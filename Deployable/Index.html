@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="description" content="The wedding of Diego and Bethany at Southdowns Manor on 29 April 2027.">
 <link rel="icon" href="assets/Logo.png" type="image/png">
 <title>Diego &amp; Bethany — 29 April 2027</title>
@@ -39,7 +39,7 @@
     --shadow-soft: 0 30px 80px -40px rgba(72,60,28,0.30);
     --shadow-lift: 0 40px 90px -46px rgba(58,48,22,0.42);
     --ease: cubic-bezier(0.16, 1, 0.3, 1);
-    --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+    --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
     
     /* Warm accent — the single note of warmth against the cool chrome. Sampled from the spring bouquet (blush garden rose). Use sparingly. */
     --warm: #F0B49E; /* blush-coral — primary warm accent */
@@ -61,8 +61,21 @@
     --text-meta: 0.875rem;                        /* 14px — secondary metadata & hints */
     --text-label: 0.75rem;                        /* 12px — uppercase labels */
     --tracking-label: 0.22em;                     /* consistent all-caps tracking */
-    --mx:0;
-    --my:0;
+
+    /* Spacing scale — 4pt base. Use gap first; fall back to margin/padding only where gap can't reach.
+       Fluid tokens (clamp) for section-level rhythm; fixed tokens for component internals. */
+    --space-2xs: 4px;
+    --space-xs:  8px;
+    --space-sm:  12px;
+    --space-md:  16px;
+    --space-lg:  24px;
+    --space-xl:  32px;
+    --space-2xl: 48px;
+    --space-3xl: 64px;
+    --space-4xl: 96px;
+    /* Fluid — sections breathe wider on bigger screens */
+    --section-pad-y: clamp(64px, 8vw, 104px);
+    --section-pad-x: 6vw;
   }
 
   *{box-sizing:border-box; margin:0; padding:0;}
@@ -93,7 +106,7 @@
     font-family: var(--font-sans);
     font-weight: 400;
     line-height: 1.6;
-    overflow-x: hidden;
+    overflow-x: clip;
     font-optical-sizing: auto;
     font-kerning: normal;
     -webkit-font-smoothing: antialiased;
@@ -136,7 +149,7 @@
     backdrop-filter: blur(14px) saturate(1.1);
     -webkit-backdrop-filter: blur(14px) saturate(1.1);
     border-bottom: 1px solid transparent;
-    transition: border-color 0.5s var(--ease), padding 0.5s var(--ease), background 0.5s var(--ease);
+    transition: border-color 0.5s var(--ease), background 0.5s var(--ease);
   }
   nav.scrolled{ border-bottom-color: var(--line-gold); padding: 13px 5vw; background: linear-gradient(to bottom, rgba(239,246,250,0.94), rgba(239,246,250,0.82)); }
   
@@ -158,11 +171,13 @@
   .nav-links a{ text-decoration:none; position:relative; padding-bottom: 5px; color: var(--ink-soft); transition: color 0.3s var(--ease); }
   .nav-links a:hover{ color: var(--ink); }
   .nav-links a::after{
-    content:''; position:absolute; left:0; bottom:0; width:0; height:1.5px; border-radius:2px;
+    content:''; position:absolute; left:0; bottom:0; width:100%; height:1.5px; border-radius:2px;
     background: linear-gradient(90deg, var(--warm), var(--warm-deep));
-    transition: width 0.4s var(--ease);
+    transform: scaleX(0); transform-origin: left center;
+    transition: transform 0.4s var(--ease);
   }
-  .nav-links a:hover::after{ width:100%; }
+  .nav-links a:hover::after{ transform: scaleX(1); }
+  .nav-links a.active::after{ width:100%; transform: scaleX(1); }
   .nav-toggle{ display:none; background:none; border:none; font-size:1.5rem; cursor:pointer; color:var(--ink); }
 
   @media (max-width: 760px){
@@ -982,7 +997,7 @@
   /* ---------- Sections ---------- */
   /* Tighter, fluid vertical rhythm — enough air for a wedding page, without the
      cavernous gaps. Individual sections nudge this up or down for cadence. */
-  section{ padding: clamp(56px, 6.4vw, 92px) 6vw; position:relative; }
+  section{ padding: var(--section-pad-y) var(--section-pad-x); position:relative; }
   .section-inner{ max-width: 1080px; margin: 0 auto; }
   .divider{ display:flex; justify-content:center; margin: 0 0 clamp(26px, 3.4vw, 42px); }
 .divider--stem .sprig{ width: 84px; opacity: 0.9; }
@@ -1137,6 +1152,13 @@
     padding: clamp(20px, 3vw, 34px); box-shadow: var(--shadow-soft);
   }
   .venue-card h3{ font-size: var(--text-h3); margin-bottom: 12px; }
+
+  @media (max-width: 640px){
+    .venue-card{
+      grid-template-columns: 1fr; gap: 28px;
+    }
+    .venue-card .venue-photo{ order: -1; max-height: 42vh; }
+  }
   /* location node echoes the timeline markers, tying "where" to "when" */
   .venue-loc{
     display:flex; align-items:flex-start; gap:11px; margin-top:22px; max-width:42ch;
@@ -1457,129 +1479,6 @@
   @media (prefers-reduced-motion: reduce){
     .gw-item{ transform: none !important; }
     .gw-item:hover .matte{ transform: none; }
-  }
-
-  .gallery-track{
-    display: flex;
-    gap: 18px;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    scroll-behavior: smooth;
-    scrollbar-width: none;
-    padding: 8px 4px 20px;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  .gallery-track::-webkit-scrollbar{
-    display: none;
-  }
-
-  .gallery-slide{
-    position: relative;
-    flex: 0 0 min(76vw, 520px);
-    aspect-ratio: 4 / 3;
-    scroll-snap-align: center;
-    /* matted-print surround (replaces the tinted gradient backgrounds) */
-    padding: 10px;
-    border-radius: 16px;
-    overflow: hidden;
-    background: linear-gradient(158deg, var(--cream-warm), var(--cream-deep));
-    border: 1px solid var(--line-gold);
-    box-shadow: var(--shadow-soft), inset 0 1px 1px rgba(255,255,255,0.28);
-  }
-  .gallery-slide img{
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 9px;                        /* inner bezel matches the mat */
-    box-shadow: 0 0 0 1px rgba(46,50,32,0.08);
-    background: var(--cream);
-  }
-
-  .gallery-slide.gallery-slide--contain img.gallery-img-contain{
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    object-position: center center;
-    padding: 0;
-    background: transparent;
-  }
-  
-  .gallery-slide figcaption{
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    display: flex;
-    align-items: flex-end;
-    justify-content: center;
-    min-height: 45%;
-    left: 10px; right: 10px; bottom: 10px;
-    border-radius: 0 0 9px 9px;
-    padding: 0 22px 24px;
-    text-align: center;
-    font-family: var(--font-accent);
-    font-style: italic;
-    color: var(--cream);
-    font-size: 1.22rem;
-    text-shadow: 0 1px 10px rgba(46,50,32,0.45);
-    background: linear-gradient(to top, rgba(46,50,32,0.42), transparent 70%);
-    transition: opacity 0.4s var(--ease), transform 0.6s var(--ease);
-  }
-
-  .gallery-slide:hover figcaption{
-    opacity: 0.92;
-    transform: translateY(-2px);
-  }
-
-  .gallery-btn{
-    position: absolute;
-    top: 50%;
-    z-index: 3;
-    width: 46px;
-    height: 46px;
-    border-radius: 50%;
-    border: 1px solid var(--line-gold);
-    background: rgba(239,246,250,0.88);
-    color: var(--ink);
-    cursor: pointer;
-    transform: translateY(-50%);
-    box-shadow: var(--shadow-soft);
-    display: grid;
-    place-items: center;
-    font-size: 1.25rem;
-    line-height: 1;
-    transition: background 0.3s var(--ease), transform 0.3s var(--ease), opacity 0.3s var(--ease);
-  }
-
-  .gallery-btn:hover{
-    background: var(--champagne);
-    transform: translateY(-50%) scale(1.05);
-  }
-
-  .gallery-btn:disabled{
-    opacity: 0.35;
-    cursor: default;
-    transform: translateY(-50%);
-  }
-
-  .gallery-btn--prev{
-    left: -14px;
-  }
-
-  .gallery-btn--next{
-    right: -14px;
-  }
-
-  @media (max-width: 700px){
-    .gallery-slide{
-      flex-basis: 84vw;
-      aspect-ratio: 4 / 5;
-    }
-
-    .gallery-btn{
-      display: none;
-    }
   }
 
   /* Garden bridge — the gallery settles gently into the RSVP pastel-green
@@ -2247,7 +2146,7 @@
   .rsvp-party.collapsed .rsvp-party-inner{ overflow: hidden; }
   .rsvp-party.collapsed{ grid-template-rows: 0fr; opacity: 0; margin-top: -22px; }
   @media (prefers-reduced-motion: no-preference){
-    .rsvp-party{ transition: grid-template-rows 0.5s var(--ease), opacity 0.35s var(--ease), margin-top 0.5s var(--ease); }
+    .rsvp-party{ transition: grid-template-rows 0.5s var(--ease), opacity 0.35s var(--ease); }
   }
 
   /* Dynamic guest rows */
@@ -2348,7 +2247,8 @@
   /* ---------- Footer ---------- */
   footer{
     position: relative;
-    padding: clamp(64px, 8vw, 104px) 6vw clamp(44px, 5vw, 62px); text-align:center; background: rgba(239,246,250,0.62);
+    padding: clamp(64px, 8vw, 104px) 6vw max(clamp(44px, 5vw, 62px), env(safe-area-inset-bottom, 0px));
+    text-align:center; background: rgba(239,246,250,0.62);
   }
   /* Twilight lifts back into cream — a smooth exit from the RSVP dark, no razor seam. */
   footer::before{
@@ -2409,12 +2309,6 @@
         animation-timeline: view();
         animation-range: entry 8% cover 34%;
       }
-      /* Gallery slides resolve as the carousel scrolls into frame */
-      .gallery-slide{
-        animation: tileIn linear both;
-        animation-timeline: view();
-        animation-range: entry 0% cover 28%;
-      }
     }
   }
 
@@ -2425,7 +2319,6 @@
     from{ opacity: 0; transform: translateY(18px) scale(0.62) rotate(-5deg); }
     to{ opacity: 0.85; transform: none; }
   }
-  @keyframes tileIn{ from{ opacity: 0.35; transform: scale(0.92); } to{ opacity: 1; transform: none; } }
 
   /* ============================================================
      Overdrive scroll — A (living botanical spine) + C (garden light
@@ -2647,15 +2540,6 @@
   @keyframes veilDraw{ to{ stroke-dashoffset:0; } }
   @keyframes veilBloom{ from{ opacity:0; transform:scale(0.2); } to{ opacity:1; transform:scale(1); } }
   @keyframes veilRule{ to{ transform:scaleX(1); } }
-
-  /* Proposal image: show the full photo instead of cropping */
-  .gallery-slide.gallery-slide--contain img{
-    width: 100% !important;
-    height: 100% !important;
-    object-fit: contain !important;
-    object-position: center center !important;
-    background: linear-gradient(150deg, rgba(239,246,250,0.95), rgba(220,234,245,0.9)) !important;
-  }
 </style>
 <style>
   /* ---------- Aesthetic refinement pass ----------
@@ -2676,8 +2560,7 @@
   .nav-links{ gap:clamp(14px, 1.9vw, 30px); }
   .nav-links a{ color:var(--ink); }
   .nav-links a.active{ color:var(--terracotta); }
-  .nav-links a.active::after{ width:100%; }
-  section{ padding-top:clamp(82px, 9vw, 132px); padding-bottom:clamp(96px, 11vw, 158px); }
+  .nav-links a.active::after{ transform: scaleX(1); }
   .section-inner{ max-width:1180px; }
   .section-title{ font-size:clamp(2.55rem, 5.2vw, 4.15rem); line-height:0.98; letter-spacing:-0.035em; }
   .eyebrow{ background:rgba(255,255,255,0.30); }
@@ -3228,7 +3111,7 @@
 
         <article class="journey-stage-card" data-stage-card="2">
           <img class="journey-stage-image" src="assets/Reykjav%C3%ADk.jpg" alt="A colourful street in Reykjavik, Iceland" loading="lazy" decoding="async">
-          <span class="journey-stage-number">03</span>Iceland
+          <span class="journey-stage-number">03</span>
           <span class="journey-stage-kicker">Across the Atlantic</span>
           <h3>Iceland</h3>
           <p>Chasing the Northern Lights and open seas, we set sail on our very first cruise together &#8212; an adventure to Iceland that reminded us just how much fun it is to explore the world side by side.</p>
@@ -3622,7 +3505,7 @@
     <div class="gallery-lightbox" id="galleryLightbox" role="dialog" aria-modal="true" aria-label="Expanded photograph" hidden>
       <div class="gallery-lightbox-inner">
         <button class="gallery-lightbox-close" id="galleryLightboxClose" type="button" aria-label="Close photograph">&times;</button>
-        <img id="galleryLightboxImage" src="" alt="">
+        <img id="galleryLightboxImage" alt="">
         <p class="gallery-lightbox-caption" id="galleryLightboxCaption"></p>
       </div>
     </div>
@@ -3830,7 +3713,7 @@
           </div>
           <p class="field-note" id="soloNote" hidden>This invitation is for one — but you'll be very welcome. 💐</p>
           <p class="field-note" id="alreadyRepliedNote" hidden>
-            Someone from your party has already replied. If you need to change your answer, please VP%20change">email us</a>.
+            Someone from your party has already replied. If you need to change your answer, please <a href="mailto:Diego.beth21@gmail.com?subject=Wedding%20RSVP%20change">email us</a>.
           </p>
           <div class="field-row">
             <div class="field">

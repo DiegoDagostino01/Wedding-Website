@@ -19,23 +19,36 @@ colors:
   terracotta: "#43627E"
   gold-deep: "#43627E"
   champagne: "#EBF3F6"
+  warm: "#F0B49E"
+  warm-deep: "#D98368"
+  rose: "#C25B6E"
+  map-dark: "#0b3550"
+  map-shade: "rgba(3,18,34,0.58)"
+  map-shade-deep: "rgba(7,25,41,0.82)"
+  map-pin: "#e7192c"
+  map-pin-soft: "rgba(231,25,44,0.55)"
+  map-vehicle: "#eef0eb"
+  map-vehicle-stroke: "#263544"
+  map-label: "#20242a"
+  map-label-small: "#69717a"
+  map-link: "#d4e7f3"
 typography:
   display:
-    fontFamily: "Dancing Script, 'Segoe Script', cursive"
+    fontFamily: "'Great Vibes', 'Segoe Script', 'Brush Script MT', cursive"
     fontSize: "clamp(3.9rem, 11.5vw, 8rem)"
-    fontWeight: 600
+    fontWeight: 300
     lineHeight: 1.04
     letterSpacing: "0"
   headline:
-    fontFamily: "Montserrat, system-ui, 'Segoe UI', Arial, sans-serif"
-    fontSize: "clamp(2.35rem, 4.9vw, 3.6rem)"
-    fontWeight: 600
-    lineHeight: 1.1
-    letterSpacing: "-0.02em"
+    fontFamily: "'Noto Serif Display', Georgia, serif"
+    fontSize: "clamp(2.55rem, 5.2vw, 4.15rem)"
+    fontWeight: 400
+    lineHeight: 0.98
+    letterSpacing: "-0.035em"
   title:
-    fontFamily: "Montserrat, system-ui, 'Segoe UI', Arial, sans-serif"
+    fontFamily: "'Noto Serif Display', Georgia, serif"
     fontSize: "clamp(1.6rem, 3vw, 2.05rem)"
-    fontWeight: 600
+    fontWeight: 400
     lineHeight: 1.2
     letterSpacing: "-0.02em"
   body:
@@ -50,16 +63,32 @@ typography:
     lineHeight: 1.2
     letterSpacing: "0.22em"
 rounded:
+  hairline: "2px"
   xs: "3px"
   sm: "4px"
-  md: "6px"
+  sm1: "6px"
+  sm2: "9px"
+  sm3: "10px"
+  sm4: "11px"
+  md: "12px"
+  md2: "14px"
+  lg: "16px"
+  lg2: "18px"
+  lg3: "20px"
+  xl: "22px"
+  xl2: "24px"
+  pill: "999px"
 spacing:
+  "2xs": "4px"
   xs: "8px"
-  sm: "14px"
-  md: "22px"
-  lg: "32px"
-  xl: "44px"
-  section: "110px"
+  sm: "12px"
+  md: "16px"
+  lg: "24px"
+  xl: "32px"
+  "2xl": "48px"
+  "3xl": "64px"
+  "4xl": "96px"
+  section: "clamp(64px, 8vw, 104px)"
 components:
   button-primary:
     backgroundColor: "{colors.peach}"
@@ -128,27 +157,41 @@ The palette is a fresh countryside-spring range: pale sky-blue paper grounds, ne
 - **Sky Emphasis** `--terracotta` / `--gold-deep` (#43627E): Deeper blue for emphasis text such as the couple's names, hover states, and prominent labels.
 - **Sky Tint** `--champagne` (#EBF3F6): Pale surface and text selection.
 
-### Named Rules
+### Warm Blush (The Single Note of Warmth)
+Sampled from the spring bouquet (blush garden rose). Used sparingly against the cool grounds; never floods a component.
+- **Blush** `--warm` (#F0B49E): Timeline nodes, journey map pins, day-status live dot, eyebrow dots, countdown hover.
+- **Deep Blush** `--warm-deep` (#D98368): Hover/emphasis, the "now" tags, journey-map marker cores.
+- **Blush Tint** `--warm-soft` (rgba(232,135,155,0.16)): Glows and fills behind blush marks.
+
+### Functional & Specialist
+- **Error Rose** `--rose` (#C25B6E): Invalid-field borders, icons, and remove-guest hovers. Text stays dark ink — colour is never the only signal.
+- **Map Dark** `--map-dark` (#0b3550): The satellite journey-map stage background (Leaflet), where the pale paper grounds would wash out tiles. Its shadows/gradients use `rgba(3,18,34,·)` (`--map-shade`, deep variant `rgba(7,25,41,0.82)`).
+- **Map Pin** `--map-pin` (#e7192c): Journey-map marker pin red and its pulse rings (`rgba(231,25,44,0.55)`), on the dark map only.
+- **Map UI** (specialist, dark map only): `--map-vehicle` (#eef0eb) vehicle icons with `--map-vehicle-stroke` (#263544), `--map-label` (#20242a) card text with `--map-label-small` (#69717a) secondary, `--map-link` (#d4e7f3) attribution links.
+- White (#FFFFFF) appears for card surfaces, matte inner frames, and marker cores — treated as a surface, not a token. Translucent whites (rgba(255,255,255,0.08–0.94)) are the standard surface treatment for cards sitting on tinted grounds.
+
+### Named Rules 
 **The Guest-First Contrast Rule.** Body text stays close to Garden Ink or Invitation Sky; decorative pale text is not allowed to carry essential information.
 
 **The Accent-with-Restraint Rule.** The spring-sky blue marks action, romance, and botanical detail; it should feel earned, not flood every component. Fresh greens carry structure; the blue carries emphasis.
 
 ## 3. Typography
 
-**Primary Font:** Montserrat (with system-ui, Segoe UI, Arial fallback) — used for headings and body.
-**Hero Script:** Dancing Script (with Segoe Script, cursive fallback) — reserved for the couple's names in the hero. It is the closest widely-available Google Font to the requested "Jimmy Script"; drop in the licensed face here if it is ever self-hosted.
+**Display Font:** Great Vibes (with Segoe Script, Brush Script MT, cursive fallback) — the handwritten script, reserved for the couple's names in the hero and the RSVP success sign-off.
+**Headline Font:** Noto Serif Display (with Georgia, serif fallback) — all section titles, block headings, schedule names, venue titles, countdown numerals, and the footer signature.
+**Primary Font:** Montserrat (with system-ui, Segoe UI, Arial fallback) — body copy, labels, navigation, and forms.
 
-**Character:** Montserrat carries the whole page in a single geometric-sans family, using weight and size for hierarchy (600 for headings, 400 for body) rather than a second text face. Dancing Script gives the couple's names their one handwritten, invitation-quality moment in the hero; everything else stays practical and legible.
+**Character:** Noto Serif Display gives headings a quiet editorial warmth that contrasts with Montserrat's geometric body; Great Vibes gives the couple's names their one handwritten, invitation-quality moment. Montserrat carries all practical reading copy in a single clean family.
 
 ### Hierarchy
-- **Hero names** (Dancing Script, 600, `clamp(3.9rem, 11.5vw, 8rem)`, ~1.04): Only "Diego & Bethany" in the hero.
-- **Headline** (Montserrat, 600, `clamp(2.35rem, 4.9vw, 3.6rem)`, ~1.1, -0.02em): Section titles such as story, day, travel, gallery, and RSVP.
-- **Title** (Montserrat, 600, `clamp(1.6rem, 3vw, 2.05rem)`, ~1.2): Schedule names, card headings, venue title, and footer signature.
+- **Hero names** (Great Vibes, 300, `clamp(3.9rem, 11.5vw, 8rem)`, ~1.04): Only "Diego & Bethany" in the hero. The `em` names use weight 600 in sky-emphasis blue.
+- **Headline** (Noto Serif Display, 400, `clamp(2.55rem, 5.2vw, 4.15rem)`, ~0.98, -0.035em): Section titles such as story, day, travel, gallery, and RSVP.
+- **Title** (Noto Serif Display, 400, `clamp(1.6rem, 3vw, 2.05rem)`, ~1.2): Schedule names, card headings, venue title, and footer signature.
 - **Body** (Montserrat, 400, 1rem, 1.6): Guest-facing explanatory copy, capped around 62ch in the current page.
 - **Label** (Montserrat, 500, 0.75rem, 0.22em, uppercase): Navigation, form labels, tags, countdown labels, and the hero date/venue subtitle.
 
 ### Named Rules
-**The One-Script-Moment Rule.** Dancing Script appears only on the couple's names in the hero. Everywhere else is Montserrat; don't scatter the script into section titles or accents, or it stops feeling special.
+**The One-Script-Moment Rule.** Great Vibes appears only on the couple's names in the hero (and the RSVP success sign-off, which echoes it). Everywhere else is Montserrat or Noto Serif Display; don't scatter the script into section titles or accents, or it stops feeling special.
 
 **The Invitation-Not-Broadsheet Rule.** Lead with guest clarity; do not turn sections into editorial magazine styling. Hierarchy comes from Montserrat weight and size, not decoration.
 
@@ -167,9 +210,10 @@ This system uses ambient softness: most surfaces are flat or tonally separated, 
 Components should feel warm, practical, and guest-first: ceremonial enough for the occasion, but never so precious that guests have to work to find details.
 
 ### Buttons
-- **Shape:** Small radius, exact current value 3px.
-- **Primary:** Sky-accent blue (`--peach`, #80A3C2) background, Garden Ink text, uppercase Montserrat label, `15px 38px` padding.
+- **Shape:** Pills (`border-radius: 999px`) for primary CTAs and soft utility buttons; `3px` for the postcode copy button and guest-row controls.
+- **Primary (RSVP / Honeymoon):** Sky-accent blue (`--peach`, #80A3C2) background, Garden Ink text, uppercase Montserrat label, `11px 12px 11px 34px` with a circular dark-tint icon chip on the right.
 - **Hover / Focus:** Hover shifts to sky-emphasis blue (`--terracotta`, #43627E) with Invitation Sky text and a small upward translate. Focus uses a visible 2px outline with 3px offset.
+- **Soft utility (calendar / sort):** Pill outline buttons on white, `--terracotta` text, `12px 20px` padding; hover lifts with a soft blue shadow.
 - **Secondary / Ghost / Tertiary:** Not currently defined. Future secondary buttons should use a full border or quiet text treatment, not side-stripe accents.
 
 ### Chips
@@ -177,14 +221,15 @@ Components should feel warm, practical, and guest-first: ceremonial enough for t
 - **State:** Use for "Coming soon" and similar status labels; avoid making them compete with calls to action.
 
 ### Cards / Containers
-- **Corner Style:** 4px for image placeholders and gallery items, 6px for cards and venue containers.
-- **Background:** Pressed Paper for large content containers; Invitation Sky for smaller cards on Pressed Paper sections.
+- **Corner Style:** 16px for journey, venue, gallery, and FAQ cards; 18px for the countdown pill and journey stage cards; 14px for stay cards and results; 12px for inputs, stats, and notes; 24px for the journey-map stage; 999px for pills and captions.
+- **Background:** Pressed Paper for large content containers; Invitation Sky for smaller cards on Pressed Paper sections; translucent white (rgba(255,255,255,0.55–0.86)) for cards sitting on tinted section grounds.
 - **Shadow Strategy:** Ambient Paper Lift only on prominent cards or hover states.
-- **Border:** Use the existing `rgba(51,54,31,0.14)` line for schedule rows and travel cards.
-- **Internal Padding:** 32px for small cards, 44px for the venue card.
+- **Border:** Use the existing `rgba(51,54,31,0.14)` line for schedule rows and travel cards, and `--line-gold` (rgba(128,163,194,0.35)) for soft card and container edges.
+- **Internal Padding:** 24px for small cards, 44px for the venue card, 30–48px for the give card.
 
 ### Inputs / Fields
 - **Style:** RSVP form fields sit on the pastel-mist panel with a translucent-white fill, hairline ink border, dark ink text, 10px radius, and Montserrat body type.
+- **Radius scale (whole page):** hairline 2px, small 3–4px, mid 9–14px, large 16–24px, pill 999px. The old {3,4,6px} scale is retired.
 - **Focus:** Border shifts to sky-emphasis blue with a soft sky-accent focus ring; the fill lightens slightly.
 - **Error / Disabled:** Invalid fields use a muted rose border and icon; text stays dark ink for readability (colour is never the only signal). Disabled not yet defined.
 
