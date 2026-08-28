@@ -312,8 +312,13 @@
       party.setAttribute('aria-hidden', String(declining));
       party.querySelectorAll('input').forEach(i => { i.disabled = declining; });
       if(selectedGuest){
-        if(selectedGuest.partner) partnerField.hidden = declining;
-        else soloNote.hidden = declining;
+        if(selectedGuest.partner){
+          partnerField.hidden = declining;
+          soloNote.hidden = true;
+        } else {
+          partnerField.hidden = true;
+          soloNote.hidden = declining;
+        }
       } else if(GUEST_LIST.length === 0){
         // Free-text mode: party size is unknown — don't presume "invitation for one".
         partnerField.hidden = true;
