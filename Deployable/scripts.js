@@ -259,6 +259,7 @@
     const pickerInput = document.getElementById('guest-picker-input');
     const pickerList = document.getElementById('guest-picker-list');
     const pickerNotFound = document.getElementById('guest-not-found');
+    const pickerHint = document.getElementById('guest-picker-hint');
     const attendanceNote = document.getElementById('guest-attendance-note');
     const partnerField = document.getElementById('partnerField');
     const partnerNameEl = document.getElementById('partner-name');
@@ -362,9 +363,9 @@
       const attendance = normaliseName(g && (g.attendance || g.Attendance));
       let message = '';
       if(attendance === 'full day' || attendance === 'full-day'){
-        message = 'We look forward to seeing you for the full day.';
+        message = 'Your invitation is for the full day. We look forward to seeing you then.';
       } else if(attendance === 'evening only' || attendance === 'evening-only'){
-        message = 'We look forward to seeing you for the evening.';
+        message = 'Your invitation is for the evening only. We look forward to seeing you then.';
       }
       attendanceNote.textContent = message;
       attendanceNote.hidden = !message;
@@ -416,6 +417,7 @@
       nameInput.value = g.name;
       pickerList.hidden = true;
       pickerInput.setAttribute('aria-expanded', 'false');
+      if(pickerHint) pickerHint.hidden = true;
       pickerInput.setAttribute('aria-invalid', 'false');
       document.getElementById('rsvp-name-err').hidden = true;
 
@@ -446,6 +448,7 @@
     pickerInput.addEventListener('input', () => {
       selectedGuest = null;
       nameInput.value = '';
+      if(pickerHint) pickerHint.hidden = false;
       updateAttendanceNote(null);
       const q = pickerInput.value.trim();
       if (q.length >= MIN_CHARS) {

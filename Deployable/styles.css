@@ -2019,6 +2019,18 @@
     margin: 6px 0 0;
     line-height: 1.5;
   }
+  .attendance-note{
+    margin-top: 10px;
+    padding: 11px 13px;
+    border: 1px solid rgba(44,83,39,0.38);
+    border-left: 4px solid var(--forest);
+    border-radius: 8px;
+    background: rgba(255,255,255,0.58);
+    color: var(--forest);
+    font-size: 0.94rem;
+    font-weight: 600;
+    line-height: 1.45;
+  }
   .field-note[hidden]{ display: none; }
   .field-note a{ color: var(--terracotta); text-underline-offset: 2px; }
 
