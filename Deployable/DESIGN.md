@@ -22,16 +22,7 @@ colors:
   warm: "#F0B49E"
   warm-deep: "#D98368"
   rose: "#C25B6E"
-  map-dark: "#0b3550"
-  map-shade: "rgba(3,18,34,0.58)"
-  map-shade-deep: "rgba(7,25,41,0.82)"
-  map-pin: "#e7192c"
-  map-pin-soft: "rgba(231,25,44,0.55)"
-  map-vehicle: "#eef0eb"
-  map-vehicle-stroke: "#263544"
-  map-label: "#20242a"
-  map-label-small: "#69717a"
-  map-link: "#d4e7f3"
+  warm-soft: "rgba(232,135,155,0.16)"
 typography:
   display:
     fontFamily: "'Great Vibes', 'Segoe Script', 'Brush Script MT', cursive"
@@ -93,7 +84,7 @@ components:
   button-primary:
     backgroundColor: "{colors.peach}"
     textColor: "{colors.ink}"
-    rounded: "{rounded.xs}"
+    rounded: "{rounded.pill}"
     padding: "15px 38px"
     typography: "{typography.label}"
   button-primary-hover:
@@ -121,7 +112,7 @@ components:
 
 The system should feel like a personal invitation carried through a countryside garden: soft enough for a wedding, clear enough for guests who need practical details, and specific enough to belong to Diego and Bethany rather than to a generic wedding template. It uses botanical accents, restrained page rhythm, and a warm guest-first tone to make the site feel celebratory without losing utility.
 
-The visual language is established in the static HTML: pale sky-blue paper surfaces, fresh spring-foliage greens for botanical structure, and a deeper spring-sky blue for accents and emphasis. Type is Montserrat throughout — headings and body — with Dancing Script reserved for the couple's names in the hero. Small botanical dividers, soft reveal motion, and ambient shadows complete the system. Preserve those choices unless a future task explicitly asks for a departure. The system rejects gray, flat, static interfaces and placeholder-heavy layouts that feel lifeless.
+The visual language is established in `Index.html`: pale sky-blue paper surfaces, fresh spring-foliage greens for botanical structure, and a deeper spring-sky blue for accents and emphasis. Type runs in three families — Great Vibes for the couple's names, Noto Serif Display for headings, and Montserrat for all body copy, labels, navigation, and forms. Small botanical dividers, soft reveal motion, and ambient shadows complete the system. Preserve those choices unless a future task explicitly asks for a departure. The system rejects gray, flat, static interfaces and placeholder-heavy layouts that feel lifeless.
 
 **Key Characteristics:**
 - Warm practical pages for invited guests.
@@ -165,9 +156,7 @@ Sampled from the spring bouquet (blush garden rose). Used sparingly against the 
 
 ### Functional & Specialist
 - **Error Rose** `--rose` (#C25B6E): Invalid-field borders, icons, and remove-guest hovers. Text stays dark ink — colour is never the only signal.
-- **Map Dark** `--map-dark` (#0b3550): The satellite journey-map stage background (Leaflet), where the pale paper grounds would wash out tiles. Its shadows/gradients use `rgba(3,18,34,·)` (`--map-shade`, deep variant `rgba(7,25,41,0.82)`).
-- **Map Pin** `--map-pin` (#e7192c): Journey-map marker pin red and its pulse rings (`rgba(231,25,44,0.55)`), on the dark map only.
-- **Map UI** (specialist, dark map only): `--map-vehicle` (#eef0eb) vehicle icons with `--map-vehicle-stroke` (#263544), `--map-label` (#20242a) card text with `--map-label-small` (#69717a) secondary, `--map-link` (#d4e7f3) attribution links.
+- **Journey Map** (specialist, `#storymap` only): the stage is a deep-sky panel (`#0b3550`, hard-coded rather than tokenised) that exists only behind the Leaflet satellite tiles, which the pale grounds would wash out. Pins are Blush marker nodes with Deep Blush cores and numbered badges (01–04); the caption is a translucent-white pill.
 - White (#FFFFFF) appears for card surfaces, matte inner frames, and marker cores — treated as a surface, not a token. Translucent whites (rgba(255,255,255,0.08–0.94)) are the standard surface treatment for cards sitting on tinted grounds.
 
 ### Named Rules 
@@ -200,7 +189,10 @@ Sampled from the spring bouquet (blush garden rose). Used sparingly against the 
 This system uses ambient softness: most surfaces are flat or tonally separated, with a single warm shadow reserved for lifted cards, mobile navigation, and hover states. Depth should feel like paper and garden light, not glass, chrome, or app panels.
 
 ### Shadow Vocabulary
-- **Ambient Paper Lift** (`0 20px 60px rgba(94,84,45,0.12)`): Use for the venue card, photo placeholders, mobile menu, and interactive card hover states.
+Three warm-toned tokens carry all depth (cool shadows are reserved for the journey map's deep-sky panel):
+- **`--shadow`** (`0 26px 60px -28px rgba(72,60,28,0.34)` + a close second layer): the default paper lift for prominent cards, the nav island, and the mobile menu.
+- **`--shadow-soft`** (`0 30px 80px -40px rgba(72,60,28,0.30)`): softer ambient lift for large resting surfaces.
+- **`--shadow-lift`** (`0 40px 90px -46px rgba(58,48,22,0.42)`): hover/emphasis lift for buttons and interactive cards.
 
 ### Named Rules
 **The Soft-Lift Rule.** Shadows appear when a surface needs tactile emphasis or hierarchy; do not add shadows to every repeated item.
@@ -218,6 +210,7 @@ Components should feel warm, practical, and guest-first: ceremonial enough for t
 
 ### Chips
 - **Style:** Small uppercase tags use sky-emphasis blue (`--terracotta`, #43627E) text on the surrounding surface, with no filled pill by default.
+- **Live state:** The schedule's "Happening now" tag and the live day-status pill invert to Garden Ink text on the Blush tint (`--warm-soft`) with a Deep Blush border and pulsing dot — warm attention, not alarm.
 - **State:** Use for "Coming soon" and similar status labels; avoid making them compete with calls to action.
 
 ### Cards / Containers
@@ -234,19 +227,19 @@ Components should feel warm, practical, and guest-first: ceremonial enough for t
 - **Error / Disabled:** Invalid fields use a muted rose border and icon; text stays dark ink for readability (colour is never the only signal). Disabled not yet defined.
 
 ### Navigation
-- **Style:** Fixed top nav with translucent cream background, blur, spring-accent hover underline, and compact uppercase Montserrat links.
-- **Mobile:** Links slide in as a right-side cream panel with Ambient Paper Lift. The menu toggle must keep its accessible label and visible focus state.
+- **Style:** A floating navigation island — a translucent paper pill with blur and a soft shadow, sitting apart from the page edge. It publishes its live height as `--nav-h` so sticky sections (journey map, countdown) always clear it.
+- **Mobile:** Links slide in as a right-side cream panel. The toggle carries `aria-expanded`/`aria-controls`, Escape closes the drawer, and focus returns to the toggle.
 
 ### Botanical Divider
-The sprig SVG is the signature motif. Use it sparingly as a ceremonial divider or visual pause; do not repeat it above every small block of text.
+The sprig SVG is the signature motif. Use it sparingly as a ceremonial divider or visual pause; do not repeat it above every small block of text. The motif extends into two structural signatures: the scroll-drawn vine down the page's left edge (flowers bloom as their chapters pass), and the numbered botanical pin badges (01–04) that carry the journey sequence in the map-marker style.
 
 ## 6. Do's and Don'ts
 
 ### Do:
-- **Do** preserve the existing color tokens from `diego-bethany-wedding.html` when extending the page.
+- **Do** preserve the existing color tokens in `styles.css` when extending the page.
 - **Do** keep guest logistics easy to scan: schedule rows, travel cards, RSVP fields, and venue details should read quickly.
-- **Do** use Dancing Script only for the couple's names in the hero — the site's single script moment.
-- **Do** use Montserrat everywhere else: headings, navigation, forms, labels, and practical body copy.
+- **Do** use Great Vibes only for the couple's names in the hero (and the RSVP success sign-off that echoes it) — the site's single script moment.
+- **Do** use Noto Serif Display for headings and Montserrat everywhere else: navigation, forms, labels, and practical body copy.
 - **Do** support reduced motion and keep reveal content visible by default or safely recoverable.
 
 ### Don't:
