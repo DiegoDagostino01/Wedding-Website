@@ -1,0 +1,152 @@
+{
+  "scripts.js": {
+    "mtime": 1787930647.110009,
+    "seen": 1787930805.8755057,
+    "ast_hash": "100d8dca015cd7e42beb8d05d4883ac1",
+    "semantic_hash": "100d8dca015cd7e42beb8d05d4883ac1"
+  },
+  "styles.css": {
+    "mtime": 1787929932.262007,
+    "seen": 1787930805.8755057,
+    "ast_hash": "f743d077803ad72a187f17658406939a",
+    "semantic_hash": "f743d077803ad72a187f17658406939a"
+  },
+  "Assets/travel-image-sources.txt": {
+    "mtime": 1786125850.0579376,
+    "seen": 1787930805.8755057,
+    "ast_hash": "dfd0f7cf1caa1b908352991ccfc942c7",
+    "semantic_hash": "dfd0f7cf1caa1b908352991ccfc942c7"
+  },
+  "DESIGN.md": {
+    "mtime": 1787403779.234627,
+    "seen": 1787930805.8755057,
+    "ast_hash": "77a91322b6c0119f45320a25c137501d",
+    "semantic_hash": "77a91322b6c0119f45320a25c137501d"
+  },
+  "Index.html": {
+    "mtime": 1787930719.2455068,
+    "seen": 1787930805.8755057,
+    "ast_hash": "880918ac848db783608354c518f28997",
+    "semantic_hash": "880918ac848db783608354c518f28997"
+  },
+  "PRODUCT.md": {
+    "mtime": 1786113609.5956924,
+    "seen": 1787930805.8755057,
+    "ast_hash": "9cb192b999bf60872b9ce7b2eeef0624",
+    "semantic_hash": "9cb192b999bf60872b9ce7b2eeef0624"
+  },
+  "extracted-skills-summary.md": {
+    "mtime": 1786113609.602693,
+    "seen": 1787930805.8755057,
+    "ast_hash": "44348a6ff28fe969ede7e8b09ceb9bd2",
+    "semantic_hash": "44348a6ff28fe969ede7e8b09ceb9bd2"
+  },
+  "Assets/Airplane icon.png": {
+    "mtime": 1786131157.8080297,
+    "seen": 1787930805.8755057,
+    "ast_hash": "d7861a9dae1a6c063d62c57832c0cbb9",
+    "semantic_hash": "d7861a9dae1a6c063d62c57832c0cbb9"
+  },
+  "Assets/Car Icon.png": {
+    "mtime": 1786131195.70133,
+    "seen": 1787930805.8755057,
+    "ast_hash": "df240d14f5d4c29cf7764032d6ad648b",
+    "semantic_hash": "df240d14f5d4c29cf7764032d6ad648b"
+  },
+  "Assets/Cruise Icon.png": {
+    "mtime": 1786131183.168042,
+    "seen": 1787930805.8755057,
+    "ast_hash": "5c49a5bfd01a014eaf6074963fb58357",
+    "semantic_hash": "5c49a5bfd01a014eaf6074963fb58357"
+  },
+  "Assets/Dress Code.png": {
+    "mtime": 1786113609.4691913,
+    "seen": 1787930805.8755057,
+    "ast_hash": "3ee7bdd48f9f5079a241f43615165e0a",
+    "semantic_hash": "3ee7bdd48f9f5079a241f43615165e0a"
+  },
+  "Assets/Flower Inspiration.jpg": {
+    "mtime": 1786113609.4766922,
+    "seen": 1787930805.8755057,
+    "ast_hash": "a5982c8cea181572964075f90973cde6",
+    "semantic_hash": "a5982c8cea181572964075f90973cde6"
+  },
+  "Assets/Geiranger.jpg": {
+    "mtime": 1786125500.279649,
+    "seen": 1787930805.8755057,
+    "ast_hash": "0546ec8e4bb3e9571693bd9f1d4dd4e7",
+    "semantic_hash": "0546ec8e4bb3e9571693bd9f1d4dd4e7"
+  },
+  "Assets/Hero-Background.png": {
+    "mtime": 1786113609.4856942,
+    "seen": 1787930805.8755057,
+    "ast_hash": "15523a0fb3a29e82154a6b1ddd411e2e",
+    "semantic_hash": "15523a0fb3a29e82154a6b1ddd411e2e"
+  },
+  "Assets/Logo.png": {
+    "mtime": 1786113609.4921954,
+    "seen": 1787930805.8755057,
+    "ast_hash": "60ef26a0f3a7365805e6d529f132f035",
+    "semantic_hash": "60ef26a0f3a7365805e6d529f132f035"
+  },
+  "Assets/Proposal.png": {
+    "mtime": 1786113609.5056922,
+    "seen": 1787930805.8755057,
+    "ast_hash": "4d47904473e9deadecca47f6d65b7f28",
+    "semantic_hash": "4d47904473e9deadecca47f6d65b7f28"
+  },
+  "Assets/Reykjav\u00edk.jpg": {
+    "mtime": 1786125499.6081204,
+    "seen": 1787930805.8755057,
+    "ast_hash": "9b3477f2674de216bfd35b301538a6c4",
+    "semantic_hash": "9b3477f2674de216bfd35b301538a6c4"
+  },
+  "Assets/Shadow-Photo.png": {
+    "mtime": 1786113609.5126927,
+    "seen": 1787930805.8755057,
+    "ast_hash": "a1de951ecca87ef1d26a5ace2012c749",
+    "semantic_hash": "a1de951ecca87ef1d26a5ace2012c749"
+  },
+  "Assets/Southampton.jpg": {
+    "mtime": 1786125611.791263,
+    "seen": 1787930805.8755057,
+    "ast_hash": "ab18ba7ff305348e8f15e9d1ff60fc69",
+    "semantic_hash": "ab18ba7ff305348e8f15e9d1ff60fc69"
+  },
+  "Assets/Swansea.png": {
+    "mtime": 1786125797.3846335,
+    "seen": 1787930805.8755057,
+    "ast_hash": "03b81faad00ee5950ec8ada29ddcfdfc",
+    "semantic_hash": "03b81faad00ee5950ec8ada29ddcfdfc"
+  },
+  "Assets/Vinyard.png": {
+    "mtime": 1786113609.5226922,
+    "seen": 1787930805.8755057,
+    "ast_hash": "c138d24350dac6b189f954537dc909c3",
+    "semantic_hash": "c138d24350dac6b189f954537dc909c3"
+  },
+  "Assets/Waterfall.png": {
+    "mtime": 1786113609.5316918,
+    "seen": 1787930805.8755057,
+    "ast_hash": "2872661594544993bdf7c356edc79ffa",
+    "semantic_hash": "2872661594544993bdf7c356edc79ffa"
+  },
+  "Assets/save-the-date.png": {
+    "mtime": 1786113609.5371928,
+    "seen": 1787930805.8755057,
+    "ast_hash": "6333d4884b35ffb347fe9c9de17ee9bc",
+    "semantic_hash": "6333d4884b35ffb347fe9c9de17ee9bc"
+  },
+  "Assets/southdowns-manor.jpg": {
+    "mtime": 1786113609.5436926,
+    "seen": 1787930805.8755057,
+    "ast_hash": "b3f5b8449df846bf6bc7a59397ab6f3b",
+    "semantic_hash": "b3f5b8449df846bf6bc7a59397ab6f3b"
+  },
+  "Assets/Swansea-to-Geirangerfjord-reference.mp4": {
+    "mtime": 1786129977.4058442,
+    "seen": 1787930805.8755057,
+    "ast_hash": "30e56c91016894bae3ade826c741f8ec",
+    "semantic_hash": "30e56c91016894bae3ade826c741f8ec"
+  }
+}

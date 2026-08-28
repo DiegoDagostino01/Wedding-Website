@@ -4,13 +4,23 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="description" content="The wedding of Diego and Bethany at Southdowns Manor on 29 April 2027.">
+<meta name="theme-color" content="#EFF6FA">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Diego &amp; Bethany — 29 April 2027">
+<meta property="og:description" content="Join us at Southdowns Manor to celebrate the day together.">
+<meta property="og:image" content="Assets/Hero-Background.webp">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Diego &amp; Bethany — 29 April 2027">
+<meta name="twitter:description" content="Join us at Southdowns Manor to celebrate the day together.">
+<meta name="twitter:image" content="Assets/Hero-Background.webp">
 <link rel="icon" href="assets/Logo.png" type="image/png">
 <title>Diego &amp; Bethany — 29 April 2027</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Noto+Serif+Display:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500;1,600&display=swap">
 <link rel="preload" as="image" href="assets/Hero-Background.png" fetchpriority="high">
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" media="print" onload="this.onload=null;this.media='all'">
+<noscript><link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"></noscript>
 <link rel="stylesheet" href="styles.css">
 <script>
   // Progressive enhancement: opt reveal elements into their hidden/animated state only
@@ -259,52 +269,11 @@
   </div>
 </div>
 
-<!-- Overdrive B: Garden parallax — right-side canopy + mid-depth atmospheric layers.
-     Fixed botanical elements parallax at different rates, creating depth between
-     the left vine and the right canopy. All aria-hidden, no JS gate needed — pure
-     CSS scroll-driven animation. Gated behind (prefers-reduced-motion: no-preference)
-     and @supports (animation-timeline: scroll()). -->
-<div class="canopy" aria-hidden="true">
-  <span class="canopy-leaf" style="--ty:0%;--tp:0;color:var(--fl-leaf)">
-    <svg viewBox="0 0 80 70"><use href="#vbSprig"/></svg>
-  </span>
-  <span class="canopy-leaf" style="--ty:-12%;--tp:14;color:var(--fl-peach);--fc:var(--fl-peach-deep)">
-    <svg viewBox="0 0 70 60"><use href="#vbRose"/></svg>
-  </span>
-  <span class="canopy-leaf" style="--ty:14%;--tp:28;color:var(--fl-blue);--fc:var(--fl-blue-deep)">
-    <svg viewBox="0 0 56 52"><use href="#vbDelph"/></svg>
-  </span>
-  <span class="canopy-leaf" style="--ty:42%;--tp:44;color:var(--fl-lilac);--fc:var(--fl-lilac-deep)">
-    <svg viewBox="0 0 60 56"><use href="#vbLilac"/></svg>
-  </span>
-  <span class="canopy-leaf" style="--ty:66%;--tp:60;color:var(--fl-leaf-deep)">
-    <svg viewBox="0 0 80 70"><use href="#vbSprig"/></svg>
-  </span>
-  <span class="canopy-leaf" style="--ty:84%;--tp:74;color:var(--fl-white)">
-    <svg viewBox="0 0 62 58"><use href="#vbDaisy"/></svg>
-  </span>
-  <span class="canopy-leaf" style="--ty:96%;--tp:90;color:var(--fl-yolk)">
-    <svg viewBox="0 0 54 48"><use href="#vbBall"/></svg>
-  </span>
-</div>
-
-<div class="depth-float depth-float--mid" aria-hidden="true">
-  <span class="depth-spec" style="--dx:10%;--dy:64%;--tp:22;color:var(--fl-blush);--fc:var(--fl-blush-deep)">
-    <svg viewBox="0 0 58 62"><use href="#vbRose"/></svg>
-  </span>
-  <span class="depth-spec" style="--dx:70%;--dy:46%;--tp:52;color:var(--fl-leaf)">
-    <svg viewBox="0 0 50 54"><use href="#vbSprig"/></svg>
-  </span>
-  <span class="depth-spec" style="--dx:22%;--dy:34%;--tp:68;color:var(--fl-blue);--fc:var(--fl-blue-deep)">
-    <svg viewBox="0 0 48 44"><use href="#vbDelph"/></svg>
-  </span>
-</div>
-
 <nav id="nav">
   <a href="#top" class="nav-mark">
     <img src="assets/Logo.png" alt="Logo">
   </a>
-  <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">&#9776;</button>
+  <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="navLinks">&#9776;</button>
   <ul class="nav-links" id="navLinks">
     <li><a href="#story" data-close>Our Story</a></li>
     <li><a href="#storymap" data-close>Our Journey</a></li>
@@ -357,8 +326,9 @@
     </div>
     <div class="story-grid">
       <div class="story-copy reveal">
+        <span class="eyebrow">Our Story</span>
         <h2 class="section-title serif">How it began</h2>
-        <p>We met in our first year of university, right in the middle of Covid. Bethany offered to help Diego with some coursework — and that was that.</p>
+        <p>We met in our first year of university, right in the middle of Covid. Bethany offered to help Diego with some coursework, and that was that.</p>
         <p>Years later, on our very first cruise together, sailing through Iceland and the Norwegian Fjords, Diego proposed on the 22nd of May, 2025. We said yes to forever somewhere between the glaciers and the fjords, and we can't wait to celebrate with the people who mean the most to us.</p>
         <ol class="story-timeline">
           <li class="tl-step"><span class="tl-date">29 April 2021</span><span class="tl-label">Met</span></li>
@@ -524,41 +494,38 @@
               <ellipse cx="62" cy="6" rx="5" ry="7.5" fill="#80A3C2"/>
             </svg>
           </div>
+          <span class="eyebrow">Our Journey</span>
           <h2 class="section-title serif">From Wales to the fjords</h2>
           <p>Four places, one story. Scroll through the chapters and the illustrated route will travel with you.</p>
         </div>
 
         <article class="journey-stage-card is-active" data-stage-card="0">
           <img class="journey-stage-image" src="assets/Swansea.png" alt="Aerial view of Swansea Bay and the city coastline" loading="lazy" decoding="async">
-          <span class="journey-stage-number">01</span>
-          <span class="journey-stage-kicker">Where it begins</span>
+          <span class="journey-stage-kicker" data-n="01">Where it begins</span>
           <h3>Swansea</h3>
-          <p>It all began in Swansea, where two university students crossed paths &#8212; and somehow, everything changed. Neither of us knew it yet, but this was the start of forever.</p>
+          <p>It all began in Swansea, where two university students crossed paths, and somehow everything changed. Neither of us knew it yet, but this was the start of forever.</p>
           <span class="stage-detail">Wales · Starting point</span>
         </article>
 
         <article class="journey-stage-card" data-stage-card="1">
           <img class="journey-stage-image" src="assets/Southampton.jpg" alt="Southampton harbour with boats" loading="lazy" decoding="async">
-          <span class="journey-stage-number">02</span>
-          <span class="journey-stage-kicker">The next chapter</span>
+          <span class="journey-stage-kicker" data-n="02">The next chapter</span>
           <h3>Southampton</h3>
-          <p>Hand in hand, we packed up our old lives and built a new one together in Southampton &#8212; our first home, our first jobs, our first taste of real life as a team.</p>
+          <p>Hand in hand, we packed up our old lives and built a new one together in Southampton: our first home, our first jobs, our first taste of real life as a team.</p>
           <span class="stage-detail">England · Harbour · Departure</span>
         </article>
 
         <article class="journey-stage-card" data-stage-card="2">
           <img class="journey-stage-image" src="assets/Reykjav%C3%ADk.jpg" alt="A colourful street in Reykjavik, Iceland" loading="lazy" decoding="async">
-          <span class="journey-stage-number">03</span>
-          <span class="journey-stage-kicker">Across the Atlantic</span>
+          <span class="journey-stage-kicker" data-n="03">Across the Atlantic</span>
           <h3>Iceland</h3>
-          <p>Chasing the Northern Lights and open seas, we set sail on our very first cruise together &#8212; an adventure to Iceland that reminded us just how much fun it is to explore the world side by side.</p>
+          <p>Chasing the Northern Lights and open seas, we set sail on our very first cruise together, an adventure to Iceland that reminded us just how much fun it is to explore the world side by side.</p>
           <span class="stage-detail">Iceland · Waterfalls · North Atlantic</span>
         </article>
 
         <article class="journey-stage-card" data-stage-card="3">
           <img class="journey-stage-image" src="assets/Geiranger.jpg" alt="Norwayfjord between steep green mountains" loading="lazy" decoding="async">
-          <span class="journey-stage-number">04</span>
-          <span class="journey-stage-kicker">And finally</span>
+          <span class="journey-stage-kicker" data-n="04">And finally</span>
           <h3>Norway</h3>
           <p>Beneath the towering fjords of Geiranger, surrounded by some of the most breathtaking scenery on earth, Diego got down on one knee &#8212; and Beth said yes. A moment we'll treasure forever, in a place as beautiful as our story.</p>
           <span class="stage-detail">Norway · Fjords · Final destination</span>
@@ -581,10 +548,11 @@
         </svg>
       </div>
 <div class="reveal">
+      <span class="eyebrow">Event Details</span>
       <h2 class="section-title serif">The Day</h2>
       <p>Here's how the day will unfold. Times are approximate for now and will be confirmed closer to the date.</p>
     </div>
-    <p class="day-status" id="dayStatus"><span class="dot"></span>This running order goes live on the day &mdash; it will show you what&rsquo;s happening right now.</p>
+    <p class="day-status" id="dayStatus"><span class="dot"></span>This running order goes live on the day and will show you what&rsquo;s happening right now.</p>
 
     <div class="schedule reveal" id="schedule">
       <span class="day-light" aria-hidden="true"></span>
@@ -626,12 +594,12 @@
       <div>
         <span class="eyebrow">Venue</span>
         <h3 class="serif">Southdowns Manor</h3>
-        <p>A countryside manor set in the Hampshire hills — full address and directions to follow closer to the date.</p>
+        <p>A countryside manor set in the Hampshire hills, with the full address and directions to follow closer to the date.</p>
         <p class="venue-loc">One setting for the whole celebration: ceremony, wedding breakfast and evening reception.</p>
       </div>
       <figure class="venue-photo">
         <img src="assets/southdowns-manor.jpg" width="1024" height="1024" loading="lazy" decoding="async"
-             alt="Watercolour of Southdowns Manor and its spring gardens in bloom — the countryside house where Diego and Bethany will marry.">
+             alt="Watercolour of Southdowns Manor and its spring gardens in bloom, the countryside house where Diego and Bethany will marry.">
       </figure>
     </div>
   </div>
@@ -654,8 +622,9 @@
 </svg>
 </div>
     <div class="dress-head" data-dr>
+      <span class="eyebrow">Dress Code</span>
       <h2 class="section-title serif">Garden Formal</h2>
-      <p class="dress-lead">The look we're hoping for on the day — relaxed, colourful, and right at home in a country garden.</p>
+      <p class="dress-lead">The look we're hoping for on the day: relaxed, colourful, and right at home in a country garden.</p>
     </div>
     <figure class="dress-visual" data-dr>
       <div class="dress-frame">
@@ -666,8 +635,8 @@
     </figure>
     <ul class="dress-cues" data-dr>
       <li><span class="cue-t">Kind to the lawns</span><span class="cue-d">The grass can be soft underfoot, so block heels or flats will thank you later.</span></li>
-      <li><span class="cue-t">A layer for later</span><span class="cue-d">Late-April evenings turn cool once the sun drops — bring something to wrap up in.</span></li>
-      <li><span class="cue-t">Keep it relaxed</span><span class="cue-d">No black tie needed — it's a garden celebration, so wear something you can enjoy the day in.</span></li>
+      <li><span class="cue-t">A layer for later</span><span class="cue-d">Late-April evenings turn cool once the sun drops, so bring something to wrap up in.</span></li>
+      <li><span class="cue-t">Keep it relaxed</span><span class="cue-d">No black tie needed; it's a garden celebration, so wear something you can enjoy the day in.</span></li>
     </ul>
   </div>
 </section>
@@ -684,8 +653,9 @@
         </svg>
       </div>
 <div data-tr>
+      <span class="eyebrow">Travel &amp; Stay</span>
       <h2 class="section-title serif">Getting There &amp; Where to Stay</h2>
-      <p class="travel-intro">Southdowns Manor sits deep in the West Sussex countryside, so here's everything you need to arrive relaxed and find a bed nearby — no hunting across ten browser tabs required.</p>
+      <p class="travel-intro">Southdowns Manor sits deep in the South Downs countryside, so here's everything you need to arrive relaxed and find a bed nearby, no hunting across ten browser tabs required.</p>
     </div>
 
     <div class="travel-blocks">
@@ -705,7 +675,7 @@
             <span class="journey-btn-label">Plot my route</span>
           </button>
         </form>
-        <p class="field-hint">UK towns and postcodes. Nothing is stored &mdash; it&rsquo;s worked out in your browser.</p>
+        <p class="field-hint">UK towns and postcodes. Nothing is stored; it&rsquo;s worked out in your browser.</p>
 
         <div class="journey-result" id="journeyResult" role="status" aria-live="polite" hidden></div>
 
@@ -714,7 +684,7 @@
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="16" rx="2.5"/><path d="M8 3v4M16 3v4M3.5 10h17"/><path d="M9.5 15.5l1.8 1.8 3.4-3.6"/></svg>
             <span class="ics-label">Add 29 April 2027 to your calendar</span>
           </button>
-          <p class="journey-share">Driving and have a spare seat &mdash; or hoping for one? Mention it in the message box when you <a href="#rsvp">RSVP</a> and we&rsquo;ll happily put people in touch.</p>
+          <p class="journey-share">Driving and have a spare seat, or hoping for one? Mention it in the message box when you <a href="#rsvp">RSVP</a> and we&rsquo;ll happily put people in touch.</p>
         </div>
       </div>
 
@@ -738,7 +708,7 @@
               <a class="ext-link" href="https://www.google.com/maps/dir/?api=1&amp;destination=Southdowns+Manor+GU31+5JN" target="_blank" rel="noopener noreferrer">Directions in Google Maps<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7"/><path d="M8 7h9v9"/></svg><span class="sr-only">(opens in a new tab)</span></a>
               <a class="ext-link" href="https://maps.apple.com/?q=Southdowns+Manor+GU31+5JN" target="_blank" rel="noopener noreferrer">Open in Apple Maps<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7"/><path d="M8 7h9v9"/></svg><span class="sr-only">(opens in a new tab)</span></a>
             </div>
-            <p class="satnav-hint">Sat-navs sometimes misroute rural venues down the wrong lane. The manor lies just off the A272 between Petersfield and Midhurst — follow the map for the final stretch.</p>
+            <p class="satnav-hint">Sat-navs sometimes misroute rural venues down the wrong lane. The manor lies just off the A272 between Petersfield and Midhurst, so follow the map for the final stretch.</p>
             <div class="note note--warn">
               <span class="note-label">Rural lanes at night</span>
               The approach is along narrow country lanes with no streetlights and patchy phone signal. Allow extra time, drive gently, and save your route before you set off.
@@ -798,7 +768,7 @@
               <div class="stay">
                 <div class="stay-name"><a href="https://parkhousehotel.com/" target="_blank" rel="noopener noreferrer">Park House Hotel &amp; Spa<span class="arrow" aria-hidden="true">&#8599;</span><span class="sr-only">(opens in a new tab)</span></a></div>
                 <div class="stay-meta">Bepton · 12 min</div>
-                <p class="stay-desc">Elegant country-house hotel with a spa, pools, tennis and croquet lawns — a proper South Downs treat.</p>
+                <p class="stay-desc">Elegant country-house hotel with a spa, pools, tennis and croquet lawns. A proper South Downs treat.</p>
               </div>
               <div class="stay">
                 <div class="stay-name"><a href="https://www.hshotels.co.uk/spread-eagle" target="_blank" rel="noopener noreferrer">The Spread Eagle Hotel &amp; Spa<span class="arrow" aria-hidden="true">&#8599;</span><span class="sr-only">(opens in a new tab)</span></a></div>
@@ -820,7 +790,7 @@
                 <div class="stay-name"><a href="https://www.thehamiltonarms.co.uk/" target="_blank" rel="noopener noreferrer">Hamilton Arms<span class="arrow" aria-hidden="true">&#8599;</span><span class="sr-only">(opens in a new tab)</span></a></div>
                 <span class="stay-flag">Closest to the venue</span>
                 <div class="stay-meta">Stedham · 4 min</div>
-                <p class="stay-desc">A village pub-with-rooms in Stedham — the nearest place to lay your head after the party.</p>
+                <p class="stay-desc">A village pub-with-rooms in Stedham, the nearest place to lay your head after the party.</p>
               </div>
               <div class="stay">
                 <div class="stay-name"><a href="https://www.elstedinn.com/" target="_blank" rel="noopener noreferrer">Rooms at The Elsted Inn<span class="arrow" aria-hidden="true">&#8599;</span><span class="sr-only">(opens in a new tab)</span></a></div>
@@ -835,7 +805,7 @@
               <div class="stay">
                 <div class="stay-name"><a href="https://www.cricketersinn.com/" target="_blank" rel="noopener noreferrer">The Cricketers Inn<span class="arrow" aria-hidden="true">&#8599;</span><span class="sr-only">(opens in a new tab)</span></a></div>
                 <div class="stay-meta">Steep · 15 min</div>
-                <p class="stay-desc">A cosy country pub with rooms — a good back-up if the closer inns fill up.</p>
+                <p class="stay-desc">A cosy country pub with rooms, a good back-up if the closer inns fill up.</p>
               </div>
             </div>
           </div>
@@ -846,7 +816,7 @@
               <div class="stay">
                 <div class="stay-name"><a href="https://www.hotelsone.com/midhurst-hotels-gb/bridge-cottage-b-b.html" target="_blank" rel="noopener noreferrer">Bridge Cottage B&amp;B<span class="arrow" aria-hidden="true">&#8599;</span><span class="sr-only">(opens in a new tab)</span></a></div>
                 <div class="stay-meta">Midhurst · 10 min</div>
-                <p class="stay-desc">A quirky 1650s cottage B&amp;B with exceptional reviews — lovely for couples.</p>
+                <p class="stay-desc">A quirky 1650s cottage B&amp;B with exceptional reviews, lovely for couples.</p>
               </div>
             </div>
           </div>
@@ -875,14 +845,14 @@
         <div class="note note--warn">
           <span class="note-label">Last trains on the night · 29 April 2027</span>
           <div class="trains">
-            <div class="train-row"><span class="train-dest">Petersfield &#8594; London Waterloo</span><span class="train-time">23:09</span></div>
-            <div class="train-row"><span class="train-dest">Petersfield &#8594; Southampton</span><span class="train-time">22:12</span></div>
+            <div class="train-row"><span class="train-dest">Petersfield &#8594; London Waterloo</span><span class="train-time">11:09 PM</span></div>
+            <div class="train-row"><span class="train-dest">Petersfield &#8594; Southampton</span><span class="train-time">10:12 PM</span></div>
           </div>
-          Please double-check times nearer the day, and book your taxi back from the manor in advance — this is the one that catches people out.
+          Please double-check times nearer the day, and book your taxi back from the manor in advance. This is the one that catches people out.
         </div>
         <div class="note note--pending" style="margin-top:14px;">
           <span class="note-label">Taxis &amp; shuttle · confirming soon</span>
-          Rural taxis must be pre-booked (app cabs don't reliably serve the area). We're gathering trusted local numbers and looking into a shuttle between the manor and Petersfield — details will land here.
+          Rural taxis must be pre-booked (app cabs don't reliably serve the area). We're gathering trusted local numbers and looking into a shuttle between the manor and Petersfield. Details will land here.
         </div>
       </div>
 
@@ -894,7 +864,7 @@
         </div>
         <div class="know">
           <div class="know-item"><h4>Signal is patchy</h4><p>Mobile coverage is thin around the manor. Screenshot your directions and booking details before you set out.</p></div>
-          <div class="know-item"><h4>Cash for taxis</h4><p>Some local firms are cash-only or card-with-notice — it's worth carrying a little cash for the journey home.</p></div>
+          <div class="know-item"><h4>Cash for taxis</h4><p>Some local firms are cash-only or card-with-notice, so it's worth carrying a little cash for the journey home.</p></div>
           <div class="know-item"><h4>Arrive with time</h4><p>The final country lanes are slow going, so aim to reach the manor 20–30 minutes before the ceremony.</p></div>
         </div>
       </div>
@@ -907,28 +877,29 @@
 <section id="gallery">
   <div class="section-inner">
     <div class="reveal">
+      <span class="eyebrow">Gallery</span>
       <h2 class="section-title serif">A Few Moments</h2>
     </div>
     <div class="gallery-wall reveal" aria-label="A few of our favourite moments">
-      <figure class="gw-item gw-item--a" role="button" tabindex="0" aria-haspopup="dialog" aria-label="Open Our Story photograph">
+      <figure class="gw-item gw-item--a" role="button" tabindex="0" aria-label="Open Our Story photograph">
         <div class="matte">
           <img src="assets/Shadow-Photo.png" alt="Our story" loading="lazy" decoding="async">
         </div>
         <figcaption>Our Story</figcaption>
       </figure>
-      <figure class="gw-item gw-item--b" role="button" tabindex="0" aria-haspopup="dialog" aria-label="Open The Proposal photograph">
+      <figure class="gw-item gw-item--b" role="button" tabindex="0" aria-label="Open The Proposal photograph">
         <div class="matte">
           <img src="assets/Proposal.png" alt="The proposal" loading="lazy" decoding="async">
         </div>
         <figcaption>The Proposal</figcaption>
       </figure>
-      <figure class="gw-item gw-item--c" role="button" tabindex="0" aria-haspopup="dialog" aria-label="Open Together photograph">
+      <figure class="gw-item gw-item--c" role="button" tabindex="0" aria-label="Open Together photograph">
         <div class="matte">
           <img src="assets/Vinyard.png" alt="Together" loading="lazy" decoding="async">
         </div>
         <figcaption>Together</figcaption>
       </figure>
-      <figure class="gw-item gw-item--d" role="button" tabindex="0" aria-haspopup="dialog" aria-label="Open Fjords photograph">
+      <figure class="gw-item gw-item--d" role="button" tabindex="0" aria-label="Open Fjords photograph">
         <div class="matte">
           <img src="assets/Waterfall.png" alt="The fjords" loading="lazy" decoding="async">
         </div>
@@ -938,7 +909,7 @@
     <div class="gallery-lightbox" id="galleryLightbox" role="dialog" aria-modal="true" aria-label="Expanded photograph" hidden>
       <div class="gallery-lightbox-inner">
         <button class="gallery-lightbox-close" id="galleryLightboxClose" type="button" aria-label="Close photograph">&times;</button>
-        <img id="galleryLightboxImage" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="">
+        <img id="galleryLightboxImage" alt="">
         <p class="gallery-lightbox-caption" id="galleryLightboxCaption"></p>
       </div>
     </div>
@@ -962,9 +933,10 @@
 </svg>
 </div>
     <div class="honeymoon-head" data-hm>
+      <span class="eyebrow">With Love</span>
       <h2 class="section-title serif">Honeymoon Fund</h2>
       <p class="honeymoon-lead">
-        Your presence on the day is truly the greatest gift. But for anyone who'd like to give a little something more, we're saving up for our honeymoon — and any contribution, however small, would help make it unforgettable.
+        Your presence on the day is truly the greatest gift. But for anyone who'd like to give a little something more, we're saving up for our honeymoon, and any contribution, however small, would help make it unforgettable.
       </p>
     </div>
     <div class="honeymoon-give" data-hm>
@@ -972,7 +944,7 @@
         <span class="eyebrow">How to Contribute</span>
         <h3 class="serif">Add to the Adventure</h3>
         <p class="give-lead">
-          We've set up a honeymoon fund where you can contribute directly — every little bit helps.
+          We've set up a honeymoon fund where you can contribute directly. Just a click and a little.
         </p>
         <a class="give-btn" href="https://prezola.com/buy/view/336224" target="_blank" rel="noopener noreferrer">
           <span class="give-btn-label">Contribute to Our Honeymoon</span>
@@ -1020,7 +992,7 @@
       <details class="faq-item">
         <summary>Are children invited?</summary>
         <div class="faq-answer">
-          <p>We'll confirm this clearly on each invitation. If you're unsure, please <a href="mailto:Diego.beth21@gmail.com">email us</a> and we'll help.</p>
+          <p>We’ll confirm this clearly on each invitation. If you’re unsure, please get in touch with us directly.</p>
         </div>
       </details>
 
@@ -1053,8 +1025,10 @@
   <div class="rsvp-atmos" aria-hidden="true"></div>
   <div class="section-inner">
     <div class="rsvp-intro" data-rv>
+      <span class="eyebrow">RSVP</span>
       <h2 class="section-title serif">Let Us Know You're Coming</h2>
       <p class="lead">Kindly reply by <strong>28 February 2027</strong>. We can't wait to celebrate the day with you.</p>
+      <p class="field-note" id="deadlinePassed" hidden>The reply deadline has passed &mdash; you&rsquo;re still very welcome to reply here, or <a href="mailto:Diego.beth21@gmail.com?subject=Wedding%20RSVP">email us</a> if that&rsquo;s easier.</p>
     </div>
 
     <div class="divider rsvp-divider" data-rv aria-hidden="true">
@@ -1089,7 +1063,7 @@
             <input type="hidden" id="rsvp-name" name="name" value="">
             <ul class="guest-picker-list" id="guest-picker-list" role="listbox" hidden></ul>
           </div>
-          <p class="field-hint" id="guest-picker-hint">Type at least 4 letters of your name — we'll do the rest.</p>
+          <p class="field-hint" id="guest-picker-hint">Start typing your name and we'll do the rest.</p>
           <p class="field-err" id="rsvp-name-err" hidden>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v5"/><path d="M12 16h.01"/></svg>
             <span>Please pick your name from the list.</span>
@@ -1142,7 +1116,7 @@
               </label>
             </div>
           </div>
-          <p class="field-note" id="soloNote" hidden>This invitation is for one — but you'll be very welcome. 💐</p>
+          <p class="field-note" id="soloNote" hidden>This invitation is for one, but you'll be very welcome. 💐</p>
           <p class="field-note" id="alreadyRepliedNote" hidden>
             Someone from your party has already replied. If you need to change your answer, please <a href="mailto:Diego.beth21@gmail.com?subject=Wedding%20RSVP%20change">email us</a>.
           </p>
@@ -1224,10 +1198,11 @@
   </div>
   <div class="serif">Diego <em>&amp;</em> Bethany</div>
   <div class="sub">29 April 2027 &middot; Southdowns Manor</div>
-  <div class="foot-contact">Questions? <a href="mailto:Diego.beth21@gmail.com">Diego.beth21@gmail.com</a></div>
 </footer>
 
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="scripts.js"></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<!-- impeccable-live-start -->
+<script src="http://localhost:8400/live.js"></script>
 </body>
 </html>

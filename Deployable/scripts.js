@@ -35,8 +35,8 @@
   const navToggle = document.getElementById('navToggle');
   const navLinks = document.getElementById('navLinks');
   let navBackdrop = null;
-  const openNav = () => { navLinks.classList.add('open'); createBackdrop(); };
-  const closeNav = () => { navLinks.classList.remove('open'); removeBackdrop(); };
+  const openNav = () => { navLinks.classList.add('open'); createBackdrop(); navToggle.setAttribute('aria-expanded', 'true'); };
+  const closeNav = () => { navLinks.classList.remove('open'); removeBackdrop(); navToggle.setAttribute('aria-expanded', 'false'); };
   const createBackdrop = () => {
     if (navBackdrop) return;
     navBackdrop = document.createElement('div');
@@ -53,6 +53,13 @@
     navLinks.classList.contains('open') ? closeNav() : openNav();
   });
   navLinks.querySelectorAll('[data-close]').forEach(a => a.addEventListener('click', closeNav));
+  // Escape closes the drawer and returns focus to the toggle.
+  document.addEventListener('keydown', (e) => {
+    if(e.key === 'Escape' && navLinks.classList.contains('open')){
+      closeNav();
+      navToggle.focus();
+    }
+  });
 
   // Active section marker keeps the floating navigation oriented as guests explore.
   if ('IntersectionObserver' in window) {
@@ -72,12 +79,21 @@
 
   // Countdown to 29 April 2027, 13:30 local.
   // Days-only until the last week; hours/minutes appear at 7 days out;
-  // seconds only on the wedding day itself.
+  // seconds only on the wedding day itself. After the day it retires
+  // gracefully instead of counting zeros forever.
   const weddingDate = new Date('2027-04-29T13:30:00');
+  const countdownEl = document.getElementById('countdown');
+  let cdTimer = null;
   function updateCountdown(){
     const now = new Date();
     let diff = weddingDate - now;
-    if(diff < 0) diff = 0;
+    if(diff <= 0){
+      if(countdownEl){
+        countdownEl.innerHTML = '<div class="unit"><div class="num">&hearts;</div><div class="label">Just married</div></div>';
+      }
+      if(cdTimer) clearInterval(cdTimer);
+      return;
+    }
     const d = Math.floor(diff / 86400000);
     const h = Math.floor((diff % 86400000) / 3600000);
     const m = Math.floor((diff % 3600000) / 60000);
@@ -103,7 +119,7 @@
     if(showSecs) document.getElementById('cd-secs').textContent = String(s).padStart(2,'0');
   }
   updateCountdown();
-  setInterval(updateCountdown, 1000);
+  cdTimer = setInterval(updateCountdown, 1000);
 
   // Scroll reveal — progressive enhancement (see the html.js-reveal gate in <head>).
   // Content is visible by default; only animate when JS + motion opted in, and a failsafe
@@ -243,6 +259,7 @@
     const pickerInput = document.getElementById('guest-picker-input');
     const pickerList = document.getElementById('guest-picker-list');
     const pickerNotFound = document.getElementById('guest-not-found');
+    const attendanceNote = document.getElementById('guest-attendance-note');
     const partnerField = document.getElementById('partnerField');
     const partnerNameEl = document.getElementById('partner-name');
     const soloNote = document.getElementById('soloNote');
@@ -262,6 +279,10 @@
     const successTitle = document.getElementById('rsvpSuccessTitle');
     const successMsg = document.getElementById('rsvpSuccessMsg');
     const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    // The deadline is soft: late replies are still welcome, just flagged.
+    const deadlineNote = document.getElementById('deadlinePassed');
+    if(deadlineNote && new Date() > new Date('2027-02-28T23:59:59')) deadlineNote.hidden = false;
 
     // ── Safe scroll reveal (content visible by default; never ships blank) ──
     const motionOK = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -292,6 +313,10 @@
       if(selectedGuest){
         if(selectedGuest.partner) partnerField.hidden = declining;
         else soloNote.hidden = declining;
+      } else if(GUEST_LIST.length === 0){
+        // Free-text mode: party size is unknown — don't presume "invitation for one".
+        partnerField.hidden = true;
+        soloNote.hidden = true;
       }
     }
 
@@ -299,6 +324,16 @@
     syncAttendance();
 
     // ── Load the guest list from the sheet ──
+    // If it can't be fetched, the form degrades to honest free-text: validation
+    // accepts the typed name instead of requiring a list pick that can never come.
+    function enterFreeTextMode(){
+      pickerInput.setAttribute('placeholder', 'Your full name');
+      const hint = document.getElementById('guest-picker-hint');
+      if(hint) hint.textContent = 'Type your full name as it appears on the invitation.';
+      const errText = document.querySelector('#rsvp-name-err span');
+      if(errText) errText.textContent = 'Please add your full name.';
+      pickerNotFound.hidden = true;
+    }
     async function loadGuests(){
       try {
         const res = await fetch(RSVP_ENDPOINT, { method: 'GET' });
@@ -306,8 +341,7 @@
         GUEST_LIST = data.guests || [];
       } catch (err) {
         console.warn('Could not load guest list — falling back to free-text.', err);
-        pickerInput.setAttribute('placeholder', 'Your full name');
-        pickerNotFound.hidden = true;
+        enterFreeTextMode();
       }
     }
     loadGuests();
@@ -320,6 +354,22 @@
       return GUEST_LIST.find(g => normaliseName(g.name) === q);
     }
 
+    // The Apps Script guest response includes the sheet's Attendance column as
+    // `attendance`. Keep the wording guest-friendly and do not expose arbitrary
+    // sheet text directly in the page.
+    function updateAttendanceNote(g){
+      if(!attendanceNote) return;
+      const attendance = normaliseName(g && (g.attendance || g.Attendance));
+      let message = '';
+      if(attendance === 'full day' || attendance === 'full-day'){
+        message = 'We look forward to seeing you for the full day.';
+      } else if(attendance === 'evening only' || attendance === 'evening-only'){
+        message = 'We look forward to seeing you for the evening.';
+      }
+      attendanceNote.textContent = message;
+      attendanceNote.hidden = !message;
+    }
+
     function renderPickerResults(query){
       const q = normaliseName(query);
       const matches = q
@@ -330,7 +380,7 @@
       if(matches.length === 0){
         const li = document.createElement('li');
         li.className = 'picker-empty';
-        li.textContent = 'No match — check the spelling, or use the link below.';
+        li.textContent = 'No match. Check the spelling, or use the link below.';
         pickerList.appendChild(li);
         pickerNotFound.hidden = false;
         pickerList.hidden = false;
@@ -339,7 +389,8 @@
       }
 
       pickerNotFound.hidden = true;
-      matches.slice(0, 40).forEach((g, i) => {
+      const CAP = 6;
+      matches.slice(0, CAP).forEach((g, i) => {
         const li = document.createElement('li');
         li.setAttribute('role', 'option');
         li.dataset.name = g.name;
@@ -349,6 +400,12 @@
         li.addEventListener('mousedown', (e) => { e.preventDefault(); pickGuest(g); });
         pickerList.appendChild(li);
       });
+      if(matches.length > CAP){
+        const more = document.createElement('li');
+        more.className = 'picker-empty';
+        more.textContent = 'And ' + (matches.length - CAP) + ' more. Keep typing…';
+        pickerList.appendChild(more);
+      }
       pickerList.hidden = false;
       pickerInput.setAttribute('aria-expanded', 'true');
     }
@@ -375,9 +432,12 @@
 
       // If they've already replied, gently flag it
       alreadyRepliedNote.hidden = !g.responded;
+      updateAttendanceNote(g);
     }
 
-    const MIN_CHARS = 4;
+    // Low threshold: short names ("Bo", "Amy") must be findable. Results are
+    // capped so a two-letter query doesn't become a wall of guests.
+    const MIN_CHARS = 2;
     pickerInput.addEventListener('focus', () => {
       if (pickerInput.value.trim().length >= MIN_CHARS) {
         renderPickerResults(pickerInput.value);
@@ -386,8 +446,19 @@
     pickerInput.addEventListener('input', () => {
       selectedGuest = null;
       nameInput.value = '';
-      if (pickerInput.value.trim().length >= MIN_CHARS) {
+      updateAttendanceNote(null);
+      const q = pickerInput.value.trim();
+      if (q.length >= MIN_CHARS) {
         renderPickerResults(pickerInput.value);
+      } else if (q.length > 0 && GUEST_LIST.length) {
+        pickerList.innerHTML = '';
+        const li = document.createElement('li');
+        li.className = 'picker-empty';
+        li.textContent = 'Keep typing…';
+        pickerList.appendChild(li);
+        pickerList.hidden = false;
+        pickerInput.setAttribute('aria-expanded', 'true');
+        pickerNotFound.hidden = true;
       } else {
         pickerList.hidden = true;
         pickerInput.setAttribute('aria-expanded', 'false');
@@ -551,7 +622,14 @@
     }
     function validate(){
       let firstInvalid = null;
-      const nameOk = !!selectedGuest && nameInput.value.trim().length > 0;
+      let nameOk;
+      if(GUEST_LIST.length === 0){
+        // Free-text mode: the guest list never loaded, so the typed name is the reply.
+        nameOk = pickerInput.value.trim().length >= 2;
+        if(nameOk) nameInput.value = pickerInput.value.trim();
+      } else {
+        nameOk = !!selectedGuest && nameInput.value.trim().length > 0;
+      }
       setError(pickerInput, 'rsvp-name-err', !nameOk);
       if(!nameOk) firstInvalid = firstInvalid || pickerInput;
       const emailOk = emailRe.test(emailInput.value.trim());
@@ -578,6 +656,9 @@
       return {
         submission_id: crypto.randomUUID ? crypto.randomUUID() : String(Date.now()) + '-' + Math.random().toString(16).slice(2),
         name: nameInput.value.trim(),
+        attendance: selectedGuest
+          ? String(selectedGuest.attendance || selectedGuest.Attendance || '').trim()
+          : '',
         email: emailInput.value.trim(),
         attending: declining ? 'Regretfully declines' : 'Joyfully accepts',
         party_size: declining ? '0' : String(1 + (partnerComing ? 1 : 0)),
@@ -596,21 +677,31 @@
         await new Promise(r => setTimeout(r, 700));
         return;
       }
-      // Google Apps Script Web App. no-cors keeps this a simple request from the
-      // browser: the row is appended; a resolved fetch means delivered, a rejected
-      // one means a genuine network failure.
-      await fetch(RSVP_ENDPOINT, { method: 'POST', mode: 'no-cors', body: new URLSearchParams(data) });
+      // Google Apps Script Web App. A CORS-mode POST (URLSearchParams keeps it a
+      // simple request, so there's no preflight, and the /exec response sends
+      // Access-Control-Allow-Origin: *) lets us read the real status: a non-2xx
+      // reply or a failed fetch now surfaces as an error, instead of every
+      // resolved ping being silently treated as delivered.
+      const res = await fetch(RSVP_ENDPOINT, { method: 'POST', body: new URLSearchParams(data) });
+      if(!res.ok) throw new Error('RSVP endpoint replied ' + res.status);
+      await res.text();
     }
     function showSuccess(data){
       form.hidden = true;
       success.hidden = false;
       if(data.attending === 'Regretfully declines'){
         successTitle.textContent = 'Thank you for letting us know.';
-        successMsg.textContent = "We'll miss you on the day — but we're so grateful you replied. With love, Diego & Bethany.";
+        successMsg.textContent = "We'll miss you on the day, but we're so grateful you replied. With love, Diego & Bethany.";
       } else {
         const first = data.name.split(' ')[0] || 'friend';
+        const attendance = normaliseName(data.attendance);
+        const timing = attendance === 'evening only' || attendance === 'evening-only'
+          ? 'the evening'
+          : attendance === 'full day' || attendance === 'full-day'
+            ? 'the full day'
+            : 'the day';
         successTitle.textContent = 'Thank you — your reply is in.';
-        successMsg.textContent = "We can't wait to celebrate with you on 29 April at Southdowns Manor. See you in the garden, " + first + '.';
+        successMsg.textContent = "We can't wait to celebrate with you on 29 April at Southdowns Manor. We look forward to seeing you for " + timing + ', ' + first + '.';
       }
       success.classList.add('in');
       success.focus();
@@ -880,6 +971,7 @@
     var currentIndex = -1;
     var navPrev = null;
     var navNext = null;
+    var lastFocused = null;
 
     // ── Build arrow-nav buttons (injected so the HTML stays clean) ──
     navPrev = document.createElement('button');
@@ -918,6 +1010,8 @@
     function close(){
       lightbox.classList.remove('open');
       document.body.style.overflow = '';
+      // Return focus to the photograph that opened the dialog.
+      if(lastFocused && lastFocused.focus){ lastFocused.focus(); lastFocused = null; }
       // Wait for the fade transition (0.22s) then hide from the DOM.
       clearTimeout(lightbox._closeTimer);
       lightbox._closeTimer = setTimeout(function(){
@@ -933,6 +1027,7 @@
       lightbox.offsetHeight;
       lightbox.classList.add('open');
       document.body.style.overflow = 'hidden';
+      lastFocused = document.activeElement;
       closeButton.focus();
     }
 
@@ -1095,8 +1190,13 @@
       const y = a.y + (b.y - a.y) * blend;
       const scale = a.scale + (b.scale - a.scale) * blend;
 
-      camera.style.transform = `translate3d(${x}%, ${y}%, 0) scale(${scale})`;
-      caption.textContent = stageLabels[activeStage];
+      // Once Leaflet takes over (.leaflet-ready) it owns the caption and the
+      // camera; the SVG system keeps only the story cards in sync, so the
+      // caption no longer flickers between two label formats while scrolling.
+      if(!section.classList.contains('leaflet-ready')){
+        camera.style.transform = `translate3d(${x}%, ${y}%, 0) scale(${scale})`;
+        caption.textContent = stageLabels[activeStage];
+      }
     }
 
     function tick(){
@@ -1161,7 +1261,7 @@
         const target = new Date(DAY.y, DAY.m, DAY.d, 13, 0, 0);
         pill.classList.remove('live');
         pill.innerHTML = now < target
-          ? '<span class="dot"></span>This running order goes live on the day &mdash; it will show you what&rsquo;s happening right now.'
+          ? '<span class="dot"></span>This running order goes live on the day and will show you what&rsquo;s happening right now.'
           : '<span class="dot"></span>What a day that was. Thank you for celebrating with us.';
         return;
       }
@@ -1208,7 +1308,7 @@
       const rows = Array.from(document.querySelectorAll('#schedule .schedule-item')).map(item => {
         const t = item.querySelector('.schedule-time');
         const n = item.querySelector('.schedule-name');
-        return (t ? t.textContent.trim() : '') + ' — ' + (n ? n.textContent.trim() : '');
+        return (t ? t.textContent.trim() : '') + ': ' + (n ? n.textContent.trim() : '');
       });
       const desc = ['Running order (times approximate):', ...rows, '', 'Dress code: Garden Formal.', 'Southdowns Manor, Dumpford Lane, Petersfield GU31 5JN']
         .join('\\n');
@@ -1357,8 +1457,8 @@
           leg = { mins: (km / 62) * 60 * 1.28, miles: km * 0.621371 * 1.22, estimated: true };
         }
         const trainLine = leg.miles > 28
-          ? 'Rather take the train? <strong>Petersfield</strong> is the nearest station &mdash; about 70 minutes from London Waterloo, then a 15-minute taxi to the manor. Pre-book the taxi.'
-          : 'You&rsquo;re close enough that a local taxi is the easiest way home &mdash; worth booking it before the day.';
+          ? 'Rather take the train? <strong>Petersfield</strong> is the nearest station, about 70 minutes from London Waterloo, then a 15-minute taxi to the manor. Pre-book the taxi.'
+          : 'You&rsquo;re close enough that a local taxi is the easiest way home, so book it before the day.';
         say(
           '<p class="journey-from">From <strong>' + from.label + '</strong> to Southdowns Manor</p>' +
           '<div class="journey-stats">' +
@@ -1366,7 +1466,7 @@
             '<div class="journey-stat"><span class="jv">' + Math.round(leg.miles) + '</span><span class="jl">Miles</span></div>' +
             '<div class="journey-stat"><span class="jv">' + pretty(leg.mins + 25) + '</span><span class="jl">Leave-by buffer</span></div>' +
           '</div>' +
-          '<p class="journey-note">Aim to arrive by <strong>12:40 PM</strong> for a 1:30 PM ceremony &mdash; the final country lanes are slow going.' +
+          '<p class="journey-note">Aim to arrive by <strong>12:40 PM</strong> for a 1:30 PM ceremony; the final country lanes are slow going.' +
           (leg.estimated ? ' These figures are an estimate.' : '') + '</p>' +
           '<p class="journey-note">' + trainLine + '</p>' +
           '<a class="ext-link" target="_blank" rel="noopener noreferrer" href="https://www.google.com/maps/dir/?api=1&origin=' +
@@ -1375,7 +1475,7 @@
           'ok'
         );
       } catch (err) {
-        say('We couldn&rsquo;t find that one. Try a UK postcode (like <strong>GU32 3AP</strong>) or a town name &mdash; or just open <a class="ext-link" target="_blank" rel="noopener noreferrer" href="https://www.google.com/maps/dir/?api=1&destination=Southdowns+Manor+GU31+5JN">directions in Google Maps</a>.', 'warn');
+        say('We couldn&rsquo;t find that one. Try a UK postcode (like <strong>GU32 3AP</strong>) or a town name, or just open <a class="ext-link" target="_blank" rel="noopener noreferrer" href="https://www.google.com/maps/dir/?api=1&destination=Southdowns+Manor+GU31+5JN">directions in Google Maps</a>.', 'warn');
       } finally {
         btn.disabled = false;
         btn.classList.remove('is-busy');
@@ -1420,9 +1520,11 @@
     });
   })();
 
-// Leaflet map init
+// Leaflet map init — deferred until #storymap nears the viewport (lazy
+// bootstrapper at the end of this file). Leaflet (~145KB) plus its stylesheet
+// and satellite tiles are only fetched by guests who actually reach the map.
    // Interactive European journey map using Leaflet + satellite imagery.
-  (function initInteractiveJourneyMap(){
+  function initInteractiveJourneyMap(){
     var mapEl = document.getElementById('journeyLeafletMap');
     if(!mapEl || typeof L === 'undefined') return;
 
@@ -1469,9 +1571,9 @@
       plane:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 13.5 21 7l-2.4 4.2-5.1 2.1 1.9 5.3-1.8.7-3.2-4.8-4.7 1.9-2.4-1.1 3.7-2.2L3 13.5Z"/></svg>',
       cruise:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 15h16l-2.5 4H6.5L4 15Z"/><path d="M8 15V9h6l2 6M10 9V6h3v3M3 21c1.3-.8 2.7-.8 4 0 1.3.8 2.7.8 4 0 1.3-.8 2.7-.8 4 0 1.3.8 2.7.8 4 0"/></svg>'
     };
-    vehicleIcons.car = '<img src="Assets/Car%20Icon.png" alt="" aria-hidden="true">';
-    vehicleIcons.plane = '<img src="Assets/Airplane%20icon.png" alt="" aria-hidden="true">';
-    vehicleIcons.cruise = '<img src="Assets/Cruise%20Icon.png" alt="" aria-hidden="true">';
+    vehicleIcons.car = '<img src="Assets/Car%20Icon.webp" alt="" aria-hidden="true">';
+    vehicleIcons.plane = '<img src="Assets/Airplane%20icon.webp" alt="" aria-hidden="true">';
+    vehicleIcons.cruise = '<img src="Assets/Cruise%20Icon.webp" alt="" aria-hidden="true">';
     var vehicleConfigs = [
       { type:'car', label:'By car', segment:0, zoom:6.2 },
       { type:'plane', label:'By plane', segment:1, zoom:4.5 },
@@ -1490,7 +1592,7 @@
       if(index < 0 || index >= places.length || index === activeIndex && !focus) return;
       activeIndex = index;
       var target = places[index];
-      if(focus){ map.flyTo(target.coords, index < 2 ? 5 : 5.5, { duration:.9, easeLinearity:.25 }); }
+      if(focus && !reducedMotion){ map.flyTo(target.coords, index < 2 ? 5 : 5.5, { duration:.9, easeLinearity:.25 }); }
       markers.forEach(function(marker, markerIndex){
         if(markerIndex === index) marker.openTooltip(); else marker.closeTooltip();
       });
@@ -1563,8 +1665,12 @@
       ticking = true;
       requestAnimationFrame(function(){ ticking = false; renderJourneyProgress(sectionProgress()); });
     }
-    window.addEventListener('scroll', requestJourneyRender, { passive:true });
-    window.addEventListener('resize', requestJourneyRender, { passive:true });
+    if(!reducedMotion){
+      // Scroll-driven camera movement is motion; reduced-motion visitors get a
+      // calm static map (the story cards still carry the journey).
+      window.addEventListener('scroll', requestJourneyRender, { passive:true });
+      window.addEventListener('resize', requestJourneyRender, { passive:true });
+    }
     setTimeout(function(){ renderJourneyProgress(sectionProgress()); map.invalidateSize(); }, 120);
 
     var cards = Array.from(document.querySelectorAll('#storymap [data-stage-card]'));
@@ -1576,4 +1682,34 @@
       cards.forEach(function(card){ observer.observe(card, { attributes:true, attributeFilter:['class'] }); });
     }
     window.addEventListener('resize', function(){ map.invalidateSize(); }, { passive:true });
+  }
+
+  // Lazy bootstrapper: load Leaflet's CSS + JS only when the story map approaches
+  // the viewport. If it never loads (offline), the illustrated SVG map remains —
+  // it is the default and needs no dependency.
+  (function(){
+    var section = document.getElementById('storymap');
+    if(!section) return;
+    var booted = false;
+    function boot(){
+      if(booted) return;
+      booted = true;
+      var css = document.createElement('link');
+      css.rel = 'stylesheet';
+      css.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
+      document.head.appendChild(css);
+      var s = document.createElement('script');
+      s.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
+      s.onload = function(){ try { initInteractiveJourneyMap(); } catch(e){ /* keep the SVG map */ } };
+      s.onerror = function(){ /* offline: keep the SVG map */ };
+      document.body.appendChild(s);
+    }
+    if('IntersectionObserver' in window){
+      var io = new IntersectionObserver(function(entries){
+        if(entries.some(function(e){ return e.isIntersecting; })){ io.disconnect(); boot(); }
+      }, { rootMargin: '600px 0px' });
+      io.observe(section);
+    } else {
+      boot();
+    }
   })();
