@@ -306,7 +306,7 @@
       } else if(attendance === 'evening only' || attendance === 'evening-only'){
         message = 'We look forward to welcoming you for the evening from 7 PM.';
       } else if(attendance === 'day before' || attendance === 'day-before'){
-        message = 'We look forward to welcoming you on 28 April, the day before the wedding.';
+        message = 'We look forward to welcoming you on the 28 of April, the day before the wedding.';
       }
       attendanceNote.textContent = message;
       attendanceNote.hidden = !message;
