@@ -1909,6 +1909,7 @@
   .rsvp-form{ display:grid; gap: 22px; max-width: 620px; margin: 0 auto; }
   .rsvp-form[hidden]{ display:none; }
   .field{ display:flex; flex-direction:column; gap: 7px; min-width:0; }
+  .field[hidden]{ display:none; }
   .field > label, .attend > legend{
     font-family: var(--font-sans); font-size: 0.8rem; letter-spacing: 0.06em;
     text-transform: uppercase; color: var(--ink); font-weight: 500; padding: 0;
