@@ -13,12 +13,12 @@
 <meta name="twitter:title" content="Diego &amp; Bethany — 29 April 2027">
 <meta name="twitter:description" content="Join us at Southdowns Manor to celebrate the day together.">
 <meta name="twitter:image" content="Assets/Hero-Background.webp">
-<link rel="icon" href="assets/Logo.png" type="image/png">
+<link rel="icon" href="Assets/Logo.png" type="image/png">
 <title>Diego &amp; Bethany — 29 April 2027</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Noto+Serif+Display:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500;1,600&display=swap">
-<link rel="preload" as="image" href="assets/Hero-Background.png" fetchpriority="high">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Noto+Serif+Display:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap">
+<link rel="preload" as="image" href="Assets/Hero-Background.webp" fetchpriority="high">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" media="print" onload="this.onload=null;this.media='all'">
 <noscript><link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"></noscript>
 <link rel="stylesheet" href="styles.css">
@@ -64,11 +64,10 @@
 <div class="scroll-progress" aria-hidden="true"></div>
 <div class="paper-grain" aria-hidden="true"></div>
 
-<!-- Overdrive scroll (A+C): garden-light wash, drifting petals, and a botanical
-     spine that draws down the page. All decorative + aria-hidden; progressive
-     enhancement gated on motion (see the overdrive CSS + the petals script). -->
+<!-- Overdrive scroll: a static garden-light wash and a botanical spine that
+     draws down the page. All decorative + aria-hidden; progressive enhancement
+     gated on motion (see the overdrive CSS). -->
 <div class="garden-light" aria-hidden="true"></div>
-<canvas class="petal-field" id="petalField" aria-hidden="true"></canvas>
 <div class="vine" aria-hidden="true">
   <div class="vine-reveal">
     <div class="vine-content">
@@ -271,7 +270,7 @@
 
 <nav id="nav">
   <a href="#top" class="nav-mark">
-    <img src="assets/Logo.png" alt="Logo">
+    <img src="Assets/Logo.png" alt="Logo">
   </a>
   <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="navLinks">&#9776;</button>
   <ul class="nav-links" id="navLinks">
@@ -289,11 +288,10 @@
 <!-- HERO -->
 <header class="hero" id="top">
   <div class="hero-stage">
-    <img class="hero-img hero-layer" src="assets/Hero-Background.png" width="1024" height="1024"
+    <img class="hero-img hero-layer" src="Assets/Hero-Background.webp" width="1024" height="1024"
          fetchpriority="high" decoding="async"
          alt="Diego and Bethany kissing in a sunlit spring woodland.">
   </div>
-  <div class="hero-sheen" aria-hidden="true"></div>
   <div class="hero-scrim" aria-hidden="true"></div>
   <div class="hero-frame" aria-hidden="true"></div>
 
@@ -337,7 +335,7 @@
         </ol>
       </div>
       <div class="story-visual reveal">
-        <img src="assets/Vinyard.png" width="1024" height="1024" loading="lazy" decoding="async"
+        <img src="Assets/Vinyard.webp" width="1024" height="1024" loading="lazy" decoding="async"
              alt="Watercolour of Southdowns Manor and its spring gardens in full bloom.">
       </div>
     </div>
@@ -500,7 +498,7 @@
         </div>
 
         <article class="journey-stage-card is-active" data-stage-card="0">
-          <img class="journey-stage-image" src="assets/Swansea.png" alt="Aerial view of Swansea Bay and the city coastline" loading="lazy" decoding="async">
+          <img class="journey-stage-image" src="Assets/Swansea.webp" alt="Aerial view of Swansea Bay and the city coastline" loading="lazy" decoding="async">
           <span class="journey-stage-kicker" data-n="01">Where it begins</span>
           <h3>Swansea</h3>
           <p>It all began in Swansea, where two university students crossed paths, and somehow everything changed. Neither of us knew it yet, but this was the start of forever.</p>
@@ -508,7 +506,7 @@
         </article>
 
         <article class="journey-stage-card" data-stage-card="1">
-          <img class="journey-stage-image" src="assets/Southampton.jpg" alt="Southampton harbour with boats" loading="lazy" decoding="async">
+          <img class="journey-stage-image" src="Assets/Southampton.webp" alt="Southampton harbour with boats" loading="lazy" decoding="async">
           <span class="journey-stage-kicker" data-n="02">The next chapter</span>
           <h3>Southampton</h3>
           <p>Hand in hand, we packed up our old lives and built a new one together in Southampton: our first home, our first jobs, our first taste of real life as a team.</p>
@@ -516,7 +514,7 @@
         </article>
 
         <article class="journey-stage-card" data-stage-card="2">
-          <img class="journey-stage-image" src="assets/Reykjav%C3%ADk.jpg" alt="A colourful street in Reykjavik, Iceland" loading="lazy" decoding="async">
+          <img class="journey-stage-image" src="Assets/Reykjav%C3%ADk.webp" alt="A colourful street in Reykjavik, Iceland" loading="lazy" decoding="async">
           <span class="journey-stage-kicker" data-n="03">Across the Atlantic</span>
           <h3>Iceland</h3>
           <p>Chasing the Northern Lights and open seas, we set sail on our very first cruise together, an adventure to Iceland that reminded us just how much fun it is to explore the world side by side.</p>
@@ -524,7 +522,7 @@
         </article>
 
         <article class="journey-stage-card" data-stage-card="3">
-          <img class="journey-stage-image" src="assets/Geiranger.jpg" alt="Norwayfjord between steep green mountains" loading="lazy" decoding="async">
+          <img class="journey-stage-image" src="Assets/Geiranger.webp" alt="Norwayfjord between steep green mountains" loading="lazy" decoding="async">
           <span class="journey-stage-kicker" data-n="04">And finally</span>
           <h3>Norway</h3>
           <p>Beneath the towering fjords of Geiranger, surrounded by some of the most breathtaking scenery on earth, Diego got down on one knee &#8212; and Beth said yes. A moment we'll treasure forever, in a place as beautiful as our story.</p>
@@ -556,8 +554,8 @@
 
     <div class="schedule reveal" id="schedule">
       <span class="day-light" aria-hidden="true"></span>
-      <div class="schedule-item" data-start="780">
-        <div class="schedule-time">1:00 PM</div>
+      <div class="schedule-item" data-start="720">
+        <div class="schedule-time">12:00 PM</div>
         <div><div class="schedule-name">Guests Arrive</div><div class="schedule-desc">Please arrive from this time to find your seat and settle in before the ceremony begins</div><span class="now-tag" aria-hidden="true">Happening now</span></div>
       </div>
       <div class="schedule-item" data-start="810">
@@ -598,7 +596,7 @@
         <p class="venue-loc">One setting for the whole celebration: ceremony, wedding breakfast and evening reception.</p>
       </div>
       <figure class="venue-photo">
-        <img src="assets/southdowns-manor.jpg" width="1024" height="1024" loading="lazy" decoding="async"
+        <img src="Assets/southdowns-manor.webp" width="1024" height="1024" loading="lazy" decoding="async"
              alt="Watercolour of Southdowns Manor and its spring gardens in bloom, the countryside house where Diego and Bethany will marry.">
       </figure>
     </div>
@@ -628,7 +626,7 @@
     </div>
     <figure class="dress-visual" data-dr>
       <div class="dress-frame">
-        <img src="assets/Dress%20Code.png" width="1536" height="1024" loading="lazy" decoding="async"
+        <img src="Assets/Dress%20Code.webp" width="1536" height="1024" loading="lazy" decoding="async"
              alt="Illustrated Garden Formal dress-code guide. For women: elegant florals, soft fabrics, floral prints and playful colours. For men: light suits or smart separates in soft neutrals, pastels or earthy tones. Rows of guests in garden-formal outfits framed by watercolour flowers and foliage.">
       </div>
       <figcaption class="dress-cap">A little inspiration for the day.</figcaption>
@@ -883,25 +881,25 @@
     <div class="gallery-wall reveal" aria-label="A few of our favourite moments">
       <figure class="gw-item gw-item--a" role="button" tabindex="0" aria-label="Open Our Story photograph">
         <div class="matte">
-          <img src="assets/Shadow-Photo.png" alt="Our story" loading="lazy" decoding="async">
+          <img src="Assets/Shadow-Photo.webp" alt="Our story" loading="lazy" decoding="async">
         </div>
         <figcaption>Our Story</figcaption>
       </figure>
       <figure class="gw-item gw-item--b" role="button" tabindex="0" aria-label="Open The Proposal photograph">
         <div class="matte">
-          <img src="assets/Proposal.png" alt="The proposal" loading="lazy" decoding="async">
+          <img src="Assets/Proposal.webp" alt="The proposal" loading="lazy" decoding="async">
         </div>
         <figcaption>The Proposal</figcaption>
       </figure>
       <figure class="gw-item gw-item--c" role="button" tabindex="0" aria-label="Open Together photograph">
         <div class="matte">
-          <img src="assets/Vinyard.png" alt="Together" loading="lazy" decoding="async">
+          <img src="Assets/Vinyard.webp" alt="Together" loading="lazy" decoding="async">
         </div>
         <figcaption>Together</figcaption>
       </figure>
       <figure class="gw-item gw-item--d" role="button" tabindex="0" aria-label="Open Fjords photograph">
         <div class="matte">
-          <img src="assets/Waterfall.png" alt="The fjords" loading="lazy" decoding="async">
+          <img src="Assets/Waterfall.webp" alt="The fjords" loading="lazy" decoding="async">
         </div>
         <figcaption>Fjords</figcaption>
       </figure>
@@ -1064,7 +1062,6 @@
             <ul class="guest-picker-list" id="guest-picker-list" role="listbox" hidden></ul>
           </div>
           <p class="field-hint" id="guest-picker-hint">Start typing your name and we'll do the rest.</p>
-          <p class="field-note attendance-note" id="guest-attendance-note" role="status" aria-live="polite" hidden></p>
           <p class="field-err" id="rsvp-name-err" hidden>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v5"/><path d="M12 16h.01"/></svg>
             <span>Please pick your name from the list.</span>
@@ -1080,6 +1077,8 @@
           <p class="field-err" id="rsvp-email-err" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v5"/><path d="M12 16h.01"/></svg><span>Please add a valid email so we can confirm.</span></p>
         </div>
       </div>
+
+      <p class="field-note attendance-note" id="guest-attendance-note" role="status" aria-live="polite" hidden></p>
 
       <fieldset class="field attend">
         <legend>Will you be joining us?</legend>
@@ -1204,6 +1203,5 @@
 <script src="scripts.js"></script>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <!-- impeccable-live-start -->
-<script src="http://localhost:8400/live.js"></script>
 </body>
 </html>

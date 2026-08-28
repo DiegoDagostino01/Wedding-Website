@@ -121,97 +121,28 @@
   updateCountdown();
   cdTimer = setInterval(updateCountdown, 1000);
 
-  // Scroll reveal — progressive enhancement (see the html.js-reveal gate in <head>).
-  // Content is visible by default; only animate when JS + motion opted in, and a failsafe
-  // guarantees nothing stays hidden on headless renderers, background tabs, or no-scroll views.
-  const revealEls = Array.from(document.querySelectorAll('.reveal'));
-  if (revealEls.length && document.documentElement.classList.contains('js-reveal')) {
+  // Scroll reveal — ONE system for the whole page. Content is visible by default;
+  // elements animate in only when JS + motion allow, and a failsafe guarantees
+  // nothing stays hidden on headless renderers, background tabs, or no-scroll views.
+  if ('IntersectionObserver' in window &&
+      !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const sectionEls = Array.from(document.querySelectorAll('[data-tr], [data-dr], [data-hm], [data-faq], [data-rv]'));
+    sectionEls.forEach(el => { const s = el.closest('section'); if (s) s.classList.add('js-reveal'); });
+    const rootGated = document.documentElement.classList.contains('js-reveal')
+      ? Array.from(document.querySelectorAll('.reveal'))
+      : [];
+    const revealEls = rootGated.concat(sectionEls);
     const reveal = el => el.classList.add('in');
     const io = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
-        if(entry.isIntersecting){ reveal(entry.target); io.unobserve(entry.target); }
+        if (entry.isIntersecting) { reveal(entry.target); io.unobserve(entry.target); }
       });
-    }, { threshold: 0.15 });
+    }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
     revealEls.forEach(el => io.observe(el));
     // Failsafe: headless renderers, background tabs, or a no-scroll view must never see blank content
     const revealAll = () => revealEls.forEach(reveal);
     window.addEventListener('load', () => setTimeout(revealAll, 1000), { once: true });
     setTimeout(revealAll, 2600);
-  }
-
-  // Travel — safe scroll reveal (content is visible by default; animate only when JS + motion allow, and never stays hidden)
-  const travelSection = document.getElementById('travel');
-  if (travelSection && 'IntersectionObserver' in window &&
-      !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    const trEls = Array.from(travelSection.querySelectorAll('[data-tr]'));
-    travelSection.classList.add('js-reveal');
-    const reveal = el => el.classList.add('in');
-    const trObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) { reveal(entry.target); trObserver.unobserve(entry.target); }
-      });
-    }, { threshold: 0.1, rootMargin: '0px 0px -6% 0px' });
-    trEls.forEach(el => trObserver.observe(el));
-    // Failsafe: headless renderers, background tabs, or a no-scroll view must never see blank content
-    const revealAll = () => trEls.forEach(reveal);
-    window.addEventListener('load', () => setTimeout(revealAll, 1000), { once: true });
-    setTimeout(revealAll, 2600);
-  }
-
-  // Dress code — safe scroll reveal (visible by default; animate only when JS + motion allow)
-  const dressSection = document.getElementById('dress');
-  if (dressSection && 'IntersectionObserver' in window &&
-      !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    const drEls = Array.from(dressSection.querySelectorAll('[data-dr]'));
-    dressSection.classList.add('js-reveal');
-    const revealDr = el => el.classList.add('in');
-    const drObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) { revealDr(entry.target); drObserver.unobserve(entry.target); }
-      });
-    }, { threshold: 0.1, rootMargin: '0px 0px -6% 0px' });
-    drEls.forEach(el => drObserver.observe(el));
-    // Failsafe: headless renderers, background tabs, or a no-scroll view must never see blank content
-    const revealAllDr = () => drEls.forEach(revealDr);
-    window.addEventListener('load', () => setTimeout(revealAllDr, 1000), { once: true });
-    setTimeout(revealAllDr, 2600);
-  }
-
-  // Honeymoon — safe scroll reveal
-  const honeymoonSection = document.getElementById('honeymoon');
-  if (honeymoonSection && 'IntersectionObserver' in window &&
-      !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    const hmEls = Array.from(honeymoonSection.querySelectorAll('[data-hm]'));
-    honeymoonSection.classList.add('js-reveal');
-    const revealHm = el => el.classList.add('in');
-    const hmObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) { revealHm(entry.target); hmObserver.unobserve(entry.target); }
-      });
-    }, { threshold: 0.1, rootMargin: '0px 0px -6% 0px' });
-    hmEls.forEach(el => hmObserver.observe(el));
-    const revealAllHm = () => hmEls.forEach(revealHm);
-    window.addEventListener('load', () => setTimeout(revealAllHm, 1000), { once: true });
-    setTimeout(revealAllHm, 2600);
-  }
-
-  // FAQ — safe scroll reveal
-  const faqSection = document.getElementById('faq');
-  if (faqSection && 'IntersectionObserver' in window &&
-      !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    const faqEls = Array.from(faqSection.querySelectorAll('[data-faq]'));
-    faqSection.classList.add('js-reveal');
-    const revealFaq = el => el.classList.add('in');
-    const faqObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) { revealFaq(entry.target); faqObserver.unobserve(entry.target); }
-      });
-    }, { threshold: 0.1, rootMargin: '0px 0px -6% 0px' });
-    faqEls.forEach(el => faqObserver.observe(el));
-
-    const revealAllFaq = () => faqEls.forEach(revealFaq);
-    window.addEventListener('load', () => setTimeout(revealAllFaq, 1000), { once: true });
-    setTimeout(revealAllFaq, 2600);
   }
 
   // Travel — copy the venue postcode
@@ -285,26 +216,15 @@
     const deadlineNote = document.getElementById('deadlinePassed');
     if(deadlineNote && new Date() > new Date('2027-02-28T23:59:59')) deadlineNote.hidden = false;
 
-    // ── Safe scroll reveal (content visible by default; never ships blank) ──
-    const motionOK = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if('IntersectionObserver' in window && motionOK){
-      const section = document.getElementById('rsvp');
-      const items = Array.from(section.querySelectorAll('[data-rv]'));
-      section.classList.add('js-reveal');
-      const show = el => el.classList.add('in');
-      const obs = new IntersectionObserver((entries) => {
-        entries.forEach(e => { if(e.isIntersecting){ show(e.target); obs.unobserve(e.target); } });
-      }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
-      items.forEach(el => obs.observe(el));
-      window.addEventListener('load', () => setTimeout(() => items.forEach(show), 1000), { once:true });
-      setTimeout(() => items.forEach(show), 2600);
-    }
+    // (RSVP items reveal via the single page-wide scroll-reveal system.)
 
     // ── Attending: collapse party details on decline ──
     function isDeclining(){
       const sel = form.querySelector('input[name="attending"]:checked');
       return !!sel && sel.value === 'Regretfully declines';
     }
+    // Shown in place of the welcome note whenever the guest declines.
+    const FAREWELL_NOTE = 'We\u2019re sorry you won\u2019t be able to join us. Your presence will be missed.';
     function syncAttendance(){
       const declining = isDeclining();
       party.classList.toggle('collapsed', declining);
@@ -323,6 +243,13 @@
         // Free-text mode: party size is unknown — don't presume "invitation for one".
         partnerField.hidden = true;
         soloNote.hidden = true;
+      }
+      // A welcome never outlives a regret: on decline the note becomes a
+      // farewell; switching back restores the welcome.
+      if(selectedGuest || declining){
+        updateAttendanceNote(selectedGuest);
+      } else {
+        attendanceNote.hidden = true;
       }
     }
 
@@ -365,12 +292,21 @@
     // sheet text directly in the page.
     function updateAttendanceNote(g){
       if(!attendanceNote) return;
+      // A decline always answers with the farewell, whatever else is happening
+      // in the picker (picking, clearing, free text).
+      if(isDeclining()){
+        attendanceNote.textContent = FAREWELL_NOTE;
+        attendanceNote.hidden = false;
+        return;
+      }
       const attendance = normaliseName(g && (g.attendance || g.Attendance));
       let message = '';
       if(attendance === 'full day' || attendance === 'full-day'){
-        message = 'Your invitation is for the full day. We look forward to seeing you then.';
+        message = 'We look forward to welcoming you for the day from 12 PM.';
       } else if(attendance === 'evening only' || attendance === 'evening-only'){
-        message = 'Your invitation is for the evening only. We look forward to seeing you then.';
+        message = 'We look forward to welcoming you for the evening from 7 PM.';
+      } else if(attendance === 'day before' || attendance === 'day-before'){
+        message = 'We look forward to welcoming you on 28 April, the day before the wedding.';
       }
       attendanceNote.textContent = message;
       attendanceNote.hidden = !message;
@@ -707,7 +643,9 @@
           ? 'the evening'
           : attendance === 'full day' || attendance === 'full-day'
             ? 'the full day'
-            : 'the day';
+            : attendance === 'day before' || attendance === 'day-before'
+              ? 'the whole celebration from the 28th'
+              : 'the day';
         successTitle.textContent = 'Thank you — your reply is in.';
         successMsg.textContent = "We can't wait to celebrate with you on 29 April at Southdowns Manor. We look forward to seeing you for " + timing + ', ' + first + '.';
       }
@@ -741,77 +679,6 @@
   })();
 
 // RSVP form
-  // Overdrive scroll (C) — drifting petal field. Atmospheric depth rendered on a
-  // canvas, gated on the same JS + IntersectionObserver + motion signal as the
-  // reveals (html.js-reveal). Never runs for reduced-motion or no-JS visitors,
-  // pauses when the tab is hidden, and stays pointer-events:none behind the nav.
-  (function initPetals(){
-    var root = document.documentElement;
-    if(!root.classList.contains('js-reveal')) return;
-    var canvas = document.getElementById('petalField');
-    if(!canvas || !canvas.getContext) return;
-    var ctx = canvas.getContext('2d');
-    var petals = [], W = 0, H = 0, running = false, raf = 0, last = 0;
-    var dpr = Math.min(window.devicePixelRatio || 1, 2);
-    // Spring palette — powder/slate blues, a fresh green, and pale sky, to match the
-    // re-themed accents and the flowering vine (previously stale warm tones).
-    var COLORS = ['167,199,234', '201,220,241', '123,160,212', '154,196,124', '239,246,250'];
-    function rnd(a, b){ return a + Math.random() * (b - a); }
-    function resize(){
-      W = canvas.clientWidth; H = canvas.clientHeight;
-      canvas.width = Math.max(1, Math.floor(W * dpr));
-      canvas.height = Math.max(1, Math.floor(H * dpr));
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    }
-    function makePetal(fromBottom){
-      var depth = Math.random();                 // 0 far … 1 near
-      var r = rnd(4, 9) * (0.7 + depth);
-      return {
-        x: rnd(0, W), y: fromBottom ? H + rnd(10, 90) : rnd(0, H),
-        r: r, vy: -(rnd(7, 15) * (0.5 + depth)),
-        sway: rnd(6, 16) * (0.5 + depth), phase: rnd(0, Math.PI * 2),
-        swaySpeed: rnd(0.3, 0.8), rot: rnd(0, Math.PI * 2), vr: rnd(-0.6, 0.6),
-        alpha: 0.08 + depth * 0.20, color: COLORS[(Math.random() * COLORS.length) | 0]
-      };
-    }
-    function seed(){
-      petals = [];
-      var count = Math.round(Math.min(28, Math.max(12, W / 78)));
-      for(var i = 0; i < count; i++) petals.push(makePetal(false));
-    }
-    function frame(t){
-      if(!running) return;
-      var dt = last ? Math.min((t - last) / 1000, 0.05) : 0.016; last = t;
-      ctx.clearRect(0, 0, W, H);
-      for(var i = 0; i < petals.length; i++){
-        var p = petals[i];
-        p.y += p.vy * dt;
-        p.phase += p.swaySpeed * dt;
-        p.x += Math.sin(p.phase) * p.sway * dt;
-        p.rot += p.vr * dt;
-        if(p.y < -24){ petals[i] = makePetal(true); continue; }
-        ctx.save();
-        ctx.translate(p.x, p.y); ctx.rotate(p.rot);
-        ctx.globalAlpha = p.alpha; ctx.fillStyle = 'rgba(' + p.color + ',1)';
-        ctx.beginPath();
-        ctx.moveTo(0, -p.r);
-        ctx.quadraticCurveTo(p.r * 0.85, 0, 0, p.r);
-        ctx.quadraticCurveTo(-p.r * 0.85, 0, 0, -p.r);
-        ctx.fill();
-        ctx.restore();
-      }
-      raf = requestAnimationFrame(frame);
-    }
-    function start(){ if(running) return; running = true; last = 0; raf = requestAnimationFrame(frame); }
-    function stop(){ running = false; if(raf) cancelAnimationFrame(raf); raf = 0; }
-    resize(); seed(); canvas.classList.add('on'); start();
-    var rto;
-    window.addEventListener('resize', function(){
-      clearTimeout(rto); rto = setTimeout(function(){ resize(); seed(); }, 200);
-    }, { passive: true });
-    document.addEventListener('visibilitychange', function(){ document.hidden ? stop() : start(); });
-  })();
-
 // Dietary select
   // Vine — JS-driven scroll animation (replaces CSS scroll-driven animation which
   // has an inverted range bug on position:fixed full-viewport elements in Chromium).
@@ -965,7 +832,7 @@
     animate();
   })();
 
-// Vine, petals, invitation veil, gallery lightbox, journey map, journey planner, ICS calendar
+// Vine, invitation veil, gallery lightbox, journey map, journey planner, ICS calendar
   // Gallery lightbox: guests pause on one photograph without leaving the page.
   // Arrow keys navigate between photos; focus-trap inside the dialog; fade+scale transition.
   (function initGalleryLightbox(){

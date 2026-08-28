@@ -340,54 +340,19 @@
     .hero-sub{ opacity:0; animation: rise 1s var(--ease) 0.5s forwards; }
     .countdown{ opacity:0; animation: rise 1s var(--ease) 0.68s forwards; }
     .scroll-cue{ opacity:0; animation: rise 1s var(--ease) 1s forwards; }
-    .hero-stage{ animation: heroDrift 32s ease-in-out 0.6s infinite alternate; }
   }
-  @keyframes heroDrift{ from{ transform: scale(1.03); } to{ transform: scale(1.11) translateY(-1.8%); } }
 
-  /* ---------- Cinematic hero — cross-dissolving plates + a slow light sweep ----------
-     The stage carries the drift/parallax transform; the layers only fade, so the two
-     never fight each other. Layer 1 is the load-bearing image: it is fully opaque and
-     visible with no JS, no animation, and no motion preference. */
+  /* ---------- Hero stage ----------
+     Layer 1 is the load-bearing image: fully opaque and visible with no JS and
+     no motion preference. The stage holds a gentle static crop. */
   .hero-stage{
     position: absolute; inset: 0; z-index: 0;
     transform: scale(1.03);
-    will-change: transform;
-  }
-  .hero-layer{
+  }  .hero-layer{
     position: absolute; inset: 0;
     width: 100%; height: 100%; object-fit: cover; object-position: 59% 50%;
     transform: none;
   }
-  .hero-layer--2, .hero-layer--3{ opacity: 0; }
-  .hero-layer--2{ object-position: 50% 54%; }
-  .hero-layer--3{ object-position: 50% 40%; }
-
-  @media (prefers-reduced-motion: no-preference){
-    /* 30s cycle, three plates, long luxurious dissolves */
-    .hero-layer{ animation: heroCross 30s linear infinite; }
-    .hero-layer--2{ animation-delay: 10s; }
-    .hero-layer--3{ animation-delay: 20s; }
-  }
-  /* Each plate holds for ~7s, dissolves over ~3s, then waits out the other two */
-  @keyframes heroCross{
-    0%   { opacity: 1; }
-    30%  { opacity: 1; }
-    39%  { opacity: 0; }
-    94%  { opacity: 0; }
-    100% { opacity: 1; }
-  }
-  /* Layer 1 must never blink out entirely — it underpins the stack */
-  @media (prefers-reduced-motion: no-preference){
-    .hero-layer:first-child{ animation-name: heroCrossBase; }
-  }
-  @keyframes heroCrossBase{
-    0%   { opacity: 1; }
-    30%  { opacity: 1; }
-    39%  { opacity: 0.001; }
-    94%  { opacity: 0.001; }
-    100% { opacity: 1; }
-  }
-
   /* A soft raking light that travels across the frame — the "film" note */
   /* Single-asset hero: keep Hero-Background.png fully visible. */
   .hero-layer,
@@ -400,21 +365,6 @@
   @media (max-width: 640px){
     .hero-img,
     .hero-layer{ object-position: 59% 50%; }
-  }
-
-  .hero-sheen{
-    position: absolute; inset: 0; z-index: 1; pointer-events: none; opacity: 0;
-    background: linear-gradient(104deg, transparent 34%, rgba(255,255,255,0.34) 47%, rgba(255,244,226,0.20) 54%, transparent 68%);
-    mix-blend-mode: screen;
-  }
-  @media (prefers-reduced-motion: no-preference){
-    .hero-sheen{ animation: heroSheen 15s ease-in-out 2.4s infinite; }
-  }
-  @keyframes heroSheen{
-    0%   { opacity: 0; transform: translate3d(-42%, 0, 0); }
-    12%  { opacity: 0.9; }
-    38%  { opacity: 0; transform: translate3d(42%, 0, 0); }
-    100% { opacity: 0; transform: translate3d(42%, 0, 0); }
   }
 
   /* ============================================================
@@ -539,10 +489,6 @@
   .journey-marker.is-visible{
     opacity:1;
     transform:scale(1);
-  }
-
-  .journey-marker.is-active .marker-halo{
-    animation:journeyHalo 2.2s ease-in-out infinite;
   }
 
   .marker-halo{
@@ -773,10 +719,6 @@
     margin:.35rem 0;
   }
 
-  @keyframes journeyHalo{
-    0%,100%{opacity:.7; transform:scale(1);}
-    50%{opacity:1; transform:scale(1.08);}
-  }
 
   @media (max-width: 900px){
     .journey-map-layout{
@@ -989,21 +931,6 @@
     display: flex; flex-direction: column; align-items: flex-start; gap: 12px;
   }
   .journey-share{ font-size: 0.9rem; color: var(--ink-soft); margin: 0; }
-
-  @supports (animation-timeline: view()){
-    @media (prefers-reduced-motion: no-preference){
-      /* The day's light travels as the running order scrolls past */
-      .day-light{
-        animation: dayLight linear both;
-        animation-timeline: view();
-        animation-range: entry 10% exit 90%;
-      }
-    }
-  }
-  @keyframes dayLight{
-    from{ opacity: 0.28; background-position: 0% 0%; filter: saturate(0.85); }
-    to{ opacity: 0.7; background-position: 0% 100%; filter: saturate(1.15); }
-  }
 
   /* ---------- Sections ---------- */
   /* Tighter, fluid vertical rhythm — enough air for a wedding page, without the
@@ -2021,16 +1948,18 @@
     line-height: 1.5;
   }
   .attendance-note{
-    margin-top: 10px;
-    padding: 11px 13px;
-    border: 1px solid rgba(44,83,39,0.38);
-    border-left: 4px solid var(--forest);
-    border-radius: 8px;
-    background: rgba(255,255,255,0.58);
-    color: var(--forest);
-    font-size: 0.94rem;
-    font-weight: 600;
-    line-height: 1.45;
+    margin-top: -8px;
+    padding: 12px 18px;
+    border: 1px solid rgba(69,112,58,0.22);
+    border-radius: 10px;
+    background: rgba(154,196,124,0.12);
+    color: var(--ink);
+    font-family: var(--font-accent);
+    font-style: italic;
+    font-size: 1.12rem;
+    font-weight: 400;
+    line-height: 1.5;
+    letter-spacing: 0.005em;
   }
   .field-note[hidden]{ display: none; }
   .field-note a{ color: var(--terracotta); text-underline-offset: 2px; }
@@ -2398,43 +2327,15 @@
         animation: progressGrow linear both;
         animation-timeline: scroll(root block);
       }
-      /* Hero image parallaxes with scroll — supersedes the idle drift above */
-      .hero-stage{
-        animation: heroParallax linear both;
-        animation-timeline: scroll(root block);
-        animation-range: 0 100vh;
-      }
-      /* Hero content lifts and softens as it scrolls away */
-      .hero-content{
-        animation: heroLift linear both;
-        animation-timeline: scroll(root block);
-        animation-range: 0 80vh;
-      }
     }
   }
 
-  @supports (animation-timeline: view()){
-    @media (prefers-reduced-motion: no-preference){
-      /* Botanical sprigs bloom into place as each divider scrolls in */
-      .divider .sprig{
-        animation: sprigBloom linear both;
-        animation-timeline: view();
-        animation-range: entry 8% cover 34%;
-      }
-    }
-  }
 
   @keyframes progressGrow{ from{ transform: scaleX(0); } to{ transform: scaleX(1); } }
-  @keyframes heroParallax{ from{ transform: scale(1.05); } to{ transform: scale(1.16) translateY(6%); } }
-  @keyframes heroLift{ from{ opacity: 1; transform: translateY(0); } to{ opacity: 0.15; transform: translateY(-48px); } }
-  @keyframes sprigBloom{
-    from{ opacity: 0; transform: translateY(18px) scale(0.62) rotate(-5deg); }
-    to{ opacity: 0.85; transform: none; }
-  }
 
   /* ============================================================
-     Overdrive scroll — A (living botanical spine) + C (garden light
-     & drifting petals). Progressive enhancement only: effects turn on
+     Overdrive scroll — the living botanical spine + the garden light
+     wash. Progressive enhancement only: effects turn on
      where scroll/view timelines exist AND motion is welcome, and fall
      back to a calm static state otherwise. Purely decorative — every
      element is aria-hidden and pointer-events:none, so nothing here
@@ -2449,46 +2350,10 @@
       radial-gradient(44% 26% at 74% 15%, rgba(128,163,194,0.5), transparent 66%),
       radial-gradient(40% 24% at 20% 72%, rgba(154,196,124,0.42), transparent 70%);
   }
-  @supports (animation-timeline: scroll()){
-    @media (prefers-reduced-motion: no-preference){
-      .garden-light{ animation: gardenRake linear both; animation-timeline: scroll(root block); }
-    }
-  }
-  @keyframes gardenRake{
-    from{ transform: translate3d(0, -7vh, 0); opacity: 0.38; }
-    50% { opacity: 0.62; }
-    to  { transform: translate3d(0, 13vh, 0); opacity: 0.5; }
-  }
 
-  /* ---- C · drifting petal field (canvas; JS-gated, see the petals script) ---- */
-  .petal-field{
-    position: fixed; inset: 0; z-index: 93; pointer-events: none;
-    width: 100%; height: 100%; opacity: 0; transition: opacity 1.4s var(--ease);
-  }
-  .petal-field.on{ opacity: 1; }
-
-  /* ---- C · richer divider bloom: a soft glow blooms with each sprig ---- */
+  /* ---- Divider ---- */
   .divider{ position: relative; }
   .divider .sprig{ position: relative; z-index: 1; }
-  .divider::before{
-    content: ''; position: absolute; left: 50%; top: 50%; z-index: 0;
-    width: 260px; height: 150px; pointer-events: none; opacity: 0;
-    transform: translate(-50%, -50%) scale(0.5);
-    background: radial-gradient(closest-side, rgba(154,196,124,0.30), transparent 72%);
-  }
-  #rsvp .divider::before{ background: radial-gradient(closest-side, rgba(128,163,194,0.30), transparent 74%); }
-  @supports (animation-timeline: view()){
-    @media (prefers-reduced-motion: no-preference){
-      .divider::before{
-        animation: dividerGlow linear both; animation-timeline: view();
-        animation-range: entry 4% cover 42%;
-      }
-    }
-  }
-  @keyframes dividerGlow{
-    from{ opacity: 0; transform: translate(-50%, -50%) scale(0.45); }
-    to  { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-  }
 
   /* ---- A · living botanical spine: a vine that draws down the left gutter and
      sprouts a cottage-garden of flowers as you scroll ---- */
@@ -2760,7 +2625,7 @@
   .journey-map-label{ display:grid; grid-template-columns:auto 1fr; align-items:center; gap:7px 10px; min-width:190px; padding:11px 15px; border:0; border-radius:9px; background:#fff; color:#20242a; font-family:var(--font-sans); font-size:10px; letter-spacing:.12em; text-transform:uppercase; text-align:left; box-shadow:0 15px 32px rgba(3,18,34,.25); transform:rotate(-1.4deg); }
   .journey-map-label::before{ display:none; }
   .journey-map-label-flag{ grid-row:span 2; font-size:27px; line-height:1; filter:saturate(1.15); }
-  .journey-map-label strong{ display:block; font-family:var(--font-sans); font-size:15px; line-height:1.05; letter-spacing:.04em; text-transform:uppercase; font-weight:800; }
+  .journey-map-label strong{ display:block; font-family:var(--font-sans); font-size:15px; line-height:1.05; letter-spacing:.04em; text-transform:uppercase; font-weight:600; }
   .journey-map-label small{ display:block; color:#69717a; font-size:9px; letter-spacing:.16em; line-height:1.2; }
   .leaflet-tooltip.journey-tooltip{ padding:0; border:0; background:transparent; box-shadow:none; }
   .leaflet-tooltip.journey-tooltip::before{ display:none; }
@@ -2770,9 +2635,7 @@
    .journey-vehicle-icon.car{ color:#e9eee7; transform:rotate(-7deg); }
    .journey-vehicle-icon.plane{ color:#eef0eb; transform:rotate(-18deg) scale(1.18); }
    .journey-vehicle-icon.cruise{ color:#f0f0ea; transform:scale(1.12); }
-   .journey-vehicle-icon::after{ content:""; position:absolute; width:58px; height:58px; border:2px solid rgba(231,25,44,.72); border-radius:50%; animation:journeyVehiclePulse 1.8s ease-out infinite; }
    @keyframes journeyPinPulse{ 0%{ opacity:.8; transform:scale(.55); } 100%{ opacity:0; transform:scale(1.3); } }
-   @keyframes journeyVehiclePulse{ 0%{ opacity:.75; transform:scale(.62); } 100%{ opacity:0; transform:scale(1.08); } }
   .journey-stage-card > :not(.journey-stage-image){ position:relative; z-index:1; }
   .journey-stage-image{ position:absolute; inset:0; z-index:0; width:100%; height:100%; object-fit:cover; opacity:.56; filter:saturate(.88) contrast(.98); }
   .journey-stage-card:has(.journey-stage-image)::after{ content:''; position:absolute; inset:0; z-index:0; background:linear-gradient(180deg, rgba(239,246,250,.04), rgba(239,246,250,.74) 72%); pointer-events:none; }
