@@ -711,9 +711,9 @@
               <span class="note-label">Rural lanes at night</span>
               The approach is along narrow country lanes with no streetlights and patchy phone signal. Allow extra time, drive gently, and save your route before you set off.
             </div>
-            <div class="note note--pending">
-              <span class="note-label">Parking &amp; what3words · confirming soon</span>
-              There's parking at the manor; we'll confirm on-site details and add a what3words pin for the entrance closer to the day.
+            <div class="note note--ok">
+              <span class="note-label">Parking &middot; plenty on-site</span>
+              There's plenty of parking at the manor, so nobody needs to reserve a space. No location pin to hunt for either &mdash; the entrance is signposted off the lane, and the team will point you to the car park as you arrive.
             </div>
           </div>
           <div class="map-frame">
@@ -848,9 +848,24 @@
           </div>
           Please double-check times nearer the day, and book your taxi back from the manor in advance. This is the one that catches people out.
         </div>
-        <div class="note note--pending" style="margin-top:14px;">
-          <span class="note-label">Taxis &amp; shuttle · confirming soon</span>
-          Rural taxis must be pre-booked (app cabs don't reliably serve the area). We're gathering trusted local numbers and looking into a shuttle between the manor and Petersfield. Details will land here.
+        <div class="note note--ok" style="margin-top:14px;">
+          <span class="note-label">Taxis home &middot; book ahead</span>
+          There's no shuttle, so a pre-booked taxi is the way home &mdash; app cabs rarely pick up out here. These three know the manor and the lanes around it:
+          <ul class="taxis">
+            <li class="taxi">
+              <span class="taxi-name">A2B Taxis Petersfield<em>Largest local fleet &middot; bookings 24 hours</em></span>
+              <a class="taxi-tel" href="tel:+441730233299">01730&nbsp;233&nbsp;299</a>
+            </li>
+            <li class="taxi">
+              <span class="taxi-name">Midhurst Cars<em>Family-run &middot; covers Midhurst, South Harting and Petersfield</em></span>
+              <a class="taxi-tel" href="tel:+441730821044">01730&nbsp;821044</a>
+            </li>
+            <li class="taxi">
+              <span class="taxi-name">Billycars<em>Petersfield-based &middot; used to rural pick-ups</em></span>
+              <a class="taxi-tel" href="tel:+441730777555">01730&nbsp;777555</a>
+            </li>
+          </ul>
+          Book the journey home when you book the one out &mdash; the last hours go first.
         </div>
       </div>
 
@@ -944,7 +959,7 @@
         <p class="give-lead">
           We've set up a honeymoon fund where you can contribute directly. Just a click and a little.
         </p>
-        <a class="give-btn" href="https://prezola.com/buy/view/336224" target="_blank" rel="noopener noreferrer">
+        <a class="give-btn" href="https://withjoy.com/diego-and-bethany/registry" target="_blank" rel="noopener noreferrer">
           <span class="give-btn-label">Contribute to Our Honeymoon</span>
           <span class="give-btn-icon" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
@@ -997,14 +1012,14 @@
       <details class="faq-item">
         <summary>Is there parking at the venue?</summary>
         <div class="faq-answer">
-          <p>Yes, there is parking at the manor. We’ll add any final parking instructions closer to the day.</p>
+          <p>Yes &mdash; there's plenty of parking at the manor and you don't need to reserve a space. There's no location pin to find either: the entrance is signposted off the lane, and the team will point you to the car park when you arrive.</p>
         </div>
       </details>
 
       <details class="faq-item">
         <summary>Do I need to book a taxi in advance?</summary>
         <div class="faq-answer">
-          <p>Yes, we strongly recommend booking taxis in advance as the venue is in a rural area and app-based taxis may not be reliable nearby.</p>
+          <p>Yes. The manor sits in a rural spot where app-based cabs rarely pick up, so pre-book a local firm. There are three we trust with their numbers listed under <a href="#travel">Taxis home</a>.</p>
         </div>
       </details>
 
@@ -1120,6 +1135,40 @@
           <p class="field-note" id="alreadyRepliedNote" hidden>
             Someone from your party has already replied. If you need to change your answer, please <a href="mailto:Diego.beth21@gmail.com?subject=Wedding%20RSVP%20change">email us</a>.
           </p>
+          <div class="field-row field-row--single">
+            <div class="field">
+              <label id="course-label" for="course-trigger">Main course</label>
+
+              <div class="select-wrap custom-select custom-select--tall" data-custom-select>
+                <input id="rsvp-course" name="course" type="hidden" value="">
+
+                <button
+                  class="select-trigger"
+                  id="course-trigger"
+                  type="button"
+                  aria-haspopup="listbox"
+                  aria-expanded="false"
+                  aria-labelledby="course-label course-selected"
+                  aria-describedby="course-hint rsvp-course-err"
+                >
+                  <span id="course-selected" data-select-value>Please choose</span>
+                  <span class="select-chevron" aria-hidden="true"></span>
+                </button>
+
+                <ul class="select-menu" id="course-options" role="listbox" aria-labelledby="course-label" hidden>
+                  <li role="option" data-value="Roasted Chicken Breast Stuffed With Sausage Meat" aria-selected="false">Roasted Chicken Breast stuffed with sausage meat</li>
+                  <li role="option" data-value="Braised Lamb Shank" aria-selected="false">Braised Lamb Shank</li>
+                  <li role="option" data-value="Roasted Vegetable Wellington" aria-selected="false">Roasted Vegetable Wellington</li>
+                </ul>
+              </div>
+              <p class="field-hint" id="course-hint">Your choice goes straight to the kitchen. The vegetable Wellington is vegetarian &mdash; anything else you can't eat, note it under dietary requirements.</p>
+              <p class="field-err" id="rsvp-course-err" hidden>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v5"/><path d="M12 16h.01"/></svg>
+                <span>Please choose your main course.</span>
+              </p>
+            </div>
+          </div>
+
           <div class="field-row">
             <div class="field">
               <label id="dietary-label" for="dietary-trigger">Dietary requirements</label>
@@ -1135,7 +1184,7 @@
                   aria-expanded="false"
                   aria-labelledby="dietary-label dietary-selected"
                 >
-                  <span id="dietary-selected">None</span>
+                  <span id="dietary-selected" data-select-value>None</span>
                   <span class="select-chevron" aria-hidden="true"></span>
                 </button>
 

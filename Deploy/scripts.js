@@ -450,7 +450,7 @@
       document.querySelectorAll('[data-custom-select]').forEach(select => {
         const hiddenInput = select.querySelector('input[type="hidden"]');
         const trigger = select.querySelector('.select-trigger');
-        const selectedText = select.querySelector('#dietary-selected');
+        const selectedText = select.querySelector('[data-select-value]');
         const menu = select.querySelector('.select-menu');
         const options = Array.from(select.querySelectorAll('[role="option"]'));
 
@@ -484,6 +484,10 @@
           const value = option.getAttribute('data-value') || option.textContent.trim();
           hiddenInput.value = value;
           selectedText.textContent = option.textContent.trim();
+          trigger.classList.toggle('is-placeholder', value === '');
+          // Announce the pick to anything listening (the RSVP validation clears
+          // its error on change), since a programmatic value set fires nothing.
+          hiddenInput.dispatchEvent(new Event('change', { bubbles: true }));
 
           close();
           trigger.focus();
@@ -553,6 +557,8 @@
             close();
           }
         });
+
+        trigger.classList.toggle('is-placeholder', hiddenInput.value === '');
       });
     }
 
@@ -579,6 +585,15 @@
       const emailOk = emailRe.test(emailInput.value.trim());
       setError(emailInput, 'rsvp-email-err', !emailOk);
       if(!emailOk) firstInvalid = firstInvalid || emailInput;
+
+      // Main course — the kitchen needs a dish for every guest who's coming.
+      // Declining replies collapse the party block, so nothing is required there.
+      const courseTrigger = document.getElementById('course-trigger');
+      const courseNeeded = !isDeclining();
+      const courseOk = !!document.getElementById('rsvp-course').value.trim();
+      setError(courseTrigger, 'rsvp-course-err', courseNeeded && !courseOk);
+      if(courseNeeded && !courseOk) firstInvalid = firstInvalid || courseTrigger;
+
       return firstInvalid;
     }
 
@@ -586,6 +601,7 @@
     nameInput.addEventListener('input', () => { if(nameInput.getAttribute('aria-invalid') === 'true' && nameInput.value.trim()) setError(nameInput, 'rsvp-name-err', false); });
     emailInput.addEventListener('blur', () => { if(emailInput.getAttribute('aria-invalid') === 'true') setError(emailInput, 'rsvp-email-err', !emailRe.test(emailInput.value.trim())); });
     emailInput.addEventListener('input', () => { if(emailInput.getAttribute('aria-invalid') === 'true' && emailRe.test(emailInput.value.trim())) setError(emailInput, 'rsvp-email-err', false); });
+    document.getElementById('rsvp-course').addEventListener('change', () => setError(document.getElementById('course-trigger'), 'rsvp-course-err', false));
 
     // ── Collect + submit ──
     function setNote(html, isError){
@@ -608,6 +624,7 @@
         party_size: declining ? '0' : String(1 + (partnerComing ? 1 : 0)),
         guests: partnerComing ? selectedGuest.partner : '',
         dietary: declining ? '' : document.getElementById('rsvp-dietary').value.trim(),
+        course: declining ? '' : document.getElementById('rsvp-course').value.trim(),
         song: declining ? '' : document.getElementById('rsvp-song').value.trim(),
         message: document.getElementById('rsvp-message').value.trim(),
         submitted_at: new Date().toISOString(),
@@ -691,14 +708,34 @@
     }
 
     var stem = vine.querySelector('.vine-stem path.stem');
+    var scroller = document.scrollingElement || document.documentElement;
 
-    // Pin the inner content to the container's exact pixel height. Viewport
-    // units (100dvh) can disagree with the fixed container on mobile browsers
-    // (URL-bar collapse timing), which left the stem short of the bottom.
-    function sizeVine(){
-      vine.style.setProperty('--vine-h', vine.clientHeight + 'px');
+    // The stem finishes growing slightly before the page does. Keyed to raw scroll
+    // progress the tip sits at progress × viewport height, so the closing screens —
+    // footer included — showed a stem that stopped just short of the bottom edge.
+    // At 0.92 the spine is fully grown while the last screen is being read.
+    var VINE_LEAD = 0.92;
+
+    // The stem's length is no longer a measured number we keep in sync. A measured
+    // height goes stale the instant the viewport changes without a clean resize
+    // (URL bars, zoom, window snapping, a page that grows after first paint), and
+    // each stale value left the tip hanging short of the bottom edge. The reveal is
+    // now a clip on a full-height element, so the stem always spans the live
+    // viewport and only the scroll maths below needs re-measuring.
+    var footer = document.querySelector('footer');
+    var pageFoot = scroller.scrollHeight;
+
+    // Where the page actually ends. Not scrollHeight: anything overflowing below
+    // the footer (a decorative element, an embedded frame) inflates the scroll
+    // range, and progress would then only reach 1 inside a strip of empty space the
+    // guest has to scroll into before the vine looks finished. Anchoring to the
+    // footer's foot means "bottom of the page" is where the content ends.
+    function measureFoot(){
+      var top = window.scrollY || scroller.scrollTop || 0;
+      var end = footer ? footer.getBoundingClientRect().bottom + top : scroller.scrollHeight;
+      pageFoot = Math.min(scroller.scrollHeight, Math.max(end, scroller.clientHeight));
     }
-    sizeVine();
+    measureFoot();
     var blooms = Array.from(vine.querySelectorAll('.vine-bloom'));
 
     // Parse --b0 / --b1 percentage values from each bloom's inline style.
@@ -721,16 +758,16 @@
 
     function clamp(v, lo, hi) { return v < lo ? lo : v > hi ? hi : v; }
 
-    function tick() {
-      var scroller = document.scrollingElement || document.documentElement;
-      var maxScroll = scroller.scrollHeight - scroller.clientHeight;
+    function paint() {
+      var maxScroll = Math.max(pageFoot - scroller.clientHeight, 1);
       var scrollTop = window.scrollY || scroller.scrollTop || 0;
-      var progress = maxScroll > 0 ? clamp(scrollTop / maxScroll, 0, 1) : 0;
-      vine.style.setProperty('--vine-reveal', (progress * 100).toFixed(3) + '%');
+      var progress = clamp(scrollTop / maxScroll, 0, 1);
+      var reveal = clamp(progress / VINE_LEAD, 0, 1);
+      vine.style.setProperty('--vine-reveal', (reveal * 100).toFixed(3) + '%');
 
       // Stem: stroke-dashoffset from 1002 (hidden) → 0 (fully drawn);
       // the clip-path above keeps flowers and endpoint artifacts from outrunning the stem.
-      if (stem) stem.style.strokeDashoffset = (1002 * (1 - progress)).toFixed(1);
+      if (stem) stem.style.strokeDashoffset = (1002 * (1 - reveal)).toFixed(1);
 
       // Blooms: each has its own scroll range [b0, b1]
       bloomData.forEach(function (d) {
@@ -769,10 +806,34 @@
       });
     }
 
+    // Scroll fires faster than we can paint, and every read here forces layout on
+    // a fixed element spanning the whole document — so reads and writes are
+    // collected into one frame.
+    var frame = 0;
+    function tick(){
+      if (frame) return;
+      frame = requestAnimationFrame(function(){ frame = 0; paint(); });
+    }
+
     tick(); // set initial state
     window.addEventListener('scroll', tick, { passive: true });
-    window.addEventListener('resize', function(){ sizeVine(); tick(); }, { passive: true });
-    window.addEventListener('orientationchange', function(){ sizeVine(); tick(); }, { passive: true });
+    window.addEventListener('resize', function(){ measureFoot(); tick(); }, { passive: true });
+    window.addEventListener('orientationchange', function(){ measureFoot(); tick(); }, { passive: true });
+    window.addEventListener('load', function(){ measureFoot(); tick(); }, { passive: true });
+    // Mobile URL bars resize the visual viewport without always firing a window
+    // resize, which is the other way the scroll maths used to drift out of step.
+    if (window.visualViewport) window.visualViewport.addEventListener('resize', function(){ measureFoot(); tick(); }, { passive: true });
+
+    // Photographs and the journey map arrive after first paint and move where the
+    // page actually ends, which used to leave progress measured against a shorter
+    // page than the one on screen. Re-measure whenever the document reflows.
+    if ('ResizeObserver' in window){
+      var vineObserver = new ResizeObserver(function(){ measureFoot(); tick(); });
+      vineObserver.observe(document.documentElement);
+      vineObserver.observe(document.body);
+      if (footer) vineObserver.observe(footer);
+    }
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(function(){ measureFoot(); tick(); });
   })();
 
 // Schedule live

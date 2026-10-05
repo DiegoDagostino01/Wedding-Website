@@ -1,0 +1,21 @@
+Journey image sources
+
+Reykjavík.jpg
+Unsplash: https://unsplash.com/photos/a-rainbow-painted-street-in-a-small-town-lS6iqI8ivO0
+Photographer: An Pham (@riannpham)
+License: Unsplash License
+
+Geiranger.jpg
+Unsplash: https://unsplash.com/photos/geirangerfjord-between-mountains-h-nbAU92qIo
+Photographer: Simon Wiedensohler (@simonwiedensohler)
+License: Unsplash License
+
+Southampton.jpg
+Unsplash: https://unsplash.com/photos/a-calm-harbor-with-boats-under-a-clear-blue-sky-yFJ0NIn_ZnU
+Photographer: Adam Edwards (@adamedwxrds)
+License: Unsplash License
+
+Swansea.png
+Wikimedia Commons: https://commons.wikimedia.org/wiki/File:Swansea_bay.jpeg
+Source collection: National Library of Wales / Welsh Landscape Collection
+License: Refer to the Wikimedia Commons file page for the current license and attribution requirements.

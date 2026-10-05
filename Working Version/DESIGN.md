@@ -164,6 +164,8 @@ Sampled from the spring bouquet (blush garden rose). Used sparingly against the 
 
 **The Accent-with-Restraint Rule.** The spring-sky blue marks action, romance, and botanical detail; it should feel earned, not flood every component. Fresh greens carry structure; the blue carries emphasis.
 
+**The Continuous-Surface Rule.** Sections never butt two fills together. Every tinted section dissolves to the bare page ground at its top and bottom edge — either by ramping its own wash to zero alpha across `--seam-feather`, or, where the section paints an opaque surface of its own, by masking that surface with `--seam-mask` (the RSVP mist panel is painted by `#rsvp::before` for exactly this reason, and its atmos light carries the same mask). Neighbours therefore always meet on the same ground, which is what lets the page read as one continuous sheet of paper rather than stacked colour blocks.
+
 ## 3. Typography
 
 **Display Font:** Great Vibes (with Segoe Script, Brush Script MT, cursive fallback) — the handwritten script, reserved for the couple's names in the hero and the RSVP success sign-off.
@@ -232,6 +234,8 @@ Components should feel warm, practical, and guest-first: ceremonial enough for t
 
 ### Botanical Divider
 The sprig SVG is the signature motif. Use it sparingly as a ceremonial divider or visual pause; do not repeat it above every small block of text. The motif extends into two structural signatures: the scroll-drawn vine down the page's left edge (flowers bloom as their chapters pass), and the numbered botanical pin badges (01–04) that carry the journey sequence in the map-marker style.
+
+The vine's growth is a clip, not a length. `.vine` is a fixed, viewport-tall spine and `.vine-reveal` clips it with `inset()` driven by `--vine-reveal`, so the stem inside is always exactly as tall as the live viewport and its tip can only ever land on the bottom edge. Never reintroduce a script-measured height for the stem (a `--vine-h`-style value): a measured height goes stale the moment the viewport changes without a clean resize — URL bars, zoom, window snapping, a page that grows after first paint — and the tip then hangs short of the bottom, which is the failure this construction exists to rule out. Only the scroll maths (page end, progress) is re-measured, and the page end is anchored to the footer rather than `scrollHeight` so any overflow below the footer cannot push "finished" into a region nobody sees.
 
 ## 6. Do's and Don'ts
 

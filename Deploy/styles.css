@@ -61,8 +61,20 @@
     --space-3xl: 64px;
     --space-4xl: 96px;
     /* Fluid — sections breathe wider on bigger screens */
-    --section-pad-y: clamp(64px, 8vw, 104px);
+    --section-pad-y: clamp(44px, 5.2vw, 74px);
     --section-pad-x: 6vw;
+    /* Seam feather — every tinted section dissolves to the page ground across
+       this distance at its top and bottom edge, so neighbours always meet on
+       the same colour instead of butting two different fills together. */
+    --seam-feather: clamp(64px, 8vw, 120px);
+    /* The same feather expressed as a mask, for sections that paint an opaque
+       surface of their own: masking fades every layer — fill, wallpaper, light —
+       to nothing at the edge, so the hand-off is exact rather than eyeballed. */
+    --seam-mask: linear-gradient(180deg,
+      transparent 0,
+      #000 var(--seam-feather),
+      #000 calc(100% - var(--seam-feather)),
+      transparent 100%);
     /* Live nav height, published by scripts.js so sticky sections can clear the bar.
        Fallback approximates the scrolled nav. */
     --nav-h: 78px;
@@ -213,7 +225,7 @@
     background:
     /* 1 · Bottom legibility wash — only rises through the lower third, where the names, sub-line and countdown sit. */
       linear-gradient(to top,
-        rgba(239,246,250,0.97) 0%,
+        rgba(239,246,250,0.99) 0%,
         rgba(239,246,250,0.90) 14%,
         rgba(239,246,250,0.64) 28%,
         rgba(239,246,250,0.28) 42%,
@@ -813,15 +825,21 @@
   }
 
   .schedule{ position: relative; }
-  /* Morning haze → golden hour → candlelit dusk, tied to scroll where supported */
+  /* Morning haze → golden hour → candlelit dusk, tied to scroll where supported.
+     Masked at both ends: a rectangle of daylight has an edge, and that edge cut
+     a hard horizontal line across the timeline above the first time. Fading the
+     wash in and out lets the light arrive and leave without an outline — the
+     same dissolve the section seams use. */
   .day-light{
     position: absolute; inset: -22px -6vw; z-index: 0; pointer-events: none;
-    border-radius: 22px; opacity: 0.55;
+    opacity: 0.55;
     background: linear-gradient(180deg,
       rgba(214,235,247,0.55) 0%,
       rgba(255,244,222,0.42) 42%,
       rgba(244,201,168,0.34) 72%,
       rgba(90,86,120,0.20) 100%);
+    -webkit-mask-image: var(--seam-mask);
+            mask-image: var(--seam-mask);
   }
   .schedule-item{ position: relative; z-index: 1; }
 
@@ -969,11 +987,13 @@
      so there is no hard block seam — the page reads as one continuous surface. */
   #story{
     background: linear-gradient(180deg,
-      rgba(239,246,250,0.58) 0,
+      rgba(220,234,245,0) 0,
+      rgba(220,234,245,0.60) var(--seam-feather),
       rgba(220,234,245,0.66) clamp(90px, 12vw, 150px),
       rgba(220,234,245,0.66) calc(100% - clamp(90px, 12vw, 150px)),
-      rgba(239,246,250,0.58) 100%);
-    padding-block: clamp(72px, 9vw, 128px);
+      rgba(220,234,245,0.60) calc(100% - var(--seam-feather)),
+      rgba(220,234,245,0) 100%);
+    padding-block: clamp(48px, 6vw, 88px);
   }
   .story-grid{ display:grid; grid-template-columns: 1.3fr 0.86fr; gap: clamp(34px, 5vw, 82px); align-items:center; }
   .story-copy p{ margin-bottom: 20px; font-size: 1.08rem; color: var(--ink-soft); }
@@ -1213,10 +1233,12 @@
   /* Same feathered wash as the story section — continuous, not a stacked block. */
   #travel{
     background: linear-gradient(180deg,
-      rgba(239,246,250,0.58) 0,
+      rgba(220,234,245,0) 0,
+      rgba(220,234,245,0.60) var(--seam-feather),
       rgba(220,234,245,0.66) clamp(90px, 12vw, 150px),
       rgba(220,234,245,0.66) calc(100% - clamp(90px, 12vw, 150px)),
-      rgba(239,246,250,0.58) 100%);
+      rgba(220,234,245,0.60) calc(100% - var(--seam-feather)),
+      rgba(220,234,245,0) 100%);
 
   }
   #travel .section-title{ margin-bottom: 16px; }
@@ -1306,8 +1328,8 @@
   .note{ border-radius: 12px; padding: 18px 20px; font-size: var(--text-body); line-height:1.58; }
   .note--warn{ background: rgba(128,163,194,0.16); border:1px solid rgba(67,98,126,0.34); color: var(--ink); }
   .note--warn .note-label{ color: var(--terracotta); }
-  .note--pending{ background: rgba(154,196,124,0.18); border:1px solid rgba(69,112,58,0.32); color: var(--ink); }
-  .note--pending .note-label{ color: var(--sage-deep); }
+  .note--pending, .note--ok{ background: rgba(154,196,124,0.18); border:1px solid rgba(69,112,58,0.32); color: var(--ink); }
+  .note--pending .note-label, .note--ok .note-label{ color: var(--sage-deep); }
   .note-label{ display:block; font-size:var(--text-label); letter-spacing:var(--tracking-label); text-transform:uppercase; font-weight:600; margin-bottom:5px; }
 
   /* C — where to stay */
@@ -1332,6 +1354,31 @@
   }
   .stay-meta{ font-size:var(--text-meta); color: var(--sage-deep); }
   .stay-desc{ font-size:var(--text-body); color: var(--ink); opacity:0.84; }
+
+  /* D — taxis home */
+  /* Three firms, name and number on one line each — the whole block scans in a
+     glance, which is what a guest in a dark lane at midnight actually needs. */
+  .taxis{ list-style:none; display:flex; flex-direction:column; margin: 10px 0 12px; }
+  .taxi{
+    display:grid; grid-template-columns: 1fr auto; align-items:center; gap: 4px 18px;
+    padding: 11px 0; border-top: 1px solid rgba(51,54,31,0.14);
+  }
+  .taxi:first-child{ border-top: 0; }
+  .taxi-name{ font-family: var(--font-serif); font-size:1.2rem; line-height:1.22; color: var(--ink); }
+  .taxi-name em{
+    display:block; margin-top:3px; font-family: var(--font-sans); font-style:normal;
+    font-size: var(--text-meta); line-height:1.4; color: var(--sage-deep);
+  }
+  .taxi-tel{
+    display:inline-block; padding: 9px 0; white-space:nowrap;
+    font-family: var(--font-serif); font-size:1.22rem;
+    font-variant-numeric: tabular-nums lining-nums;
+    color: var(--terracotta); text-decoration: underline;
+    text-decoration-thickness: 1px; text-underline-offset: 5px;
+    text-decoration-color: rgba(67,98,126,0.38);
+    transition: color 0.3s var(--ease), text-decoration-color 0.3s var(--ease);
+  }
+  .taxi-tel:hover{ color: var(--ink); text-decoration-color: currentColor; }
 
   /* D — trains */
   .trains{ display:flex; flex-direction:column; margin: 8px 0 12px; }
@@ -1361,6 +1408,8 @@
   }
   @media (max-width: 520px){
     .train-row{ flex-direction:column; gap:2px; align-items:flex-start; }
+    .taxi{ grid-template-columns: 1fr; gap: 2px; }
+    .taxi-tel{ justify-self:start; }
   }
 
 /* ---------- Gallery ---------- */
@@ -1483,36 +1532,29 @@
      a cream→mist→cream ramp so the honeymoon section blends in without a seam. */
   #gallery{
   position: relative;
+  /* Same feathered edges as the rest of the page: paper at the top, and a mist
+     settle at the foot that dissolves before the honeymoon section begins. */
   background: linear-gradient(180deg,
-    rgba(239,246,250,0.96) 0,
-    rgba(239,246,250,0.94) 62%,
-    rgba(173,189,172,0.22) 88%,
-    rgba(239,246,250,0.72) 100%);
-  padding-block: clamp(72px, 9vw, 128px);
+    rgba(239,246,250,0) 0,
+    rgba(239,246,250,0.94) var(--seam-feather),
+    rgba(239,246,250,0.94) 58%,
+    rgba(173,189,172,0.20) calc(100% - var(--seam-feather)),
+    rgba(173,189,172,0) 100%);
+  padding-block: clamp(48px, 6vw, 88px);
   }
   /* Gallery breaks the container for a wall-to-wall scrapbook */
   #gallery .section-inner{ max-width: none; padding-inline: clamp(20px, 5vw, 72px); }
   #gallery .section-inner > .reveal:first-child{ max-width: 1080px; margin-inline: auto; } /* keep the heading centred/contained */
   
-  #gallery::after{
-    content:'';
-    position:absolute;
-    left:0;
-    right:0;
-    bottom:0;
-    z-index:0;
-    pointer-events:none;
-    height: clamp(96px, 12vw, 168px);
-    background: linear-gradient(180deg, rgba(173,189,172,0), rgba(173,189,172,0.28) 62%, rgba(239,246,250,0.64) 100%);
-}
-
 /* ---------- Honeymoon Fund ---------- */
   #honeymoon{
     background: linear-gradient(180deg,
-      rgba(239,246,250,0.58) 0,
+      rgba(220,234,245,0) 0,
+      rgba(220,234,245,0.60) var(--seam-feather),
       rgba(220,234,245,0.66) clamp(90px, 12vw, 150px),
       rgba(220,234,245,0.66) calc(100% - clamp(90px, 12vw, 150px)),
-      rgba(239,246,250,0.58) 100%);
+      rgba(220,234,245,0.60) calc(100% - var(--seam-feather)),
+      rgba(220,234,245,0) 100%);
   }
   .honeymoon-head{
     max-width: 680px; margin: 0 auto clamp(34px, 5vw, 52px); text-align: center;
@@ -1681,11 +1723,14 @@
 
   /* ---------- FAQ ---------- */
   #faq{
+    /* Fades in off the ground, warms toward the mist green at the foot, then
+       dissolves before the RSVP panel — no two fills ever butt together. */
     background: linear-gradient(180deg,
-    rgba(239,246,250,0.56) 0,
-    rgba(230,240,248,0.66) clamp(70px, 10vw, 130px),
-    rgba(230,240,248,0.66) calc(100% - clamp(70px, 10vw, 130px)),
-    rgba(173,189,172,0.82) 100%);
+    rgba(230,240,248,0) 0,
+    rgba(230,240,248,0.66) var(--seam-feather),
+    rgba(230,240,248,0.66) 60%,
+    rgba(173,189,172,0.42) calc(100% - var(--seam-feather)),
+    rgba(173,189,172,0) 100%);
 
   }
 
@@ -1788,7 +1833,13 @@
     }
   }
   /* ---------- RSVP ---------- */
-  #rsvp{ position:relative; overflow:hidden; color: var(--ink);
+  #rsvp{ position:relative; overflow:hidden; color: var(--ink); }
+  /* The mist panel is painted by ::before rather than the section itself, purely
+     so it can be masked. Both it and the atmos light dissolve to nothing at the
+     section's top and bottom edge, which lets the page ground carry the seam —
+     the panel rises out of the paper instead of starting on a line. */
+  #rsvp::before{
+    content:''; position:absolute; inset:0; z-index:0; pointer-events:none;
     background-image:
       linear-gradient(165deg, rgba(188,201,187,0.90) 0%, rgba(173,189,172,0.90) 100%),
       var(--stripe-bg);
@@ -1802,9 +1853,11 @@
       scroll,
       scroll;
     background-blend-mode: normal, multiply;
+    -webkit-mask-image: var(--seam-mask);
+            mask-image: var(--seam-mask);
   }
   @media (hover: hover) and (pointer: fine){
-    #rsvp{
+    #rsvp::before{
       background-attachment:
         scroll,
         fixed;
@@ -1818,6 +1871,8 @@
       radial-gradient(95% 78% at 106% 112%, rgba(128,163,194,0.16), transparent 55%),
       radial-gradient(70% 50% at 50% 122%, rgba(69,112,58,0.12), transparent 60%),
       linear-gradient(180deg, rgba(255,255,255,0.12), rgba(69,112,58,0.05));
+    -webkit-mask-image: var(--seam-mask);
+            mask-image: var(--seam-mask);
   }
   #rsvp .section-inner{ position:relative; z-index:1; }
 
@@ -2124,10 +2179,15 @@
     transform: translateY(-65%) rotate(-45deg);
   }
 
-  .field input[aria-invalid="true"], .guest-input[aria-invalid="true"]{
+  .field input[aria-invalid="true"], .guest-input[aria-invalid="true"],
+  .select-trigger[aria-invalid="true"]{
     border-color: #C25B6E; box-shadow: 0 0 0 3px rgba(194,91,110,0.20);
   }
+  /* A long dish name needs room to wrap, so this variant grows past the fixed row height. */
+  .custom-select--tall .select-trigger{ height: auto; padding-top: 11px; padding-bottom: 11px; }
+  .select-trigger.is-placeholder{ color: rgba(46,50,32,0.72); }
   .field-row{ display:grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+  .field-row--single{ grid-template-columns: 1fr; }
 
   .field-err{
     display:flex; align-items:center; gap: 6px; margin: 2px 0 0;
@@ -2374,24 +2434,25 @@
     --fl-lilac:#C6B2DA; --fl-lilac-deep:#A98FC9;
     --fl-leaf:#8FA85C; --fl-leaf-deep:#5E7C3A; --fl-stem:#6E8B3D;
   }
+  /* The draw window is a clip on an element that is always the full height of the
+     viewport, not a box that grows to a measured height. That distinction is the
+     whole fix: a measured height goes stale the moment the viewport changes size
+     without a clean resize (URL bars, browser zoom, window snapping, a page that
+     grows after load), and a stale height left the stem's tip hanging short of the
+     bottom edge — the exact symptom this spine kept showing. A clip cannot go
+     stale, so the tip lands on the bottom edge whenever the page has reached it. */
   .vine-reveal{
-    position: absolute; top: 0;
+    position: absolute; top: 0; bottom: 0;
     left: calc(0px - var(--vine-bleed, 72px));
     right: calc(0px - var(--vine-bleed, 72px));
-    height: var(--vine-reveal, 0%);
     overflow: hidden;
+    clip-path: inset(0 0 calc(100% - var(--vine-reveal, 0%)) 0);
   }
   .vine-content{
     position: absolute; top: 0;
     left: var(--vine-bleed, 72px);
     right: var(--vine-bleed, 72px);
-    /* Height must match the .vine container exactly. Viewport units (100dvh)
-       can disagree with the fixed container on mobile (URL-bar dynamics), which
-       left the stem short of the viewport bottom — scripts.js publishes the
-       container's measured height as --vine-h; these are fallbacks only. */
-    height: 100vh;
-    height: 100dvh;
-    height: var(--vine-h, 100dvh);
+    height: 100%;
   }
   .vine-stem{
     position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible;
