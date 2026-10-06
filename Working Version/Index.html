@@ -1,0 +1,1256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="description" content="The wedding of Diego and Bethany at Southdowns Manor on 29 April 2027.">
+<meta name="theme-color" content="#EFF6FA">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Diego &amp; Bethany — 29 April 2027">
+<meta property="og:description" content="Join us at Southdowns Manor to celebrate the day together.">
+<meta property="og:image" content="Assets/Hero-Background.webp">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Diego &amp; Bethany — 29 April 2027">
+<meta name="twitter:description" content="Join us at Southdowns Manor to celebrate the day together.">
+<meta name="twitter:image" content="Assets/Hero-Background.webp">
+<link rel="icon" href="Assets/Logo.png" type="image/png">
+<title>Diego &amp; Bethany — 29 April 2027</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Noto+Serif+Display:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap">
+<link rel="preload" as="image" href="Assets/Hero-Background.webp" fetchpriority="high">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" media="print" onload="this.onload=null;this.media='all'">
+<noscript><link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"></noscript>
+<link rel="stylesheet" href="styles.css">
+<script>
+  // Progressive enhancement: opt reveal elements into their hidden/animated state only
+  // when JS, IntersectionObserver, and motion are all available. Runs before the body
+  // paints, so content is never hidden unless it can be reliably revealed.
+  (function () {
+    try {
+      if ('IntersectionObserver' in window &&
+          !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        document.documentElement.classList.add('js-reveal');
+        // Play the one-time invitation opening (see .invitation-veil). Same gate:
+        // only when JS + motion are available; the page is fully visible beneath it.
+        document.documentElement.classList.add('invite');
+      }
+    } catch (e) { /* leave content visible */ }
+  })();
+</script>
+</head>
+<body>
+
+<a class="skip-link" href="#top">Skip to content</a>
+
+<!-- Invitation opening (overdrive first-load) — decorative, plays once then removes itself -->
+<div class="invitation-veil" id="inviteVeil" aria-hidden="true">
+  <div class="veil-panel veil-top"></div>
+  <div class="veil-panel veil-bottom"></div>
+  <div class="veil-seal">
+    <svg class="veil-sprig" viewBox="0 0 120 60" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path class="stem" d="M60 55 C 60 40, 40 30, 20 20"/>
+      <path class="stem" d="M60 55 C 60 40, 80 30, 100 20"/>
+      <ellipse class="leaf leaf-1" cx="20" cy="18" rx="7" ry="4"/>
+      <ellipse class="leaf leaf-2" cx="100" cy="18" rx="7" ry="4"/>
+      <ellipse class="leaf leaf-3" cx="60" cy="10" rx="6" ry="9"/>
+    </svg>
+    <span class="veil-mono">D <em>&amp;</em> B</span>
+    <span class="veil-rule"></span>
+    <span class="veil-date">29 April 2027</span>
+  </div>
+</div>
+
+<div class="scroll-progress" aria-hidden="true"></div>
+<div class="paper-grain" aria-hidden="true"></div>
+
+<!-- Overdrive scroll: a static garden-light wash and a botanical spine that
+     draws down the page. All decorative + aria-hidden; progressive enhancement
+     gated on motion (see the overdrive CSS). -->
+<div class="garden-light" aria-hidden="true"></div>
+<div class="vine" aria-hidden="true">
+  <div class="vine-reveal">
+    <div class="vine-content">
+  <svg class="vine-stem" viewBox="0 0 40 1000" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="vineGrad" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#A9CE86"/>
+        <stop offset="0.55" stop-color="#7BB45A"/>
+        <stop offset="1" stop-color="#4E8A3E"/>
+      </linearGradient>
+    </defs>
+    <path class="stem" pathLength="1000" d="M20 0 C 33 90, 8 170, 20 260 C 32 350, 9 430, 20 520 C 31 610, 9 690, 20 780 C 30 860, 12 930, 20 1000"/>
+  </svg>
+  <svg class="vine-defs" width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute">
+    <defs>
+      <!-- Colour-agnostic volume: a soft core shadow + top-left sheen sit over any
+           petal colour, plus fixed warm gradients for daisy eyes and billy-balls. -->
+      <radialGradient id="fgCore" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#3a2015" stop-opacity="0.24"/>
+        <stop offset="46%" stop-color="#3a2015" stop-opacity="0.06"/>
+        <stop offset="100%" stop-color="#3a2015" stop-opacity="0"/>
+      </radialGradient>
+      <radialGradient id="fgHi" cx="38%" cy="30%" r="46%">
+        <stop offset="0%" stop-color="#ffffff" stop-opacity="0.34"/>
+        <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+      </radialGradient>
+      <radialGradient id="fgYolk" cx="40%" cy="35%" r="68%">
+        <stop offset="0%" stop-color="#FCE38C"/>
+        <stop offset="52%" stop-color="#F2C230"/>
+        <stop offset="100%" stop-color="#CE8E12"/>
+      </radialGradient>
+      <radialGradient id="fgBall" cx="36%" cy="30%" r="72%">
+        <stop offset="0%" stop-color="#F8DA63"/>
+        <stop offset="50%" stop-color="#EEB824"/>
+        <stop offset="100%" stop-color="#C6860E"/>
+      </radialGradient>
+      <!-- Cupped garden rose: three offset petal rings, deep-toned inner swirl. -->
+      <symbol id="vbRose" viewBox="0 0 40 40">
+        <g fill="currentColor">
+          <path d="M20 22 C 12 18, 11.5 7.5, 20 4 C 28.5 7.5, 28 18, 20 22 Z"/>
+          <path d="M20 22 C 12 18, 11.5 7.5, 20 4 C 28.5 7.5, 28 18, 20 22 Z" transform="rotate(60 20 20)"/>
+          <path d="M20 22 C 12 18, 11.5 7.5, 20 4 C 28.5 7.5, 28 18, 20 22 Z" transform="rotate(120 20 20)"/>
+          <path d="M20 22 C 12 18, 11.5 7.5, 20 4 C 28.5 7.5, 28 18, 20 22 Z" transform="rotate(180 20 20)"/>
+          <path d="M20 22 C 12 18, 11.5 7.5, 20 4 C 28.5 7.5, 28 18, 20 22 Z" transform="rotate(240 20 20)"/>
+          <path d="M20 22 C 12 18, 11.5 7.5, 20 4 C 28.5 7.5, 28 18, 20 22 Z" transform="rotate(300 20 20)"/>
+        </g>
+        <g fill="currentColor">
+          <path d="M20 21 C 14 18, 13.5 10, 20 7.5 C 26.5 10, 26 18, 20 21 Z" transform="rotate(30 20 20)"/>
+          <path d="M20 21 C 14 18, 13.5 10, 20 7.5 C 26.5 10, 26 18, 20 21 Z" transform="rotate(90 20 20)"/>
+          <path d="M20 21 C 14 18, 13.5 10, 20 7.5 C 26.5 10, 26 18, 20 21 Z" transform="rotate(150 20 20)"/>
+          <path d="M20 21 C 14 18, 13.5 10, 20 7.5 C 26.5 10, 26 18, 20 21 Z" transform="rotate(210 20 20)"/>
+          <path d="M20 21 C 14 18, 13.5 10, 20 7.5 C 26.5 10, 26 18, 20 21 Z" transform="rotate(270 20 20)"/>
+          <path d="M20 21 C 14 18, 13.5 10, 20 7.5 C 26.5 10, 26 18, 20 21 Z" transform="rotate(330 20 20)"/>
+        </g>
+        <g fill="var(--fc, #DD9068)">
+          <path d="M20 20.4 C 16 19, 15.7 13.6, 20 11.8 C 24.3 13.6, 24 19, 20 20.4 Z"/>
+          <path d="M20 20.4 C 16 19, 15.7 13.6, 20 11.8 C 24.3 13.6, 24 19, 20 20.4 Z" transform="rotate(72 20 20)"/>
+          <path d="M20 20.4 C 16 19, 15.7 13.6, 20 11.8 C 24.3 13.6, 24 19, 20 20.4 Z" transform="rotate(144 20 20)"/>
+          <path d="M20 20.4 C 16 19, 15.7 13.6, 20 11.8 C 24.3 13.6, 24 19, 20 20.4 Z" transform="rotate(216 20 20)"/>
+          <path d="M20 20.4 C 16 19, 15.7 13.6, 20 11.8 C 24.3 13.6, 24 19, 20 20.4 Z" transform="rotate(288 20 20)"/>
+        </g>
+        <circle cx="20" cy="20" r="15" fill="url(#fgCore)"/>
+        <circle cx="20" cy="19.6" r="1.9" fill="var(--fc, #DD9068)"/>
+        <circle cx="20" cy="20" r="16" fill="url(#fgHi)"/>
+      </symbol>
+      <!-- Chamomile daisy: white rays around a domed, stippled yellow eye. -->
+      <symbol id="vbDaisy" viewBox="0 0 40 40">
+        <g fill="currentColor">
+          <ellipse cx="20" cy="8.5" rx="2.5" ry="7.6"/>
+          <ellipse cx="20" cy="8.5" rx="2.5" ry="7.6" transform="rotate(30 20 20)"/>
+          <ellipse cx="20" cy="8.5" rx="2.5" ry="7.6" transform="rotate(60 20 20)"/>
+          <ellipse cx="20" cy="8.5" rx="2.5" ry="7.6" transform="rotate(90 20 20)"/>
+          <ellipse cx="20" cy="8.5" rx="2.5" ry="7.6" transform="rotate(120 20 20)"/>
+          <ellipse cx="20" cy="8.5" rx="2.5" ry="7.6" transform="rotate(150 20 20)"/>
+          <ellipse cx="20" cy="8.5" rx="2.5" ry="7.6" transform="rotate(180 20 20)"/>
+          <ellipse cx="20" cy="8.5" rx="2.5" ry="7.6" transform="rotate(210 20 20)"/>
+          <ellipse cx="20" cy="8.5" rx="2.5" ry="7.6" transform="rotate(240 20 20)"/>
+          <ellipse cx="20" cy="8.5" rx="2.5" ry="7.6" transform="rotate(270 20 20)"/>
+          <ellipse cx="20" cy="8.5" rx="2.5" ry="7.6" transform="rotate(300 20 20)"/>
+          <ellipse cx="20" cy="8.5" rx="2.5" ry="7.6" transform="rotate(330 20 20)"/>
+        </g>
+        <circle cx="20" cy="20" r="5.6" fill="url(#fgYolk)"/>
+        <g fill="#B87C0A" opacity="0.5">
+          <circle cx="18.3" cy="18.4" r="0.7"/><circle cx="21.4" cy="18.7" r="0.7"/>
+          <circle cx="19.5" cy="21.3" r="0.7"/><circle cx="22" cy="21" r="0.6"/>
+          <circle cx="18.5" cy="20.4" r="0.6"/><circle cx="20.4" cy="19.4" r="0.6"/>
+        </g>
+        <circle cx="18.2" cy="17.9" r="1.5" fill="#FCEBA0" opacity="0.75"/>
+      </symbol>
+      <!-- Craspedia billy-ball: shaded sphere with stippled florets on a stem. -->
+      <symbol id="vbBall" viewBox="0 0 40 40">
+        <path d="M20 24 C 20 30, 20 34, 20 39" stroke="var(--fl-stem, #6E8B3D)" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+        <circle cx="20" cy="16" r="10.5" fill="url(#fgBall)"/>
+        <g fill="#B87C0A" opacity="0.45">
+          <circle cx="20" cy="6.4" r="0.8"/><circle cx="24" cy="7.5" r="0.8"/><circle cx="27.4" cy="10.4" r="0.8"/>
+          <circle cx="29" cy="15" r="0.8"/><circle cx="27.4" cy="19.6" r="0.8"/><circle cx="24.4" cy="22.6" r="0.8"/>
+          <circle cx="20" cy="24.4" r="0.8"/><circle cx="15.6" cy="22.6" r="0.8"/><circle cx="12.6" cy="19.6" r="0.8"/>
+          <circle cx="11" cy="15" r="0.8"/><circle cx="12.6" cy="10.4" r="0.8"/><circle cx="16" cy="7.5" r="0.8"/>
+          <circle cx="20" cy="13" r="0.7"/><circle cx="23" cy="16" r="0.7"/><circle cx="17" cy="18" r="0.7"/>
+        </g>
+        <circle cx="20" cy="16" r="10.5" fill="url(#fgHi)"/>
+      </symbol>
+      <!-- Powder-blue delphinium floret with a pale eye. -->
+      <symbol id="vbDelph" viewBox="0 0 40 40">
+        <g fill="currentColor">
+          <path d="M20 20 C 14.5 17, 14.5 8, 20 6.5 C 25.5 8, 25.5 17, 20 20 Z"/>
+          <path d="M20 20 C 14.5 17, 14.5 8, 20 6.5 C 25.5 8, 25.5 17, 20 20 Z" transform="rotate(72 20 20)"/>
+          <path d="M20 20 C 14.5 17, 14.5 8, 20 6.5 C 25.5 8, 25.5 17, 20 20 Z" transform="rotate(144 20 20)"/>
+          <path d="M20 20 C 14.5 17, 14.5 8, 20 6.5 C 25.5 8, 25.5 17, 20 20 Z" transform="rotate(216 20 20)"/>
+          <path d="M20 20 C 14.5 17, 14.5 8, 20 6.5 C 25.5 8, 25.5 17, 20 20 Z" transform="rotate(288 20 20)"/>
+        </g>
+        <circle cx="20" cy="20" r="3" fill="#F4F7FB"/>
+        <circle cx="20" cy="20" r="1.4" fill="var(--fc, #7396C8)"/>
+      </symbol>
+      <!-- Lilac scabiosa: a soft mound of tiny florets, deeper toward the base. -->
+      <symbol id="vbLilac" viewBox="0 0 40 40">
+        <g fill="var(--fc, #A98FC9)">
+          <circle cx="20" cy="27" r="4"/><circle cx="13" cy="24" r="3.6"/><circle cx="27" cy="24" r="3.6"/>
+        </g>
+        <g fill="currentColor">
+          <circle cx="20" cy="12" r="4"/><circle cx="13.5" cy="15" r="3.8"/><circle cx="26.5" cy="15" r="3.8"/>
+          <circle cx="20" cy="18.5" r="4.2"/><circle cx="10.5" cy="20.5" r="3.4"/><circle cx="29.5" cy="20.5" r="3.4"/>
+          <circle cx="16" cy="22" r="3.6"/><circle cx="24" cy="22" r="3.6"/>
+        </g>
+        <g fill="#FBF7EC" opacity="0.55">
+          <circle cx="20" cy="12" r="1.1"/><circle cx="13.5" cy="15" r="1"/><circle cx="26.5" cy="15" r="1"/>
+          <circle cx="20" cy="18.5" r="1.1"/><circle cx="16" cy="22" r="1"/><circle cx="24" cy="22" r="1"/>
+        </g>
+      </symbol>
+      <!-- Cupped tulip: two deep side petals, a lit front petal, short stem. -->
+      <symbol id="vbTulip" viewBox="0 0 40 40">
+        <path d="M20 34 C 20 30, 20 25, 20 21" stroke="var(--fl-stem, #6E8B3D)" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+        <g fill="var(--fc, #D67E97)">
+          <path d="M20 33 C 12.5 26, 12 12, 16 7 C 17.5 14, 18.5 24, 20 33 Z"/>
+          <path d="M20 33 C 27.5 26, 28 12, 24 7 C 22.5 14, 21.5 24, 20 33 Z"/>
+        </g>
+        <path d="M20 33 C 14 25, 14 11, 20 6 C 26 11, 26 25, 20 33 Z" fill="currentColor"/>
+        <path d="M20 8 C 18.6 16, 18.6 24, 20 31" stroke="#ffffff" stroke-width="1.4" fill="none" opacity="0.18" stroke-linecap="round"/>
+      </symbol>
+      <!-- Single leaf and an airy leaflet sprig for greenery. -->
+      <symbol id="vbLeaf" viewBox="0 0 40 40">
+        <path d="M7 35 C 4 22, 13 6, 34 6 C 31 23, 17 35, 7 35 Z" fill="currentColor"/>
+        <path d="M11 32 C 17 23, 25 13, 32 9" stroke="var(--fl-leaf-deep, #5E7C3A)" stroke-width="1" fill="none" stroke-linecap="round"/>
+        <path d="M16 29 C 19 27, 22 25, 24 21" stroke="var(--fl-leaf-deep, #5E7C3A)" stroke-width="0.7" fill="none" opacity="0.7"/>
+        <path d="M14 25 C 17 24, 20 22, 22 18" stroke="var(--fl-leaf-deep, #5E7C3A)" stroke-width="0.7" fill="none" opacity="0.7"/>
+      </symbol>
+      <symbol id="vbSprig" viewBox="0 0 40 40">
+        <path d="M20 39 C 20 30, 21 16, 22 4" stroke="var(--fl-leaf-deep, #5E7C3A)" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+        <g fill="currentColor">
+          <path d="M20.5 33 C 15 33, 11 30, 10 25 C 16 25, 20 28, 20.5 33 Z"/>
+          <path d="M21 27 C 26 27, 30 24, 31 19 C 25 19, 21.5 22, 21 27 Z"/>
+          <path d="M21.4 21 C 16 21, 12 18, 11 13 C 17 13, 21 16, 21.4 21 Z"/>
+          <path d="M22 15 C 27 15, 30.5 12, 31.5 7.5 C 26 7.5, 22.5 10.5, 22 15 Z"/>
+          <path d="M22 9 C 19 7, 18 3.5, 20 1.5 C 22.5 3.5, 23.5 6.5, 22 9 Z"/>
+        </g>
+      </symbol>
+    </defs>
+  </svg>
+  <span class="vine-bloom" style="--t:12%;--x:22px;--r:-24deg;--z:22px;--b0:7%;--b1:15%;color:var(--fl-leaf)"><svg viewBox="0 0 40 40"><use href="#vbSprig"/></svg></span>
+  <span class="vine-bloom" style="--t:15%;--x:-24px;--r:0deg;--z:18px;--b0:12%;--b1:20%;color:var(--fl-yolk)"><svg viewBox="0 0 40 40"><use href="#vbBall"/></svg></span>
+  <span class="vine-bloom" style="--t:14%;--x:12px;--r:-8deg;--z:32px;--b0:9%;--b1:18%;color:var(--fl-peach);--fc:var(--fl-peach-deep)"><svg viewBox="0 0 40 40"><use href="#vbRose"/></svg></span>
+  <span class="vine-bloom" style="--t:17%;--x:24px;--r:14deg;--z:17px;--b0:12%;--b1:20%;color:var(--fl-white)"><svg viewBox="0 0 40 40"><use href="#vbDaisy"/></svg></span>
+  <span class="vine-bloom" style="--t:18%;--x:-19px;--r:10deg;--z:16px;--b0:14%;--b1:22%;color:var(--fl-blue);--fc:var(--fl-blue-deep)"><svg viewBox="0 0 40 40"><use href="#vbDelph"/></svg></span>
+  <span class="vine-bloom" style="--t:21%;--x:-13px;--r:6deg;--z:24px;--b0:17%;--b1:26%;color:var(--fl-lilac);--fc:var(--fl-lilac-deep)"><svg viewBox="0 0 40 40"><use href="#vbLilac"/></svg></span>
+  <span class="vine-bloom" style="--t:24%;--x:-23px;--r:-12deg;--z:16px;--b0:20%;--b1:28%;color:var(--fl-white)"><svg viewBox="0 0 40 40"><use href="#vbDaisy"/></svg></span>
+  <span class="vine-bloom" style="--t:26%;--x:15px;--r:16deg;--z:18px;--b0:23%;--b1:31%;color:var(--fl-white)"><svg viewBox="0 0 40 40"><use href="#vbDaisy"/></svg></span>
+  <span class="vine-bloom" style="--t:28%;--x:8px;--r:-6deg;--z:33px;--b0:25%;--b1:34%;color:var(--fl-blush);--fc:var(--fl-blush-deep)"><svg viewBox="0 0 40 40"><use href="#vbRose"/></svg></span>
+  <span class="vine-bloom" style="--t:31%;--x:-14px;--r:18deg;--z:22px;--b0:28%;--b1:36%;color:var(--fl-leaf-deep)"><svg viewBox="0 0 40 40"><use href="#vbSprig"/></svg></span>
+  <span class="vine-bloom" style="--t:33%;--x:24px;--r:8deg;--z:22px;--b0:31%;--b1:39%;color:var(--fl-lilac);--fc:var(--fl-lilac-deep)"><svg viewBox="0 0 40 40"><use href="#vbLilac"/></svg></span>
+  <span class="vine-bloom" style="--t:34%;--x:15px;--r:-10deg;--z:16px;--b0:31%;--b1:39%;color:var(--fl-blue);--fc:var(--fl-blue-deep)"><svg viewBox="0 0 40 40"><use href="#vbDelph"/></svg></span>
+  <span class="vine-bloom" style="--t:37%;--x:25px;--r:0deg;--z:16px;--b0:34%;--b1:42%;color:var(--fl-yolk)"><svg viewBox="0 0 40 40"><use href="#vbBall"/></svg></span>
+  <span class="vine-bloom" style="--t:39%;--x:-13px;--r:-14deg;--z:17px;--b0:36%;--b1:44%;color:var(--fl-white)"><svg viewBox="0 0 40 40"><use href="#vbDaisy"/></svg></span>
+  <span class="vine-bloom" style="--t:40%;--x:-24px;--r:-12deg;--z:15px;--b0:38%;--b1:46%;color:var(--fl-blue);--fc:var(--fl-blue-deep)"><svg viewBox="0 0 40 40"><use href="#vbDelph"/></svg></span>
+  <span class="vine-bloom" style="--t:43%;--x:-13px;--r:10deg;--z:32px;--b0:40%;--b1:49%;color:var(--fl-peach);--fc:var(--fl-peach-deep)"><svg viewBox="0 0 40 40"><use href="#vbRose"/></svg></span>
+  <span class="vine-bloom" style="--t:46%;--x:-22px;--r:-20deg;--z:18px;--b0:43%;--b1:51%;color:var(--fl-white)"><svg viewBox="0 0 40 40"><use href="#vbDaisy"/></svg></span>
+  <span class="vine-bloom" style="--t:49%;--x:24px;--r:0deg;--z:15px;--b0:47%;--b1:55%;color:var(--fl-yolk)"><svg viewBox="0 0 40 40"><use href="#vbBall"/></svg></span>
+  <span class="vine-bloom" style="--t:49%;--x:14px;--r:16deg;--z:22px;--b0:46%;--b1:54%;color:var(--fl-blush);--fc:var(--fl-blush-deep)"><svg viewBox="0 0 40 40"><use href="#vbTulip"/></svg></span>
+  <span class="vine-bloom" style="--t:52%;--x:-6px;--r:-8deg;--z:22px;--b0:49%;--b1:57%;color:var(--fl-leaf)"><svg viewBox="0 0 40 40"><use href="#vbSprig"/></svg></span>
+  <span class="vine-bloom" style="--t:55%;--x:13px;--r:14deg;--z:23px;--b0:52%;--b1:60%;color:var(--fl-lilac);--fc:var(--fl-lilac-deep)"><svg viewBox="0 0 40 40"><use href="#vbLilac"/></svg></span>
+  <span class="vine-bloom" style="--t:59%;--x:22px;--r:10deg;--z:18px;--b0:56%;--b1:64%;color:var(--fl-white)"><svg viewBox="0 0 40 40"><use href="#vbDaisy"/></svg></span>
+  <span class="vine-bloom" style="--t:61%;--x:13px;--r:-10deg;--z:33px;--b0:58%;--b1:67%;color:var(--fl-blush);--fc:var(--fl-blush-deep)"><svg viewBox="0 0 40 40"><use href="#vbRose"/></svg></span>
+  <span class="vine-bloom" style="--t:66%;--x:-23px;--r:14deg;--z:23px;--b0:63%;--b1:71%;color:var(--fl-lilac);--fc:var(--fl-lilac-deep)"><svg viewBox="0 0 40 40"><use href="#vbLilac"/></svg></span>
+  <span class="vine-bloom" style="--t:65%;--x:24px;--r:18deg;--z:16px;--b0:62%;--b1:70%;color:var(--fl-white)"><svg viewBox="0 0 40 40"><use href="#vbDaisy"/></svg></span>
+  <span class="vine-bloom" style="--t:70%;--x:-13px;--r:-6deg;--z:20px;--b0:67%;--b1:75%;color:var(--fl-coral);--fc:var(--fl-coral-deep)"><svg viewBox="0 0 40 40"><use href="#vbRose"/></svg></span>
+  <span class="vine-bloom" style="--t:69%;--x:14px;--r:8deg;--z:16px;--b0:66%;--b1:74%;color:var(--fl-blue);--fc:var(--fl-blue-deep)"><svg viewBox="0 0 40 40"><use href="#vbDelph"/></svg></span>
+  <span class="vine-bloom" style="--t:73%;--x:-22px;--r:-20deg;--z:22px;--b0:70%;--b1:78%;color:var(--fl-leaf-deep)"><svg viewBox="0 0 40 40"><use href="#vbSprig"/></svg></span>
+  <span class="vine-bloom" style="--t:76%;--x:15px;--r:0deg;--z:16px;--b0:74%;--b1:82%;color:var(--fl-yolk)"><svg viewBox="0 0 40 40"><use href="#vbBall"/></svg></span>
+  <span class="vine-bloom" style="--t:78%;--x:8px;--r:-6deg;--z:33px;--b0:75%;--b1:84%;color:var(--fl-peach);--fc:var(--fl-peach-deep)"><svg viewBox="0 0 40 40"><use href="#vbRose"/></svg></span>
+  <span class="vine-bloom" style="--t:82%;--x:-13px;--r:16deg;--z:17px;--b0:79%;--b1:87%;color:var(--fl-white)"><svg viewBox="0 0 40 40"><use href="#vbDaisy"/></svg></span>
+  <span class="vine-bloom" style="--t:86%;--x:15px;--r:-10deg;--z:16px;--b0:83%;--b1:91%;color:var(--fl-blue);--fc:var(--fl-blue-deep)"><svg viewBox="0 0 40 40"><use href="#vbDelph"/></svg></span>
+  <span class="vine-bloom" style="--t:88%;--x:-22px;--r:-14deg;--z:22px;--b0:85%;--b1:93%;color:var(--fl-leaf)"><svg viewBox="0 0 40 40"><use href="#vbSprig"/></svg></span>
+  <span class="vine-bloom" style="--t:90%;--x:23px;--r:20deg;--z:23px;--b0:86%;--b1:94%;color:var(--fl-lilac);--fc:var(--fl-lilac-deep)"><svg viewBox="0 0 40 40"><use href="#vbLilac"/></svg></span>
+  <span class="vine-bloom" style="--t:92%;--x:-12px;--r:8deg;--z:30px;--b0:88%;--b1:96%;color:var(--fl-blush);--fc:var(--fl-blush-deep)"><svg viewBox="0 0 40 40"><use href="#vbRose"/></svg></span>
+  <span class="vine-bloom" style="--t:94%;--x:-22px;--r:-10deg;--z:18px;--b0:90%;--b1:97%;color:var(--fl-white)"><svg viewBox="0 0 40 40"><use href="#vbDaisy"/></svg></span>
+  <span class="vine-bloom" style="--t:96%;--x:14px;--r:16deg;--z:22px;--b0:93%;--b1:99%;color:var(--fl-blue);--fc:var(--fl-blue-deep)"><svg viewBox="0 0 40 40"><use href="#vbDelph"/></svg></span>
+  <span class="vine-bloom" style="--t:99%;--x:-8px;--r:-4deg;--z:24px;--b0:96%;--b1:100%;color:var(--fl-leaf)"><svg viewBox="0 0 40 40"><use href="#vbSprig"/></svg></span>
+    </div>
+  </div>
+</div>
+
+<nav id="nav">
+  <a href="#top" class="nav-mark">
+    <img src="Assets/Logo.png" alt="Logo">
+  </a>
+  <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="navLinks">&#9776;</button>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#story" data-close>Our Story</a></li>
+    <li><a href="#storymap" data-close>Our Journey</a></li>
+    <li><a href="#details" data-close>Event Details</a></li>
+    <li><a href="#travel" data-close>Travel</a></li>
+    <li><a href="#gallery" data-close>Gallery</a></li>
+    <li><a href="#honeymoon" data-close>Honeymoon</a></li>
+    <li><a href="#faq" data-close>FAQ</a></li>
+    <li><a href="#rsvp" data-close>RSVP</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<header class="hero" id="top">
+  <div class="hero-stage">
+    <img class="hero-img hero-layer" src="Assets/Hero-Background.webp" width="1024" height="1024"
+         fetchpriority="high" decoding="async"
+         alt="Diego and Bethany kissing in a sunlit spring woodland.">
+  </div>
+  <div class="hero-scrim" aria-hidden="true"></div>
+  <div class="hero-frame" aria-hidden="true"></div>
+
+  <div class="hero-content">
+    <h1 class="hero-title serif"><em>Diego</em> <span class="ampersand">&amp;</span> <em>Bethany</em></h1>
+    <p class="hero-sub">are getting married &middot; 29 April 2027 &middot; Southdowns Manor</p>
+
+    <div class="countdown" id="countdown">
+      <div class="unit"><div class="num" id="cd-days">–</div><div class="label">Days</div></div>
+      <div class="unit"><div class="num" id="cd-hours">–</div><div class="label">Hours</div></div>
+      <div class="unit"><div class="num" id="cd-mins">–</div><div class="label">Minutes</div></div>
+      <div class="unit"><div class="num" id="cd-secs">–</div><div class="label">Seconds</div></div>
+    </div>
+  </div>
+
+  <div class="scroll-cue" aria-hidden="true"><span>Scroll</span><span class="line"></span></div>
+</header>
+
+<!-- OUR STORY -->
+<section id="story">
+  <div class="section-inner">
+    <div class="divider">
+      <svg class="sprig" viewBox="0 0 120 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M60 55 C 60 40, 40 30, 20 20" stroke="#5D9440" stroke-width="1.5"/>
+        <path d="M60 55 C 60 40, 80 30, 100 20" stroke="#5D9440" stroke-width="1.5"/>
+        <ellipse cx="20" cy="18" rx="7" ry="4" fill="#86B463" transform="rotate(-30 20 18)"/>
+        <ellipse cx="100" cy="18" rx="7" ry="4" fill="#86B463" transform="rotate(30 100 18)"/>
+        <ellipse cx="60" cy="10" rx="6" ry="9" fill="#80A3C2"/>
+      </svg>
+    </div>
+    <div class="story-grid">
+      <div class="story-copy reveal">
+        <span class="eyebrow">Our Story</span>
+        <h2 class="section-title serif">How it began</h2>
+        <p>We met in our first year of university, right in the middle of Covid. Bethany offered to help Diego with some coursework, and that was that.</p>
+        <p>Years later, on our very first cruise together, sailing through Iceland and the Norwegian Fjords, Diego proposed on the 22nd of May, 2025. We said yes to forever somewhere between the glaciers and the fjords, and we can't wait to celebrate with the people who mean the most to us.</p>
+        <ol class="story-timeline">
+          <li class="tl-step"><span class="tl-date">29 April 2021</span><span class="tl-label">Met</span></li>
+          <li class="tl-step"><span class="tl-date">22 May 2025</span><span class="tl-label">Engaged</span></li>
+          <li class="tl-step"><span class="tl-date">29 April 2027</span><span class="tl-label">Married</span></li>
+        </ol>
+      </div>
+      <div class="story-visual reveal">
+        <img src="Assets/Vinyard.webp" width="1024" height="1024" loading="lazy" decoding="async"
+             alt="Watercolour of Southdowns Manor and its spring gardens in full bloom.">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STORY MAP -->
+<section id="storymap" aria-labelledby="journey-map-title">
+  <div class="section-inner">
+    <div class="journey-map-layout">
+      <div class="journey-map-stage" aria-hidden="false">
+        <div id="journeyLeafletMap" aria-label="Interactive map of our journey from Swansea to Southampton, Iceland and Norway"></div>
+        <div class="journey-compass" aria-hidden="true">N</div>
+
+        <div class="journey-map-camera" id="journeyMapCamera">
+          <svg class="journey-map-svg" viewBox="0 0 1000 680" role="img"
+               aria-labelledby="journey-map-title journey-map-desc">
+            <title id="journey-map-title">Our journey from Swansea to Norway</title>
+            <desc id="journey-map-desc">A stylised illustrated travel map. The route progressively reveals from Swansea in Wales to Southampton in England, across the Atlantic to Iceland, and finally to Norway as the visitor scrolls.</desc>
+
+            <defs>
+              <linearGradient id="journeySea" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#F2F8FA"/>
+                <stop offset="100%" stop-color="#DCEAF5"/>
+              </linearGradient>
+              <linearGradient id="journeyLand" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#E4EEDC"/>
+                <stop offset="100%" stop-color="#C9DFBA"/>
+              </linearGradient>
+              <linearGradient id="journeyLandDark" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#D5E7C8"/>
+                <stop offset="100%" stop-color="#B8D3A8"/>
+              </linearGradient>
+              <filter id="journeyPaper" x="-10%" y="-10%" width="120%" height="120%">
+                <feTurbulence type="fractalNoise" baseFrequency=".018" numOctaves="2" seed="4" result="noise"/>
+                <feColorMatrix in="noise" type="saturate" values="0"/>
+                <feComponentTransfer><feFuncA type="table" tableValues="0 .045"/></feComponentTransfer>
+                <feBlend in="SourceGraphic" mode="multiply"/>
+              </filter>
+            </defs>
+
+            <rect width="1000" height="680" rx="24" fill="url(#journeySea)"/>
+
+            <!-- Simplified geographic context -->
+            <g opacity=".88" filter="url(#journeyPaper)">
+              <!-- Ireland -->
+              <path class="land" d="M166 166 C132 142 104 165 105 202 C106 238 132 260 159 246 C181 234 186 194 166 166Z"/>
+              <!-- Great Britain -->
+              <path class="land" d="M252 126 C278 104 302 112 308 145 C315 182 300 214 312 250 C323 286 312 331 285 354 C260 374 230 352 233 320 C237 286 252 262 246 226 C239 190 232 150 252 126Z"/>
+              <!-- England / Wales subtle internal wash -->
+              <path class="land-detail" d="M247 272 C264 263 286 267 302 278"/>
+              <!-- France / northern Europe -->
+              <path class="land" d="M332 374 C380 340 430 346 470 380 C492 400 484 433 450 448 C408 466 356 454 326 426 C310 411 313 389 332 374Z"/>
+              <!-- Iceland -->
+              <path class="land" d="M365 106 C404 83 460 91 487 120 C501 136 489 159 458 166 C423 174 379 161 355 140 C344 130 350 115 365 106Z"/>
+              <!-- Norway / Scandinavian peninsula -->
+              <path class="land" d="M652 86 C683 63 721 76 733 110 C746 147 732 185 716 214 C704 237 714 265 694 289 C676 310 647 298 645 271 C644 244 660 224 654 198 C646 169 632 111 652 86Z"/>
+              <!-- Sweden / Finland -->
+              <path class="land" d="M735 102 C763 92 792 111 798 143 C805 180 794 222 778 249 C765 272 741 267 735 244 C729 220 743 192 738 166 C733 142 720 112 735 102Z"/>
+            </g>
+
+            <!-- Decorative ocean lines -->
+            <g class="water-detail">
+              <path d="M58 298 C170 272 270 304 360 282"/>
+              <path d="M80 336 C196 310 286 340 378 318"/>
+              <path d="M470 238 C566 216 650 238 752 214"/>
+              <path d="M474 520 C600 492 724 520 900 486"/>
+              <path d="M500 560 C628 532 748 562 914 530"/>
+            </g>
+
+            <!-- Tiny decorative waves -->
+            <g fill="none" stroke="#80A3C2" stroke-width="1.4" opacity=".45">
+              <path d="M92 474 q12 -8 24 0 t24 0"/>
+              <path d="M846 356 q12 -8 24 0 t24 0"/>
+              <path d="M530 126 q12 -8 24 0 t24 0"/>
+            </g>
+
+            <!-- Scroll-drawn route segments -->
+            <path id="journeyRoute01" class="journey-route route-complete"
+                  d="M275 286 C320 290 340 350 392 385"/>
+            <path id="journeyRoute02" class="journey-route route-complete"
+                  d="M392 385 C412 314 404 230 421 145"/>
+            <path id="journeyRoute03" class="journey-route route-complete"
+                  d="M421 145 C505 90 575 103 690 158"/>
+
+            <!-- Swansea marker -->
+            <g class="journey-marker" data-stage="0" transform="translate(275 286)">
+              <circle class="marker-halo" r="42"/>
+              <circle class="marker-ring" r="31"/>
+              <!-- simplified coastal / Welsh-inspired illustration -->
+              <path class="marker-illustration" d="M-16 8 C-9 2 4 3 16 8"/>
+              <path class="marker-illustration" d="M-11 2 L-6 -12 L0 2 L6 -9 L12 4"/>
+              <circle class="marker-core" cx="0" cy="20" r="5"/>
+              <text class="marker-title" x="0" y="64" text-anchor="middle">Swansea</text>
+              <text class="marker-sub" x="0" y="82" text-anchor="middle">Wales · Where it begins</text>
+            </g>
+
+            <!-- Southampton marker -->
+            <g class="journey-marker" data-stage="1" transform="translate(392 385)">
+              <circle class="marker-halo" r="42"/>
+              <circle class="marker-ring" r="31"/>
+              <!-- harbour / ship illustration -->
+              <path class="marker-illustration" d="M-18 6 H18 L10 15 H-10 Z"/>
+              <path class="marker-illustration" d="M-2 5 V-14 H10 L16 5"/>
+              <path class="marker-illustration" d="M-18 20 Q0 13 18 20"/>
+              <circle class="marker-core" cx="0" cy="28" r="5"/>
+              <text class="marker-title" x="0" y="64" text-anchor="middle">Southampton</text>
+              <text class="marker-sub" x="0" y="82" text-anchor="middle">England · The harbour</text>
+            </g>
+
+            <!-- Iceland marker -->
+            <g class="journey-marker" data-stage="2" transform="translate(421 145)">
+              <circle class="marker-halo" r="44"/>
+              <circle class="marker-ring" r="31"/>
+              <!-- mountain + waterfall -->
+              <path class="marker-illustration" d="M-20 8 L-5 -13 L5 0 L13 -10 L22 8"/>
+              <path class="marker-illustration" d="M5 0 V17"/>
+              <path class="marker-illustration" d="M-2 17 Q5 21 12 17"/>
+              <circle class="marker-core" cx="0" cy="28" r="5"/>
+              <text class="marker-title" x="0" y="66" text-anchor="middle">Iceland</text>
+              <text class="marker-sub" x="0" y="84" text-anchor="middle">Across the Atlantic</text>
+            </g>
+
+            <!-- Norway marker -->
+            <g class="journey-marker" data-stage="3" transform="translate(690 158)">
+              <circle class="marker-halo" r="46"/>
+              <circle class="marker-ring" r="31"/>
+              <!-- fjord illustration -->
+              <path class="marker-illustration" d="M-21 10 L-7 -14 L2 3 L13 -17 L23 10"/>
+              <path class="marker-illustration" d="M-7 -14 V17 M13 -17 V17"/>
+              <path class="marker-illustration" d="M-21 17 Q0 7 23 17"/>
+              <circle class="marker-core" cx="0" cy="29" r="5"/>
+              <text class="marker-title" x="0" y="68" text-anchor="middle">Norway</text>
+              <text class="marker-sub" x="0" y="86" text-anchor="middle">The fjords · Finally</text>
+            </g>
+
+            <g opacity=".45" aria-hidden="true">
+              <text x="98" y="625" font-family="var(--font-serif)" font-size="18" fill="#43627E">a little journey</text>
+              <text x="800" y="610" font-family="var(--font-script)" font-size="32" fill="#5D9440">and then us</text>
+            </g>
+          </svg>
+        </div>
+
+        <div class="journey-map-caption" id="journeyMapCaption">Swansea · our starting point</div>
+      </div>
+
+      <div class="journey-story">
+        <div class="journey-story-head">
+          <div class="divider divider--stem">
+            <svg class="sprig" viewBox="0 0 120 60" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M60 56 C60 38 58 20 62 6" stroke="#5D9440" stroke-width="1.5" stroke-linecap="round"/>
+              <ellipse cx="52" cy="30" rx="6" ry="3.5" fill="#86B463" transform="rotate(-32 52 30)"/>
+              <ellipse cx="70" cy="22" rx="6" ry="3.5" fill="#86B463" transform="rotate(28 70 22)"/>
+              <ellipse cx="62" cy="6" rx="5" ry="7.5" fill="#80A3C2"/>
+            </svg>
+          </div>
+          <span class="eyebrow">Our Journey</span>
+          <h2 class="section-title serif">From Wales to the fjords</h2>
+          <p>Four places, one story. Scroll through the chapters and the illustrated route will travel with you.</p>
+        </div>
+
+        <article class="journey-stage-card is-active" data-stage-card="0">
+          <img class="journey-stage-image" src="Assets/Swansea.webp" alt="Aerial view of Swansea Bay and the city coastline" loading="lazy" decoding="async">
+          <span class="journey-stage-kicker" data-n="01">Where it begins</span>
+          <h3>Swansea</h3>
+          <p>It all began in Swansea, where two university students crossed paths, and somehow everything changed. Neither of us knew it yet, but this was the start of forever.</p>
+          <span class="stage-detail">Wales · Starting point</span>
+        </article>
+
+        <article class="journey-stage-card" data-stage-card="1">
+          <img class="journey-stage-image" src="Assets/Southampton.webp" alt="Southampton harbour with boats" loading="lazy" decoding="async">
+          <span class="journey-stage-kicker" data-n="02">The next chapter</span>
+          <h3>Southampton</h3>
+          <p>Hand in hand, we packed up our old lives and built a new one together in Southampton: our first home, our first jobs, our first taste of real life as a team.</p>
+          <span class="stage-detail">England · Harbour · Departure</span>
+        </article>
+
+        <article class="journey-stage-card" data-stage-card="2">
+          <img class="journey-stage-image" src="Assets/Reykjav%C3%ADk.webp" alt="A colourful street in Reykjavik, Iceland" loading="lazy" decoding="async">
+          <span class="journey-stage-kicker" data-n="03">Across the Atlantic</span>
+          <h3>Iceland</h3>
+          <p>Chasing the Northern Lights and open seas, we set sail on our very first cruise together, an adventure to Iceland that reminded us just how much fun it is to explore the world side by side.</p>
+          <span class="stage-detail">Iceland · Waterfalls · North Atlantic</span>
+        </article>
+
+        <article class="journey-stage-card" data-stage-card="3">
+          <img class="journey-stage-image" src="Assets/Geiranger.webp" alt="Norwayfjord between steep green mountains" loading="lazy" decoding="async">
+          <span class="journey-stage-kicker" data-n="04">And finally</span>
+          <h3>Norway</h3>
+          <p>Beneath the towering fjords of Geiranger, surrounded by some of the most breathtaking scenery on earth, Diego got down on one knee &#8212; and Beth said yes. A moment we'll treasure forever, in a place as beautiful as our story.</p>
+          <span class="stage-detail">Norway · Fjords · Final destination</span>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- EVENT DETAILS -->
+<section id="details">
+  <div class="section-inner">
+          <div class="divider divider--stem">
+        <svg class="sprig" viewBox="0 0 120 60" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M60 56 C 60 38, 58 20, 62 6" stroke="#5D9440" stroke-width="1.5" stroke-linecap="round"/>
+          <ellipse cx="52" cy="30" rx="6" ry="3.5" fill="#86B463" transform="rotate(-32 52 30)"/>
+          <ellipse cx="70" cy="22" rx="6" ry="3.5" fill="#86B463" transform="rotate(28 70 22)"/>
+          <ellipse cx="62" cy="6" rx="5" ry="7.5" fill="#80A3C2"/>
+        </svg>
+      </div>
+<div class="reveal">
+      <span class="eyebrow">Event Details</span>
+      <h2 class="section-title serif">The Day</h2>
+      <p>Here's how the day will unfold. Times are approximate for now and will be confirmed closer to the date.</p>
+    </div>
+    <p class="day-status" id="dayStatus"><span class="dot"></span>This running order goes live on the day and will show you what&rsquo;s happening right now.</p>
+
+    <div class="schedule reveal" id="schedule">
+      <span class="day-light" aria-hidden="true"></span>
+      <div class="schedule-item" data-start="720">
+        <div class="schedule-time">12:00 PM</div>
+        <div><div class="schedule-name">Guests Arrive</div><div class="schedule-desc">Please arrive from this time to find your seat and settle in before the ceremony begins</div><span class="now-tag" aria-hidden="true">Happening now</span></div>
+      </div>
+      <div class="schedule-item" data-start="810">
+        <div class="schedule-time">1:30 PM</div>
+        <div><div class="schedule-name">Ceremony</div><div class="schedule-desc">We say our vows at Southdowns Manor. Please be seated a little beforehand.</div><span class="now-tag" aria-hidden="true">Happening now</span></div>
+      </div>
+      <div class="schedule-item" data-start="840">
+        <div class="schedule-time">2:00 PM</div>
+        <div><div class="schedule-name">Drinks Reception</div><div class="schedule-desc">Celebrate with us over drinks and canapés as we begin married life.</div><span class="now-tag" aria-hidden="true">Happening now</span></div>
+      </div>
+      <div class="schedule-item" data-start="960">
+        <div class="schedule-time">4:00 PM</div>
+        <div><div class="schedule-name">Wedding Breakfast</div><div class="schedule-desc">Join us for a relaxed meal together to mark the occasion.</div><span class="now-tag" aria-hidden="true">Happening now</span></div>
+      </div>
+      <div class="schedule-item" data-start="1080">
+        <div class="schedule-time">6:00 PM</div>
+        <div><div class="schedule-name">Speeches</div><div class="schedule-desc">Raise a glass as our loved ones share a few heartfelt words.</div><span class="now-tag" aria-hidden="true">Happening now</span></div>
+      </div>
+      <div class="schedule-item" data-start="1140">
+        <div class="schedule-time">7:00 PM</div>
+        <div><div class="schedule-name">Evening Reception</div><div class="schedule-desc">Evening guests join us as we dance and celebrate into the night.</div><span class="now-tag" aria-hidden="true">Happening now</span></div>
+      </div>
+    </div>
+
+    <div class="day-actions reveal">
+      <button class="ics-btn" type="button" data-ics>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="16" rx="2.5"/><path d="M8 3v4M16 3v4M3.5 10h17"/><path d="M9.5 15.5l1.8 1.8 3.4-3.6"/></svg>
+        <span class="ics-label">Save the day to your calendar</span>
+      </button>
+    </div>
+
+
+    <div class="venue-card reveal">
+      <div>
+        <span class="eyebrow">Venue</span>
+        <h3 class="serif">Southdowns Manor</h3>
+        <p>A countryside manor set in the Hampshire hills, with the full address and directions to follow closer to the date.</p>
+        <p class="venue-loc">One setting for the whole celebration: ceremony, wedding breakfast and evening reception.</p>
+      </div>
+      <figure class="venue-photo">
+        <img src="Assets/southdowns-manor.webp" width="1024" height="1024" loading="lazy" decoding="async"
+             alt="Watercolour of Southdowns Manor and its spring gardens in bloom, the countryside house where Diego and Bethany will marry.">
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- DRESS CODE -->
+<section id="dress">
+  <div class="section-inner">
+    <div class="divider divider--bloom">
+<svg class="sprig" viewBox="0 0 120 60" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <path d="M60 56 C 60 42, 44 34, 26 26" stroke="#5D9440" stroke-width="1.5"/>
+  <path d="M60 56 C 60 42, 76 34, 94 26" stroke="#5D9440" stroke-width="1.5"/>
+  <path d="M60 56 C 60 44, 60 30, 60 16" stroke="#5D9440" stroke-width="1.5"/>
+  <ellipse cx="26" cy="24" rx="6.5" ry="3.5" fill="#86B463" transform="rotate(-30 26 24)"/>
+  <ellipse cx="94" cy="24" rx="6.5" ry="3.5" fill="#86B463" transform="rotate(30 94 24)"/>
+  <circle cx="42" cy="20" r="5" fill="#ECA6B6"/>
+  <circle cx="78" cy="20" r="5" fill="#F2C230"/>
+  <ellipse cx="60" cy="12" rx="6" ry="9" fill="#80A3C2"/>
+  <circle cx="60" cy="12" r="2.4" fill="#FBF2D9"/>
+</svg>
+</div>
+    <div class="dress-head" data-dr>
+      <span class="eyebrow">Dress Code</span>
+      <h2 class="section-title serif">Garden Formal</h2>
+      <p class="dress-lead">The look we're hoping for on the day: relaxed, colourful, and right at home in a country garden.</p>
+    </div>
+    <figure class="dress-visual" data-dr>
+      <div class="dress-frame">
+        <img src="Assets/Dress%20Code.webp" width="1536" height="1024" loading="lazy" decoding="async"
+             alt="Illustrated Garden Formal dress-code guide. For women: elegant florals, soft fabrics, floral prints and playful colours. For men: light suits or smart separates in soft neutrals, pastels or earthy tones. Rows of guests in garden-formal outfits framed by watercolour flowers and foliage.">
+      </div>
+      <figcaption class="dress-cap">A little inspiration for the day.</figcaption>
+    </figure>
+    <ul class="dress-cues" data-dr>
+      <li><span class="cue-t">Kind to the lawns</span><span class="cue-d">The grass can be soft underfoot, so block heels or flats will thank you later.</span></li>
+      <li><span class="cue-t">A layer for later</span><span class="cue-d">Late-April evenings turn cool once the sun drops, so bring something to wrap up in.</span></li>
+      <li><span class="cue-t">Keep it relaxed</span><span class="cue-d">No black tie needed; it's a garden celebration, so wear something you can enjoy the day in.</span></li>
+    </ul>
+  </div>
+</section>
+
+<!-- TRAVEL & STAY -->
+<section id="travel">
+  <div class="section-inner">
+          <div class="divider divider--stem">
+        <svg class="sprig" viewBox="0 0 120 60" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M60 56 C 60 38, 58 20, 62 6" stroke="#5D9440" stroke-width="1.5" stroke-linecap="round"/>
+          <ellipse cx="52" cy="30" rx="6" ry="3.5" fill="#86B463" transform="rotate(-32 52 30)"/>
+          <ellipse cx="70" cy="22" rx="6" ry="3.5" fill="#86B463" transform="rotate(28 70 22)"/>
+          <ellipse cx="62" cy="6" rx="5" ry="7.5" fill="#80A3C2"/>
+        </svg>
+      </div>
+<div data-tr>
+      <span class="eyebrow">Travel &amp; Stay</span>
+      <h2 class="section-title serif">Getting There &amp; Where to Stay</h2>
+      <p class="travel-intro">Southdowns Manor sits deep in the South Downs countryside, so here's everything you need to arrive relaxed and find a bed nearby, no hunting across ten browser tabs required.</p>
+    </div>
+
+    <div class="travel-blocks">
+
+      <!-- Plan my journey -->
+      <div class="travel-block journey-block" data-tr>
+        <div class="block-head">
+          <svg class="ico" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M15.5 8.5l-2.2 5.1-5.1 2.2 2.2-5.1z"/></svg>
+          <h3 class="serif">Plan your journey</h3>
+        </div>
+        <p class="block-p">Tell us where you&rsquo;re setting off from and we&rsquo;ll work out the drive, the buffer you&rsquo;ll want, and whether the train is the easier option.</p>
+
+        <form class="journey-form" id="journeyForm" novalidate>
+          <label class="sr-only" for="journeyFrom">Your town or postcode</label>
+          <input id="journeyFrom" name="from" type="text" placeholder="e.g. Guildford, or GU32 3AP" autocomplete="postal-code" spellcheck="false">
+          <button class="journey-btn" type="submit" id="journeyBtn">
+            <span class="journey-btn-label">Plot my route</span>
+          </button>
+        </form>
+        <p class="field-hint">UK towns and postcodes. Nothing is stored; it&rsquo;s worked out in your browser.</p>
+
+        <div class="journey-result" id="journeyResult" role="status" aria-live="polite" hidden></div>
+
+        <div class="journey-extras">
+          <button class="ics-btn" type="button" data-ics>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="16" rx="2.5"/><path d="M8 3v4M16 3v4M3.5 10h17"/><path d="M9.5 15.5l1.8 1.8 3.4-3.6"/></svg>
+            <span class="ics-label">Add 29 April 2027 to your calendar</span>
+          </button>
+          <p class="journey-share">Driving and have a spare seat, or hoping for one? Mention it in the message box when you <a href="#rsvp">RSVP</a> and we&rsquo;ll happily put people in touch.</p>
+        </div>
+      </div>
+
+      <!-- By car -->
+      <div class="travel-block" data-tr>
+        <div class="block-head">
+          <svg class="ico" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21s-6-5.1-6-10a6 6 0 0 1 12 0c0 4.9-6 10-6 10z"/><circle cx="12" cy="11" r="2.3"/></svg>
+          <h3 class="serif">By car</h3>
+        </div>
+        <div class="getting-here">
+          <div class="locate">
+            <p class="address">Southdowns Manor<br>Dumpford Lane<br>Petersfield</p>
+            <div class="postcode-row">
+              <span class="postcode" id="venuePostcode">GU31 5JN</span>
+              <button class="copy-btn" type="button" id="copyPostcode" data-postcode="GU31 5JN">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8" y="8" width="12" height="13" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h2"/></svg>
+                <span class="copy-label" aria-live="polite">Copy postcode</span>
+              </button>
+            </div>
+            <div class="map-links">
+              <a class="ext-link" href="https://www.google.com/maps/dir/?api=1&amp;destination=Southdowns+Manor+GU31+5JN" target="_blank" rel="noopener noreferrer">Directions in Google Maps<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7"/><path d="M8 7h9v9"/></svg><span class="sr-only">(opens in a new tab)</span></a>
+              <a class="ext-link" href="https://maps.apple.com/?q=Southdowns+Manor+GU31+5JN" target="_blank" rel="noopener noreferrer">Open in Apple Maps<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7"/><path d="M8 7h9v9"/></svg><span class="sr-only">(opens in a new tab)</span></a>
+            </div>
+            <p class="satnav-hint">Sat-navs sometimes misroute rural venues down the wrong lane. The manor lies just off the A272 between Petersfield and Midhurst, so follow the map for the final stretch.</p>
+            <div class="note note--warn">
+              <span class="note-label">Rural lanes at night</span>
+              The approach is along narrow country lanes with no streetlights and patchy phone signal. Allow extra time, drive gently, and save your route before you set off.
+            </div>
+            <div class="note note--ok">
+              <span class="note-label">Parking &middot; plenty on-site</span>
+              There's plenty of parking at the manor, so nobody needs to reserve a space. No location pin to hunt for either &mdash; the entrance is signposted off the lane, and the team will point you to the car park as you arrive.
+            </div>
+          </div>
+          <div class="map-frame">
+            <div class="static-map">
+              <div class="static-map-tiles" aria-hidden="true">
+                <img src="https://tile.openstreetmap.org/14/8152/5483.png" width="256" height="256" alt="" loading="lazy" decoding="async">
+                <img src="https://tile.openstreetmap.org/14/8153/5483.png" width="256" height="256" alt="" loading="lazy" decoding="async">
+                <img src="https://tile.openstreetmap.org/14/8154/5483.png" width="256" height="256" alt="" loading="lazy" decoding="async">
+                <img src="https://tile.openstreetmap.org/14/8155/5483.png" width="256" height="256" alt="" loading="lazy" decoding="async">
+                <img src="https://tile.openstreetmap.org/14/8152/5484.png" width="256" height="256" alt="" loading="lazy" decoding="async">
+                <img src="https://tile.openstreetmap.org/14/8153/5484.png" width="256" height="256" alt="" loading="lazy" decoding="async">
+                <img src="https://tile.openstreetmap.org/14/8154/5484.png" width="256" height="256" alt="" loading="lazy" decoding="async">
+                <img src="https://tile.openstreetmap.org/14/8155/5484.png" width="256" height="256" alt="" loading="lazy" decoding="async">
+                <img src="https://tile.openstreetmap.org/14/8152/5485.png" width="256" height="256" alt="" loading="lazy" decoding="async">
+                <img src="https://tile.openstreetmap.org/14/8153/5485.png" width="256" height="256" alt="" loading="lazy" decoding="async">
+                <img src="https://tile.openstreetmap.org/14/8154/5485.png" width="256" height="256" alt="" loading="lazy" decoding="async">
+                <img src="https://tile.openstreetmap.org/14/8155/5485.png" width="256" height="256" alt="" loading="lazy" decoding="async">
+                <img src="https://tile.openstreetmap.org/14/8152/5486.png" width="256" height="256" alt="" loading="lazy" decoding="async">
+                <img src="https://tile.openstreetmap.org/14/8153/5486.png" width="256" height="256" alt="" loading="lazy" decoding="async">
+                <img src="https://tile.openstreetmap.org/14/8154/5486.png" width="256" height="256" alt="" loading="lazy" decoding="async">
+                <img src="https://tile.openstreetmap.org/14/8155/5486.png" width="256" height="256" alt="" loading="lazy" decoding="async">
+              </div>
+              <span class="map-pin" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none"><path d="M12 23.5S4.5 15.2 4.5 9a7.5 7.5 0 0 1 15 0c0 6.2-7.5 14.5-7.5 14.5z" fill="currentColor"/><circle cx="12" cy="9" r="2.7"/></svg>
+              </span>
+            </div>
+            <a class="map-cover" href="https://www.google.com/maps/search/?api=1&amp;query=Southdowns+Manor+GU31+5JN" target="_blank" rel="noopener noreferrer"><span class="sr-only">Open Southdowns Manor, GU31 5JN in Google Maps (opens in a new tab)</span></a>
+            <span class="map-caption">Southdowns Manor · GU31 5JN</span>
+            <a class="map-attr" href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">© OpenStreetMap<span class="sr-only"> contributors (opens in a new tab)</span></a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Where to stay -->
+      <div class="travel-block" data-tr>
+        <div class="block-head">
+          <svg class="ico" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 18V7"/><path d="M3 12h14a3 3 0 0 1 3 3v3"/><path d="M20 18v-3"/><path d="M6.5 12v-2h4v2"/></svg>
+          <h3 class="serif">Where to stay</h3>
+        </div>
+        <p class="block-p">A spread of places within a short drive, from country-house treats to reliable budget rooms. Drive times below are approximate from the manor.</p>
+        <button class="sort-btn" type="button" id="staySort" aria-pressed="false">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 4v16"/><path d="M4 17l3 3 3-3"/><path d="M13 6h7"/><path d="M13 11h5"/><path d="M13 16h3"/></svg>
+          <span class="sort-label">Closest to the venue first</span>
+        </button>
+        <div class="stay-tiers">
+
+          <div class="tier">
+            <p class="tier-label">Luxury &amp; country-house</p>
+            <div class="stays">
+              <div class="stay">
+                <div class="stay-name"><a href="https://parkhousehotel.com/" target="_blank" rel="noopener noreferrer">Park House Hotel &amp; Spa<span class="arrow" aria-hidden="true">&#8599;</span><span class="sr-only">(opens in a new tab)</span></a></div>
+                <div class="stay-meta">Bepton · 12 min</div>
+                <p class="stay-desc">Elegant country-house hotel with a spa, pools, tennis and croquet lawns. A proper South Downs treat.</p>
+              </div>
+              <div class="stay">
+                <div class="stay-name"><a href="https://www.hshotels.co.uk/spread-eagle" target="_blank" rel="noopener noreferrer">The Spread Eagle Hotel &amp; Spa<span class="arrow" aria-hidden="true">&#8599;</span><span class="sr-only">(opens in a new tab)</span></a></div>
+                <div class="stay-meta">Midhurst · 10 min</div>
+                <p class="stay-desc">A characterful 15th-century coaching inn in the heart of Midhurst, with a spa and centuries of history.</p>
+              </div>
+              <div class="stay">
+                <div class="stay-name"><a href="https://www.langrishhouse.co.uk/" target="_blank" rel="noopener noreferrer">Langrish House<span class="arrow" aria-hidden="true">&#8599;</span><span class="sr-only">(opens in a new tab)</span></a></div>
+                <div class="stay-meta">Langrish · 15 min</div>
+                <p class="stay-desc">A four-star country house set in 14 acres of gardens inside the South Downs National Park.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="tier">
+            <p class="tier-label">Inns &amp; mid-range</p>
+            <div class="stays">
+              <div class="stay">
+                <div class="stay-name"><a href="https://www.thehamiltonarms.co.uk/" target="_blank" rel="noopener noreferrer">Hamilton Arms<span class="arrow" aria-hidden="true">&#8599;</span><span class="sr-only">(opens in a new tab)</span></a></div>
+                <span class="stay-flag">Closest to the venue</span>
+                <div class="stay-meta">Stedham · 4 min</div>
+                <p class="stay-desc">A village pub-with-rooms in Stedham, the nearest place to lay your head after the party.</p>
+              </div>
+              <div class="stay">
+                <div class="stay-name"><a href="https://www.elstedinn.com/" target="_blank" rel="noopener noreferrer">Rooms at The Elsted Inn<span class="arrow" aria-hidden="true">&#8599;</span><span class="sr-only">(opens in a new tab)</span></a></div>
+                <div class="stay-meta">Elsted · 8 min</div>
+                <p class="stay-desc">A charming country pub-with-rooms, closer than most Midhurst options.</p>
+              </div>
+              <div class="stay">
+                <div class="stay-name"><a href="https://www.halfmoonsheet.co.uk/" target="_blank" rel="noopener noreferrer">The Half Moon<span class="arrow" aria-hidden="true">&#8599;</span><span class="sr-only">(opens in a new tab)</span></a></div>
+                <div class="stay-meta">Sheet · 12 min</div>
+                <p class="stay-desc">A family-owned free house with rooms on the edge of the South Downs.</p>
+              </div>
+              <div class="stay">
+                <div class="stay-name"><a href="https://www.cricketersinn.com/" target="_blank" rel="noopener noreferrer">The Cricketers Inn<span class="arrow" aria-hidden="true">&#8599;</span><span class="sr-only">(opens in a new tab)</span></a></div>
+                <div class="stay-meta">Steep · 15 min</div>
+                <p class="stay-desc">A cosy country pub with rooms, a good back-up if the closer inns fill up.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="tier">
+            <p class="tier-label">B&amp;B &amp; character</p>
+            <div class="stays">
+              <div class="stay">
+                <div class="stay-name"><a href="https://www.hotelsone.com/midhurst-hotels-gb/bridge-cottage-b-b.html" target="_blank" rel="noopener noreferrer">Bridge Cottage B&amp;B<span class="arrow" aria-hidden="true">&#8599;</span><span class="sr-only">(opens in a new tab)</span></a></div>
+                <div class="stay-meta">Midhurst · 10 min</div>
+                <p class="stay-desc">A quirky 1650s cottage B&amp;B with exceptional reviews, lovely for couples.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="tier">
+            <p class="tier-label">Budget</p>
+            <div class="stays">
+              <div class="stay">
+                <div class="stay-name"><a href="https://www.premierinn.com/gb/en/hotels/england/hampshire/petersfield/petersfield.html" target="_blank" rel="noopener noreferrer">Premier Inn Petersfield<span class="arrow" aria-hidden="true">&#8599;</span><span class="sr-only">(opens in a new tab)</span></a></div>
+                <div class="stay-meta">Petersfield · 15 min</div>
+                <p class="stay-desc">Reliable and good value, with free parking and right by Petersfield station.</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Trains & getting home -->
+      <div class="travel-block" data-tr>
+        <div class="block-head">
+          <svg class="ico" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="6" y="4" width="12" height="12" rx="2.5"/><path d="M6 11h12"/><path d="M8.5 20l1.5-4M15.5 20l-1.5-4"/><circle cx="9.7" cy="13.5" r="0.5"/><circle cx="14.3" cy="13.5" r="0.5"/></svg>
+          <h3 class="serif">Trains &amp; getting home</h3>
+        </div>
+        <p class="block-p">The nearest station is <strong>Petersfield</strong>, with direct trains to and from London Waterloo (around 70 minutes) on the Portsmouth line. It's roughly a 15-minute drive or taxi from the manor.</p>
+        <div class="note note--warn">
+          <span class="note-label">Last trains on the night · 29 April 2027</span>
+          <div class="trains">
+            <div class="train-row"><span class="train-dest">Petersfield &#8594; London Waterloo</span><span class="train-time">11:09 PM</span></div>
+            <div class="train-row"><span class="train-dest">Petersfield &#8594; Southampton</span><span class="train-time">10:12 PM</span></div>
+          </div>
+          Please double-check times nearer the day, and book your taxi back from the manor in advance. This is the one that catches people out.
+        </div>
+        <div class="note note--ok" style="margin-top:14px;">
+          <span class="note-label">Taxis home &middot; book ahead</span>
+          There's no shuttle, so a pre-booked taxi is the way home &mdash; app cabs rarely pick up out here. These three know the manor and the lanes around it:
+          <ul class="taxis">
+            <li class="taxi">
+              <span class="taxi-name">A2B Taxis Petersfield<em>Largest local fleet &middot; bookings 24 hours</em></span>
+              <a class="taxi-tel" href="tel:+441730233299">01730&nbsp;233&nbsp;299</a>
+            </li>
+            <li class="taxi">
+              <span class="taxi-name">Midhurst Cars<em>Family-run &middot; covers Midhurst, South Harting and Petersfield</em></span>
+              <a class="taxi-tel" href="tel:+441730821044">01730&nbsp;821044</a>
+            </li>
+            <li class="taxi">
+              <span class="taxi-name">Billycars<em>Petersfield-based &middot; used to rural pick-ups</em></span>
+              <a class="taxi-tel" href="tel:+441730777555">01730&nbsp;777555</a>
+            </li>
+          </ul>
+          Book the journey home when you book the one out &mdash; the last hours go first.
+        </div>
+      </div>
+
+      <!-- Good to know -->
+      <div class="travel-block" data-tr>
+        <div class="block-head">
+          <svg class="ico" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M14.5 9.5l-1.7 4.8-4.8 1.7 1.7-4.8z"/></svg>
+          <h3 class="serif">Good to know</h3>
+        </div>
+        <div class="know">
+          <div class="know-item"><h4>Signal is patchy</h4><p>Mobile coverage is thin around the manor. Screenshot your directions and booking details before you set out.</p></div>
+          <div class="know-item"><h4>Cash for taxis</h4><p>Some local firms are cash-only or card-with-notice, so it's worth carrying a little cash for the journey home.</p></div>
+          <div class="know-item"><h4>Arrive with time</h4><p>The final country lanes are slow going, so aim to reach the manor 20–30 minutes before the ceremony.</p></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="section-inner">
+    <div class="reveal">
+      <span class="eyebrow">Gallery</span>
+      <h2 class="section-title serif">A Few Moments</h2>
+    </div>
+    <div class="gallery-wall reveal" aria-label="A few of our favourite moments">
+      <figure class="gw-item gw-item--a" role="button" tabindex="0" aria-label="Open Our Story photograph">
+        <div class="matte">
+          <img src="Assets/Shadow-Photo.webp" alt="Our story" loading="lazy" decoding="async">
+        </div>
+        <figcaption>Our Story</figcaption>
+      </figure>
+      <figure class="gw-item gw-item--b" role="button" tabindex="0" aria-label="Open The Proposal photograph">
+        <div class="matte">
+          <img src="Assets/Proposal.webp" alt="The proposal" loading="lazy" decoding="async">
+        </div>
+        <figcaption>The Proposal</figcaption>
+      </figure>
+      <figure class="gw-item gw-item--c" role="button" tabindex="0" aria-label="Open Together photograph">
+        <div class="matte">
+          <img src="Assets/Vinyard.webp" alt="Together" loading="lazy" decoding="async">
+        </div>
+        <figcaption>Together</figcaption>
+      </figure>
+      <figure class="gw-item gw-item--d" role="button" tabindex="0" aria-label="Open Fjords photograph">
+        <div class="matte">
+          <img src="Assets/Waterfall.webp" alt="The fjords" loading="lazy" decoding="async">
+        </div>
+        <figcaption>Fjords</figcaption>
+      </figure>
+    </div>
+    <div class="gallery-lightbox" id="galleryLightbox" role="dialog" aria-modal="true" aria-label="Expanded photograph" hidden>
+      <div class="gallery-lightbox-inner">
+        <button class="gallery-lightbox-close" id="galleryLightboxClose" type="button" aria-label="Close photograph">&times;</button>
+        <img id="galleryLightboxImage" alt="">
+        <p class="gallery-lightbox-caption" id="galleryLightboxCaption"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HONEYMOON FUND -->
+<section id="honeymoon">
+  <div class="section-inner">
+    <div class="divider divider--bloom">
+<svg class="sprig" viewBox="0 0 120 60" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <path d="M60 56 C 60 42, 44 34, 26 26" stroke="#5D9440" stroke-width="1.5"/>
+  <path d="M60 56 C 60 42, 76 34, 94 26" stroke="#5D9440" stroke-width="1.5"/>
+  <path d="M60 56 C 60 44, 60 30, 60 16" stroke="#5D9440" stroke-width="1.5"/>
+  <ellipse cx="26" cy="24" rx="6.5" ry="3.5" fill="#86B463" transform="rotate(-30 26 24)"/>
+  <ellipse cx="94" cy="24" rx="6.5" ry="3.5" fill="#86B463" transform="rotate(30 94 24)"/>
+  <circle cx="42" cy="20" r="5" fill="#ECA6B6"/>
+  <circle cx="78" cy="20" r="5" fill="#F2C230"/>
+  <ellipse cx="60" cy="12" rx="6" ry="9" fill="#80A3C2"/>
+  <circle cx="60" cy="12" r="2.4" fill="#FBF2D9"/>
+</svg>
+</div>
+    <div class="honeymoon-head" data-hm>
+      <span class="eyebrow">With Love</span>
+      <h2 class="section-title serif">Honeymoon Fund</h2>
+      <p class="honeymoon-lead">
+        Your presence on the day is truly the greatest gift. But for anyone who'd like to give a little something more, we're saving up for our honeymoon, and any contribution, however small, would help make it unforgettable.
+      </p>
+    </div>
+    <div class="honeymoon-give" data-hm>
+      <div class="give-card">
+        <span class="eyebrow">How to Contribute</span>
+        <h3 class="serif">Add to the Adventure</h3>
+        <p class="give-lead">
+          We've set up a honeymoon fund where you can contribute directly. Just a click and a little.
+        </p>
+        <a class="give-btn" href="https://withjoy.com/diego-and-bethany/registry" target="_blank" rel="noopener noreferrer">
+          <span class="give-btn-label">Contribute to Our Honeymoon</span>
+          <span class="give-btn-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 12h14"/>
+              <path d="M13 6l6 6-6 6"/>
+            </svg>
+          </span>
+          <span class="sr-only">(opens in a new tab)</span>
+        </a>
+        <p class="give-alt">
+          Prefer to give on the day? There'll be a little postbox at the reception for cards and envelopes.
+        </p>
+        <p class="give-note">Please don't feel any obligation. Being with us on the day is truly enough. 💐</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="section-inner">
+    <div class="faq-head" data-faq>
+      <span class="eyebrow">FAQ</span>
+      <h2 class="section-title serif">A Few Helpful Details</h2>
+      <p class="faq-lead">A few quick answers before you RSVP. We’ll keep this updated as plans are finalised.</p>
+    </div>
+
+    <div class="faq-list" data-faq>
+      <details class="faq-item">
+        <summary>When should I RSVP by?</summary>
+        <div class="faq-answer">
+          <p>Please RSVP by 28 February 2027 so we have plenty of time to confirm final numbers.</p>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary>Can I bring a plus one?</summary>
+        <div class="faq-answer">
+          <p>Please refer to your invitation. If your invitation includes a named guest, they will be included when you RSVP.</p>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary>Are children invited?</summary>
+        <div class="faq-answer">
+          <p>We’ll confirm this clearly on each invitation. If you’re unsure, please get in touch with us directly.</p>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary>Is there parking at the venue?</summary>
+        <div class="faq-answer">
+          <p>Yes &mdash; there's plenty of parking at the manor and you don't need to reserve a space. There's no location pin to find either: the entrance is signposted off the lane, and the team will point you to the car park when you arrive.</p>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary>Do I need to book a taxi in advance?</summary>
+        <div class="faq-answer">
+          <p>Yes. The manor sits in a rural spot where app-based cabs rarely pick up, so pre-book a local firm. There are three we trust with their numbers listed under <a href="#travel">Taxis home</a>.</p>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary>What should I wear?</summary>
+        <div class="faq-answer">
+          <p>The dress code is Garden Formal. Think relaxed, colourful, and suitable for a countryside celebration.</p>
+        </div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- RSVP -->
+<section id="rsvp">
+  <div class="rsvp-atmos" aria-hidden="true"></div>
+  <div class="section-inner">
+    <div class="rsvp-intro" data-rv>
+      <span class="eyebrow">RSVP</span>
+      <h2 class="section-title serif">Let Us Know You're Coming</h2>
+      <p class="lead">Kindly reply by <strong>28 February 2027</strong>. We can't wait to celebrate the day with you.</p>
+      <p class="field-note" id="deadlinePassed" hidden>The reply deadline has passed &mdash; you&rsquo;re still very welcome to reply here, or <a href="mailto:Diego.beth21@gmail.com?subject=Wedding%20RSVP">email us</a> if that&rsquo;s easier.</p>
+    </div>
+
+    <div class="divider rsvp-divider" data-rv aria-hidden="true">
+      <svg class="sprig" viewBox="0 0 120 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M60 55 C 60 40, 40 30, 20 20" stroke="#45703A" stroke-width="1.5"/>
+        <path d="M60 55 C 60 40, 80 30, 100 20" stroke="#45703A" stroke-width="1.5"/>
+        <ellipse cx="20" cy="18" rx="7" ry="4" fill="#5D9440" transform="rotate(-30 20 18)"/>
+        <ellipse cx="100" cy="18" rx="7" ry="4" fill="#5D9440" transform="rotate(30 100 18)"/>
+        <ellipse cx="60" cy="10" rx="6" ry="9" fill="#80A3C2"/>
+      </svg>
+    </div>
+
+    <form class="rsvp-form" id="rsvpForm" novalidate data-rv>
+      <div class="field-row">
+        <div class="field">
+          <label for="guest-picker-input">Find your name</label>
+          <div class="guest-picker" id="guestPicker">
+            <input
+              id="guest-picker-input"
+              class="guest-picker-input"
+              type="text"
+              autocomplete="off"
+              placeholder="Start typing your name…"
+              role="combobox"
+              aria-expanded="false"
+              aria-controls="guest-picker-list"
+              aria-autocomplete="list"
+              required
+              aria-required="true"
+              aria-describedby="rsvp-name-err guest-picker-hint guest-attendance-note"
+            >
+            <input type="hidden" id="rsvp-name" name="name" value="">
+            <ul class="guest-picker-list" id="guest-picker-list" role="listbox" hidden></ul>
+          </div>
+          <p class="field-hint" id="guest-picker-hint">Start typing your name and we'll do the rest.</p>
+          <p class="field-err" id="rsvp-name-err" hidden>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v5"/><path d="M12 16h.01"/></svg>
+            <span>Please pick your name from the list.</span>
+          </p>
+          <p class="field-note" id="guest-not-found" hidden>
+            Can't find your name? <a href="mailto:Diego.beth21@gmail.com?subject=Wedding RSVP">Email us</a> and we'll add you.
+          </p>
+        </div>
+        <div class="field">
+          <label for="rsvp-email">Email</label>
+          <input id="rsvp-email" name="email" type="email" autocomplete="email" inputmode="email" placeholder="you@example.com" required aria-required="true" aria-describedby="rsvp-email-hint rsvp-email-err">
+          <p class="field-hint" id="rsvp-email-hint">So we can confirm we've received your reply.</p>
+          <p class="field-err" id="rsvp-email-err" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v5"/><path d="M12 16h.01"/></svg><span>Please add a valid email so we can confirm.</span></p>
+        </div>
+      </div>
+
+      <p class="field-note attendance-note" id="guest-attendance-note" role="status" aria-live="polite" hidden></p>
+
+      <fieldset class="field attend">
+        <legend>Will you be joining us?</legend>
+        <div class="attend-options">
+          <label class="attend-opt">
+            <input type="radio" name="attending" value="Joyfully accepts" checked>
+            <span class="dot" aria-hidden="true"></span>
+            <span>Joyfully accepts</span>
+          </label>
+          <label class="attend-opt">
+            <input type="radio" name="attending" value="Regretfully declines">
+            <span class="dot" aria-hidden="true"></span>
+            <span>Regretfully declines</span>
+          </label>
+        </div>
+      </fieldset>
+
+      <div class="rsvp-party" id="rsvpParty">
+        <div class="rsvp-party-inner">
+          <div class="field" id="partnerField" hidden>
+            <label id="partner-label">Will your plus-one be joining you?</label>
+            <p class="field-hint" id="partner-hint">
+              Your invitation includes <strong id="partner-name"></strong>.
+            </p>
+            <div class="attend-options" role="radiogroup" aria-labelledby="partner-label">
+              <label class="attend-opt">
+                <input type="radio" name="partnerAttending" value="yes" checked>
+                <span class="dot" aria-hidden="true"></span>
+                <span>Yes, together</span>
+              </label>
+              <label class="attend-opt">
+                <input type="radio" name="partnerAttending" value="no">
+                <span class="dot" aria-hidden="true"></span>
+                <span>No, just me</span>
+              </label>
+            </div>
+          </div>
+          <p class="field-note" id="soloNote" hidden>This invitation is for one, but you'll be very welcome. 💐</p>
+          <p class="field-note" id="alreadyRepliedNote" hidden>
+            Someone from your party has already replied. If you need to change your answer, please <a href="mailto:Diego.beth21@gmail.com?subject=Wedding%20RSVP%20change">email us</a>.
+          </p>
+          <div class="field-row field-row--single">
+            <div class="field">
+              <label id="course-label" for="course-trigger">Main course</label>
+
+              <div class="select-wrap custom-select custom-select--tall" data-custom-select>
+                <input id="rsvp-course" name="course" type="hidden" value="">
+
+                <button
+                  class="select-trigger"
+                  id="course-trigger"
+                  type="button"
+                  aria-haspopup="listbox"
+                  aria-expanded="false"
+                  aria-labelledby="course-label course-selected"
+                  aria-describedby="course-hint rsvp-course-err"
+                >
+                  <span id="course-selected" data-select-value>Please choose</span>
+                  <span class="select-chevron" aria-hidden="true"></span>
+                </button>
+
+                <ul class="select-menu" id="course-options" role="listbox" aria-labelledby="course-label" hidden>
+                  <li role="option" data-value="Roasted Chicken Breast Stuffed With Sausage Meat" aria-selected="false">Roasted Chicken Breast stuffed with sausage meat</li>
+                  <li role="option" data-value="Braised Lamb Shank" aria-selected="false">Braised Lamb Shank</li>
+                  <li role="option" data-value="Roasted Vegetable Wellington" aria-selected="false">Roasted Vegetable Wellington</li>
+                </ul>
+              </div>
+              <p class="field-hint" id="course-hint">Your choice goes straight to the kitchen. The vegetable Wellington is vegetarian &mdash; anything else you can't eat, note it under dietary requirements.</p>
+              <p class="field-err" id="rsvp-course-err" hidden>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v5"/><path d="M12 16h.01"/></svg>
+                <span>Please choose your main course.</span>
+              </p>
+            </div>
+          </div>
+
+          <div class="field-row">
+            <div class="field">
+              <label id="dietary-label" for="dietary-trigger">Dietary requirements</label>
+
+              <div class="select-wrap custom-select" data-custom-select>
+                <input id="rsvp-dietary" name="dietary" type="hidden" value="None">
+
+                <button
+                  class="select-trigger"
+                  id="dietary-trigger"
+                  type="button"
+                  aria-haspopup="listbox"
+                  aria-expanded="false"
+                  aria-labelledby="dietary-label dietary-selected"
+                >
+                  <span id="dietary-selected" data-select-value>None</span>
+                  <span class="select-chevron" aria-hidden="true"></span>
+                </button>
+
+                <ul class="select-menu" id="dietary-options" role="listbox" hidden>
+                  <li role="option" data-value="None" aria-selected="true">None</li>
+                  <li role="option" data-value="Vegetarian" aria-selected="false">Vegetarian</li>
+                  <li role="option" data-value="Gluten Free" aria-selected="false">Gluten Free</li>
+                  <li role="option" data-value="Lactose Free" aria-selected="false">Lactose Free</li>
+                  <li role="option" data-value="Nut Free" aria-selected="false">Nut Free</li>
+                  <li role="option" data-value="Other" aria-selected="false">Other</li>
+                </ul>
+              </div>
+            </div>
+            <div class="field">
+              <label for="rsvp-song">Song request</label>
+              <input id="rsvp-song" name="song" type="text" placeholder="The one that'll get you dancing" autocomplete="off">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="rsvp-message">A message for the couple <span class="opt">(optional)</span></label>
+        <textarea id="rsvp-message" name="message" rows="4" placeholder="Say hello, or share a memory…"></textarea>
+      </div>
+
+      <div class="rsvp-actions">
+        <button class="submit-btn" type="submit" id="rsvpSubmit">
+          <span class="btn-label">Send RSVP</span>
+          <span class="btn-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg></span>
+          <span class="btn-spinner" aria-hidden="true"></span>
+        </button>
+      </div>
+      <p class="form-note" id="formNote" role="status" aria-live="polite"></p>
+    </form>
+
+    <div class="rsvp-success" id="rsvpSuccess" tabindex="-1" hidden>
+      <svg class="success-mark" viewBox="0 0 64 64" fill="none" aria-hidden="true">
+        <circle cx="32" cy="32" r="30" stroke="#2C5327" stroke-width="1.5"/>
+        <path d="M21 33.5l7.5 7.5L44 24" stroke="#2C5327" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <h3 class="serif" id="rsvpSuccessTitle">Thank you — your reply is in.</h3>
+      <p id="rsvpSuccessMsg">We can't wait to celebrate with you on 29 April at Southdowns Manor.</p>
+      <div class="success-kicker">A little note from us</div>
+      <div class="success-signoff">With love, Diego &amp; Bethany</div>
+      <a class="success-back" href="#nav">Back to the beginning</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="foot-mark">
+    <svg class="sprig" viewBox="0 0 120 60" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M60 55 C 60 40, 40 30, 20 20" stroke="#5D9440" stroke-width="1.5"/>
+      <path d="M60 55 C 60 40, 80 30, 100 20" stroke="#5D9440" stroke-width="1.5"/>
+      <ellipse cx="20" cy="18" rx="7" ry="4" fill="#86B463" transform="rotate(-30 20 18)"/>
+      <ellipse cx="100" cy="18" rx="7" ry="4" fill="#86B463" transform="rotate(30 100 18)"/>
+      <ellipse cx="60" cy="10" rx="6" ry="9" fill="#80A3C2"/>
+    </svg>
+  </div>
+  <div class="serif">Diego <em>&amp;</em> Bethany</div>
+  <div class="sub">29 April 2027 &middot; Southdowns Manor</div>
+</footer>
+
+<script src="scripts.js"></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<!-- impeccable-live-start -->
+</body>
+</html>
